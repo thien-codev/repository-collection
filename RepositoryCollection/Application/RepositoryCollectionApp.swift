@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct RepositoryCollectionApp: App {
+    
+    init() {
+        AppEnvironment.bootstrap()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LaunchView()
         }
     }
 }

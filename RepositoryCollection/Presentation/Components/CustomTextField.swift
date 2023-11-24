@@ -10,9 +10,9 @@ import SwiftUI
 
 struct CustomTextField: View {
     
-    var placeholder: String = .init()
+    var placeholder: String = "Enter"
     @Binding var text: String
-    @State var isEnabled: Bool = false
+    @Binding var isEnabled: Bool
     @State var height: CGFloat = 50
     @State var backgroundColor: Color = .gray
     
@@ -33,17 +33,16 @@ struct CustomTextField: View {
                     }
                     .accentColor(.gray)
                     Spacer()
-                    Button(action: {
-                        text = .init()
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 10, height: 10)
-                            .fontWeight(.bold)
-                            .foregroundColor(.gray)
-                    })
-                    .opacity(text.isEmpty ? 0 : 1)
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                        .fontWeight(.bold)
+                        .foregroundColor(.gray)
+                        .opacity(text.isEmpty ? 0 : 1)
+                        .onTapGesture {
+                            text = .init()
+                        }
                 }
                 .padding()
             }
@@ -53,5 +52,5 @@ struct CustomTextField: View {
 
 #Preview {
     @State var text: String = .init()
-    return CustomTextField(text: $text)
+    return CustomTextField(text: $text, isEnabled: .constant(true))
 }

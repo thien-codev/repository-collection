@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol GithubRepoUseCases {
-    func fetchRepos() async -> [GithubRepoModel]
+    func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error>
 }
 
-class GithubRepoUseCasesIml: GithubRepoUseCases {
+final class GithubRepoUseCasesIml: GithubRepoUseCases {
     
     private let repo: GithubRepoRepository
     
@@ -19,7 +20,17 @@ class GithubRepoUseCasesIml: GithubRepoUseCases {
         self.repo = repo
     }
     
-    func fetchRepos() async -> [GithubRepoModel] {
-        await repo.fetchRepos()
+    func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error> {
+        let subject = PassthroughSubject<[GithubRepoModel], Error>()
+        Task {
+            do {
+                let repos = try await repo.fetchRepos(userId: userId)
+                subject.send(repos)
+                subject.send(completion: .finished)
+            } catch {
+                subject.send(completion: .failure(error))
+            }
+        }
+        return subject.eraseToAnyPublisher()
     }
 }
