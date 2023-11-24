@@ -1,0 +1,13 @@
+//
+//  RepositoryCollection-Dev-Config.xcconfig
+//  RepositoryCollection
+//
+//  Created by ndthien01 on 22/11/2023.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+SLASH = /
+
+GITHUB_REPO_BASE_URL = https:$(SLASH)/api.github.com

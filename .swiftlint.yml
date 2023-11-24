@@ -1,0 +1,26 @@
+file_length:
+  warning: 1000
+  error: 2000
+type_body_length:
+  warning: 300
+  error: 500
+type_name:
+  max_length:
+    warning: 45
+    error: 60
+  min_length:
+    warning: 3
+private_outlet:
+  allow_private_set: true
+  allows_public_getter: true
+  
+  opt_in_rules:
+  - private_action
+  - private_outlet
+  - yoda_condition
+  - closure_spacing
+  - cyclomatic_complexity
+  - closure_end_indentation
+  - operator_usage_whitespace
+
+warning_threshold: 5

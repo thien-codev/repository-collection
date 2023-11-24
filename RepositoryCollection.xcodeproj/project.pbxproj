@@ -7,34 +7,90 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B901C4C2B0F813100C05DFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B901C4B2B0F813100C05DFF /* Assets.xcassets */; };
+		8B901C4F2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C4D2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld */; };
+		8B901C522B0F846600C05DFF /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C512B0F846600C05DFF /* CoreDataStorage.swift */; };
+		8B901C552B0F88E000C05DFF /* GithubRepoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C542B0F88E000C05DFF /* GithubRepoStorage.swift */; };
+		8B901C572B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C562B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift */; };
+		8B901C592B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C582B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift */; };
+		8B901C5B2B0FA8F700C05DFF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B901C5A2B0FA8F700C05DFF /* String.swift */; };
+		8BD2D74E2B0CF64800CCF197 /* GithubRepoRepositoryIml.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D74D2B0CF64800CCF197 /* GithubRepoRepositoryIml.swift */; };
+		8BD2D7512B0CF84400CCF197 /* WaveBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7502B0CF84400CCF197 /* WaveBackgroundView.swift */; };
+		8BD2D7562B0D0AA200CCF197 /* NetworkSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7552B0D0AA200CCF197 /* NetworkSessionManager.swift */; };
+		8BD2D75A2B0D0BEF00CCF197 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7592B0D0BEF00CCF197 /* NetworkService.swift */; };
+		8BD2D75E2B0D0CC100CCF197 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D75D2B0D0CC100CCF197 /* Endpoint.swift */; };
+		8BD2D7612B0D0DA200CCF197 /* JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7602B0D0DA200CCF197 /* JSONDictionary.swift */; };
+		8BD2D7652B0D1BAB00CCF197 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7642B0D1BAB00CCF197 /* Dictionary.swift */; };
+		8BD2D7672B0D258000CCF197 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7662B0D258000CCF197 /* Encodable.swift */; };
+		8BD2D76A2B0D28A100CCF197 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD2D7692B0D28A100CCF197 /* Alamofire */; };
+		8BD2D76D2B0DDB4C00CCF197 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D76C2B0DDB4C00CCF197 /* APIEndpoint.swift */; };
+		8BD2D76F2B0DE04B00CCF197 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D76E2B0DE04B00CCF197 /* DIContainer.swift */; };
+		8BD2D7712B0DE09E00CCF197 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7702B0DE09E00CCF197 /* Configurations.swift */; };
+		8BD2D7732B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2D7722B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig */; };
+		8BD2D7762B0DE62200CCF197 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7752B0DE62200CCF197 /* Bundle.swift */; };
+		8BD2D7782B0DEA1A00CCF197 /* DataTransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7772B0DEA1A00CCF197 /* DataTransferService.swift */; };
+		8BD2D77C2B0E36B900CCF197 /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D77B2B0E36B900CCF197 /* Cancellable.swift */; };
+		8BD2D77E2B0E512600CCF197 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D77D2B0E512600CCF197 /* AppEnvironment.swift */; };
+		8BD2D7802B0E5ACC00CCF197 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D77F2B0E5ACC00CCF197 /* RepositoryCell.swift */; };
+		8BD2D7822B0EEE3C00CCF197 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7812B0EEE3C00CCF197 /* LoadingView.swift */; };
+		8BD2D7872B0F12A800CCF197 /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7862B0F12A800CCF197 /* ActivityTracker.swift */; };
+		8BD2D7892B0F12DD00CCF197 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D7882B0F12DD00CCF197 /* ErrorTracker.swift */; };
+		8BD2D78B2B0F2A4900CCF197 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2D78A2B0F2A4900CCF197 /* AlertMessage.swift */; };
 		A2BFB1752B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1742B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift */; };
-		A2BFB1772B0C8D6400AA6FE7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1762B0C8D6400AA6FE7 /* ContentView.swift */; };
-		A2BFB1792B0C8D6700AA6FE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2BFB1782B0C8D6700AA6FE7 /* Assets.xcassets */; };
 		A2BFB17C2B0C8D6700AA6FE7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2BFB17B2B0C8D6700AA6FE7 /* Preview Assets.xcassets */; };
 		A2BFB18A2B0C904500AA6FE7 /* GithubRepoUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1892B0C904500AA6FE7 /* GithubRepoUseCases.swift */; };
 		A2BFB18C2B0C90B200AA6FE7 /* GithubRepoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB18B2B0C90B200AA6FE7 /* GithubRepoRepository.swift */; };
 		A2BFB18E2B0C9C1000AA6FE7 /* GithubRepoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB18D2B0C9C1000AA6FE7 /* GithubRepoModel.swift */; };
 		A2BFB1942B0CA68700AA6FE7 /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1932B0CA68700AA6FE7 /* RepositoriesView.swift */; };
 		A2BFB1962B0CA6B100AA6FE7 /* RepositoriesViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewVM.swift */; };
-		A2BFB1992B0CA83400AA6FE7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1982B0CA83400AA6FE7 /* OnboardingView.swift */; };
 		A2BFB19C2B0CA96100AA6FE7 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */; };
 		A2BFB19F2B0CB4DB00AA6FE7 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */; };
+		A2F2F1222B0F40B30004281E /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F1212B0F40B30004281E /* LaunchView.swift */; };
+		A2F2F1252B0F5B100004281E /* RepositoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F1242B0F5B100004281E /* RepositoryDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B901C4B2B0F813100C05DFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8B901C4E2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RepositoryCollectionStorage.xcdatamodel; sourceTree = "<group>"; };
+		8B901C512B0F846600C05DFF /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
+		8B901C542B0F88E000C05DFF /* GithubRepoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubRepoStorage.swift; sourceTree = "<group>"; };
+		8B901C562B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataGithubRepoStorage.swift; sourceTree = "<group>"; };
+		8B901C582B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataGithubRepoModelMapping.swift; sourceTree = "<group>"; };
+		8B901C5A2B0FA8F700C05DFF /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		8BD2D74D2B0CF64800CCF197 /* GithubRepoRepositoryIml.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubRepoRepositoryIml.swift; sourceTree = "<group>"; };
+		8BD2D7502B0CF84400CCF197 /* WaveBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveBackgroundView.swift; sourceTree = "<group>"; };
+		8BD2D7552B0D0AA200CCF197 /* NetworkSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionManager.swift; sourceTree = "<group>"; };
+		8BD2D7592B0D0BEF00CCF197 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		8BD2D75D2B0D0CC100CCF197 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		8BD2D7602B0D0DA200CCF197 /* JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDictionary.swift; sourceTree = "<group>"; };
+		8BD2D7642B0D1BAB00CCF197 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		8BD2D7662B0D258000CCF197 /* Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encodable.swift; sourceTree = "<group>"; };
+		8BD2D76C2B0DDB4C00CCF197 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		8BD2D76E2B0DE04B00CCF197 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		8BD2D7702B0DE09E00CCF197 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
+		8BD2D7722B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "RepositoryCollection-Dev-Config.xcconfig"; sourceTree = "<group>"; };
+		8BD2D7742B0DE57D00CCF197 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8BD2D7752B0DE62200CCF197 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		8BD2D7772B0DEA1A00CCF197 /* DataTransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransferService.swift; sourceTree = "<group>"; };
+		8BD2D77B2B0E36B900CCF197 /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		8BD2D77D2B0E512600CCF197 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		8BD2D77F2B0E5ACC00CCF197 /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
+		8BD2D7812B0EEE3C00CCF197 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		8BD2D7862B0F12A800CCF197 /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
+		8BD2D7882B0F12DD00CCF197 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
+		8BD2D78A2B0F2A4900CCF197 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		A2BFB1712B0C8D6400AA6FE7 /* RepositoryCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepositoryCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2BFB1742B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCollectionApp.swift; sourceTree = "<group>"; };
-		A2BFB1762B0C8D6400AA6FE7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A2BFB1782B0C8D6700AA6FE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2BFB17B2B0C8D6700AA6FE7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A2BFB1892B0C904500AA6FE7 /* GithubRepoUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubRepoUseCases.swift; sourceTree = "<group>"; };
 		A2BFB18B2B0C90B200AA6FE7 /* GithubRepoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubRepoRepository.swift; sourceTree = "<group>"; };
 		A2BFB18D2B0C9C1000AA6FE7 /* GithubRepoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubRepoModel.swift; sourceTree = "<group>"; };
 		A2BFB1932B0CA68700AA6FE7 /* RepositoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
 		A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesViewVM.swift; sourceTree = "<group>"; };
-		A2BFB1982B0CA83400AA6FE7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		A2F2F1212B0F40B30004281E /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		A2F2F1242B0F5B100004281E /* RepositoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,12 +98,150 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD2D76A2B0D28A100CCF197 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B901C4A2B0F813100C05DFF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B901C4B2B0F813100C05DFF /* Assets.xcassets */,
+				8B901C4D2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8B901C502B0F845400C05DFF /* CoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				8B901C532B0F88C500C05DFF /* GithubRepoStorage */,
+				8B901C512B0F846600C05DFF /* CoreDataStorage.swift */,
+			);
+			path = CoreDataStorage;
+			sourceTree = "<group>";
+		};
+		8B901C532B0F88C500C05DFF /* GithubRepoStorage */ = {
+			isa = PBXGroup;
+			children = (
+				8B901C542B0F88E000C05DFF /* GithubRepoStorage.swift */,
+				8B901C562B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift */,
+				8B901C582B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift */,
+			);
+			path = GithubRepoStorage;
+			sourceTree = "<group>";
+		};
+		8BD2D74A2B0CF5F700CCF197 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D76B2B0DDB2F00CCF197 /* NetworkService */,
+				8BD2D7532B0D09A800CCF197 /* PersistentStorage */,
+				8BD2D74C2B0CF61800CCF197 /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8BD2D74B2B0CF60A00CCF197 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7542B0D0A0900CCF197 /* Networking */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		8BD2D74C2B0CF61800CCF197 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D74D2B0CF64800CCF197 /* GithubRepoRepositoryIml.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		8BD2D7532B0D09A800CCF197 /* PersistentStorage */ = {
+			isa = PBXGroup;
+			children = (
+				8B901C502B0F845400C05DFF /* CoreDataStorage */,
+			);
+			path = PersistentStorage;
+			sourceTree = "<group>";
+		};
+		8BD2D7542B0D0A0900CCF197 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7552B0D0AA200CCF197 /* NetworkSessionManager.swift */,
+				8BD2D7592B0D0BEF00CCF197 /* NetworkService.swift */,
+				8BD2D7772B0DEA1A00CCF197 /* DataTransferService.swift */,
+				8BD2D75D2B0D0CC100CCF197 /* Endpoint.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		8BD2D75F2B0D0D8700CCF197 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7622B0D1B7A00CCF197 /* Utils */,
+				8BD2D7602B0D0DA200CCF197 /* JSONDictionary.swift */,
+				8BD2D77B2B0E36B900CCF197 /* Cancellable.swift */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		8BD2D7622B0D1B7A00CCF197 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7852B0F05D900CCF197 /* Helpers */,
+				8BD2D7632B0D1B9800CCF197 /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BD2D7632B0D1B9800CCF197 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7642B0D1BAB00CCF197 /* Dictionary.swift */,
+				8BD2D7662B0D258000CCF197 /* Encodable.swift */,
+				8BD2D7752B0DE62200CCF197 /* Bundle.swift */,
+				8B901C5A2B0FA8F700C05DFF /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8BD2D76B2B0DDB2F00CCF197 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D76C2B0DDB4C00CCF197 /* APIEndpoint.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		8BD2D7792B0DF3E500CCF197 /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D76E2B0DE04B00CCF197 /* DIContainer.swift */,
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		8BD2D77A2B0DF3F300CCF197 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7702B0DE09E00CCF197 /* Configurations.swift */,
+				8BD2D7722B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		8BD2D7852B0F05D900CCF197 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2D7862B0F12A800CCF197 /* ActivityTracker.swift */,
+				8BD2D7882B0F12DD00CCF197 /* ErrorTracker.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		A2BFB1682B0C8D6400AA6FE7 = {
 			isa = PBXGroup;
 			children = (
@@ -67,12 +261,14 @@
 		A2BFB1732B0C8D6400AA6FE7 /* RepositoryCollection */ = {
 			isa = PBXGroup;
 			children = (
+				8BD2D7742B0DE57D00CCF197 /* Info.plist */,
 				A2BFB1822B0C8DE800AA6FE7 /* Application */,
+				8B901C4A2B0F813100C05DFF /* Resources */,
+				8BD2D75F2B0D0D8700CCF197 /* Commons */,
 				A2BFB1842B0C8E0F00AA6FE7 /* Presentation */,
 				A2BFB1832B0C8E0000AA6FE7 /* Domains */,
-				A2BFB1852B0C8E2600AA6FE7 /* Data */,
-				A2BFB18F2B0CA60900AA6FE7 /* Infrastructure */,
-				A2BFB1782B0C8D6700AA6FE7 /* Assets.xcassets */,
+				8BD2D74A2B0CF5F700CCF197 /* Data */,
+				8BD2D74B2B0CF60A00CCF197 /* Infrastructure */,
 				A2BFB17A2B0C8D6700AA6FE7 /* Preview Content */,
 			);
 			path = RepositoryCollection;
@@ -89,8 +285,10 @@
 		A2BFB1822B0C8DE800AA6FE7 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				8BD2D77A2B0DF3F300CCF197 /* Configurations */,
+				8BD2D7792B0DF3E500CCF197 /* DIContainer */,
 				A2BFB1742B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift */,
-				A2BFB1762B0C8D6400AA6FE7 /* ContentView.swift */,
+				8BD2D77D2B0E512600CCF197 /* AppEnvironment.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -113,14 +311,6 @@
 				A2BFB1912B0CA66100AA6FE7 /* Modules */,
 			);
 			path = Presentation;
-			sourceTree = "<group>";
-		};
-		A2BFB1852B0C8E2600AA6FE7 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				A2BFB1902B0CA61A00AA6FE7 /* Repositories */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		A2BFB1862B0C8E5D00AA6FE7 /* UseCases */ = {
@@ -147,25 +337,12 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
-		A2BFB18F2B0CA60900AA6FE7 /* Infrastructure */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Infrastructure;
-			sourceTree = "<group>";
-		};
-		A2BFB1902B0CA61A00AA6FE7 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
-			sourceTree = "<group>";
-		};
 		A2BFB1912B0CA66100AA6FE7 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				A2BFB1972B0CA7BD00AA6FE7 /* OnboardingView */,
+				A2F2F1202B0F40650004281E /* LaunchView */,
 				A2BFB1922B0CA66D00AA6FE7 /* RepositoriesView */,
+				A2F2F1232B0F5ACE0004281E /* RepositoryDetailView */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -175,16 +352,9 @@
 			children = (
 				A2BFB1932B0CA68700AA6FE7 /* RepositoriesView.swift */,
 				A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewVM.swift */,
+				8BD2D77F2B0E5ACC00CCF197 /* RepositoryCell.swift */,
 			);
 			path = RepositoriesView;
-			sourceTree = "<group>";
-		};
-		A2BFB1972B0CA7BD00AA6FE7 /* OnboardingView */ = {
-			isa = PBXGroup;
-			children = (
-				A2BFB1982B0CA83400AA6FE7 /* OnboardingView.swift */,
-			);
-			path = OnboardingView;
 			sourceTree = "<group>";
 		};
 		A2BFB19A2B0CA94A00AA6FE7 /* Extensions */ = {
@@ -199,8 +369,27 @@
 			isa = PBXGroup;
 			children = (
 				A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */,
+				8BD2D7502B0CF84400CCF197 /* WaveBackgroundView.swift */,
+				8BD2D7812B0EEE3C00CCF197 /* LoadingView.swift */,
+				8BD2D78A2B0F2A4900CCF197 /* AlertMessage.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		A2F2F1202B0F40650004281E /* LaunchView */ = {
+			isa = PBXGroup;
+			children = (
+				A2F2F1212B0F40B30004281E /* LaunchView.swift */,
+			);
+			path = LaunchView;
+			sourceTree = "<group>";
+		};
+		A2F2F1232B0F5ACE0004281E /* RepositoryDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				A2F2F1242B0F5B100004281E /* RepositoryDetailView.swift */,
+			);
+			path = RepositoryDetailView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,12 +402,16 @@
 				A2BFB16D2B0C8D6400AA6FE7 /* Sources */,
 				A2BFB16E2B0C8D6400AA6FE7 /* Frameworks */,
 				A2BFB16F2B0C8D6400AA6FE7 /* Resources */,
+				8B901C5D2B0FBDF200C05DFF /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = RepositoryCollection;
+			packageProductDependencies = (
+				8BD2D7692B0D28A100CCF197 /* Alamofire */,
+			);
 			productName = RepositoryCollection;
 			productReference = A2BFB1712B0C8D6400AA6FE7 /* RepositoryCollection.app */;
 			productType = "com.apple.product-type.application";
@@ -247,6 +440,9 @@
 				Base,
 			);
 			mainGroup = A2BFB1682B0C8D6400AA6FE7;
+			packageReferences = (
+				8BD2D7682B0D28A100CCF197 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = A2BFB1722B0C8D6400AA6FE7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -262,27 +458,75 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2BFB17C2B0C8D6700AA6FE7 /* Preview Assets.xcassets in Resources */,
-				A2BFB1792B0C8D6700AA6FE7 /* Assets.xcassets in Resources */,
+				8B901C4C2B0F813100C05DFF /* Assets.xcassets in Resources */,
+				8BD2D7732B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8B901C5D2B0FBDF200C05DFF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif ! which swiftlint >/dev/null; then\n    echo \"Installing SwiftLint...\"\n    brew install swiftlint\nfi\n\n    echo \"Linting...\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A2BFB16D2B0C8D6400AA6FE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD2D7872B0F12A800CCF197 /* ActivityTracker.swift in Sources */,
+				8BD2D7802B0E5ACC00CCF197 /* RepositoryCell.swift in Sources */,
 				A2BFB1942B0CA68700AA6FE7 /* RepositoriesView.swift in Sources */,
-				A2BFB1772B0C8D6400AA6FE7 /* ContentView.swift in Sources */,
+				8BD2D7672B0D258000CCF197 /* Encodable.swift in Sources */,
+				8B901C4F2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld in Sources */,
+				8BD2D7512B0CF84400CCF197 /* WaveBackgroundView.swift in Sources */,
 				A2BFB1752B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift in Sources */,
+				8BD2D75E2B0D0CC100CCF197 /* Endpoint.swift in Sources */,
+				8B901C522B0F846600C05DFF /* CoreDataStorage.swift in Sources */,
+				8B901C552B0F88E000C05DFF /* GithubRepoStorage.swift in Sources */,
+				8BD2D7892B0F12DD00CCF197 /* ErrorTracker.swift in Sources */,
 				A2BFB18C2B0C90B200AA6FE7 /* GithubRepoRepository.swift in Sources */,
 				A2BFB19F2B0CB4DB00AA6FE7 /* CustomTextField.swift in Sources */,
+				8B901C572B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift in Sources */,
+				8BD2D76D2B0DDB4C00CCF197 /* APIEndpoint.swift in Sources */,
 				A2BFB19C2B0CA96100AA6FE7 /* UIScreen.swift in Sources */,
+				8B901C592B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift in Sources */,
 				A2BFB1962B0CA6B100AA6FE7 /* RepositoriesViewVM.swift in Sources */,
-				A2BFB1992B0CA83400AA6FE7 /* OnboardingView.swift in Sources */,
+				8BD2D7822B0EEE3C00CCF197 /* LoadingView.swift in Sources */,
+				A2F2F1222B0F40B30004281E /* LaunchView.swift in Sources */,
+				8BD2D76F2B0DE04B00CCF197 /* DIContainer.swift in Sources */,
+				8BD2D75A2B0D0BEF00CCF197 /* NetworkService.swift in Sources */,
+				8BD2D7712B0DE09E00CCF197 /* Configurations.swift in Sources */,
+				8BD2D7562B0D0AA200CCF197 /* NetworkSessionManager.swift in Sources */,
+				8BD2D78B2B0F2A4900CCF197 /* AlertMessage.swift in Sources */,
 				A2BFB18A2B0C904500AA6FE7 /* GithubRepoUseCases.swift in Sources */,
 				A2BFB18E2B0C9C1000AA6FE7 /* GithubRepoModel.swift in Sources */,
+				8BD2D77C2B0E36B900CCF197 /* Cancellable.swift in Sources */,
+				8BD2D7652B0D1BAB00CCF197 /* Dictionary.swift in Sources */,
+				8BD2D77E2B0E512600CCF197 /* AppEnvironment.swift in Sources */,
+				8B901C5B2B0FA8F700C05DFF /* String.swift in Sources */,
+				8BD2D7782B0DEA1A00CCF197 /* DataTransferService.swift in Sources */,
+				8BD2D7762B0DE62200CCF197 /* Bundle.swift in Sources */,
+				A2F2F1252B0F5B100004281E /* RepositoryDetailView.swift in Sources */,
+				8BD2D74E2B0CF64800CCF197 /* GithubRepoRepositoryIml.swift in Sources */,
+				8BD2D7612B0D0DA200CCF197 /* JSONDictionary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +535,7 @@
 /* Begin XCBuildConfiguration section */
 		A2BFB17D2B0C8D6700AA6FE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BD2D7722B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -354,6 +599,7 @@
 		};
 		A2BFB17E2B0C8D6700AA6FE7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BD2D7722B0DE21800CCF197 /* RepositoryCollection-Dev-Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -419,6 +665,7 @@
 				DEVELOPMENT_TEAM = 95XVN448CF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RepositoryCollection/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -448,6 +695,7 @@
 				DEVELOPMENT_TEAM = 95XVN448CF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RepositoryCollection/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -488,6 +736,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BD2D7682B0D28A100CCF197 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BD2D7692B0D28A100CCF197 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BD2D7682B0D28A100CCF197 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		8B901C4D2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8B901C4E2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodel */,
+			);
+			currentVersion = 8B901C4E2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodel */;
+			path = RepositoryCollectionStorage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A2BFB1692B0C8D6400AA6FE7 /* Project object */;
 }

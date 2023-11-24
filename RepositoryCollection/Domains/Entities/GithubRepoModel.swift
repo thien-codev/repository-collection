@@ -8,14 +8,13 @@
 import Foundation
 
 struct GithubRepoModel: Decodable {
-    
     let id: Int
     let name, fullName: String
     let owner: Owner
     let htmlURL: String
     let description: String?
     let url: String
-    let createdAt, updatedAt, pushedAt: Date
+    let createdAt, updatedAt, pushedAt: String
     let gitURL, sshURL: String
     let cloneURL: String
     let language: String?
@@ -36,6 +35,13 @@ struct GithubRepoModel: Decodable {
         case cloneURL = "clone_url"
         case language
         case visibility
+    }
+}
+
+extension GithubRepoModel: Equatable {
+    
+    static func == (lhs: GithubRepoModel, rhs: GithubRepoModel) -> Bool {
+        return lhs.id == rhs.id && lhs.fullName == rhs.fullName && lhs.gitURL == rhs.gitURL
     }
 }
 

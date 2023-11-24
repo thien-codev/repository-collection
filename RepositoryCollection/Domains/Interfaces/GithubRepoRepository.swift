@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GithubRepoRepository {
-    func fetchRepos() async -> [GithubRepoModel]
+    func fetchRepos(userId: String) async throws -> [GithubRepoModel]
 }
