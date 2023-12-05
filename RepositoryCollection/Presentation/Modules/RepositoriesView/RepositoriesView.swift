@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RepositoriesView: GeneralView {
     
-    @StateObject var viewModel: RepositoriesViewVM
+    @ObservedObject var viewModel: RepositoriesViewVM
     @State var isEnableSearch: Bool = false
     
     init(viewModel: RepositoriesViewVM) {
