@@ -19,31 +19,17 @@ struct RepositoriesView: GeneralView {
     
     var body: some View {
         LoadingView(isShowing: $viewModel.isLoading) {
-            NavigationView {
+            CustomNavigationView {
                 ZStack {
                     WaveBackgroundView()
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("\(viewModel.displayItems.count) items")
-                            .fontWeight(.semibold)
-                            .font(.system(size: 12))
-                            .padding(.leading, 32)
-                            .foregroundColor(.gray)
-                        HStack {
-                            CustomTextField(placeholder: "UserID", 
-                                            text: $viewModel.userID,
-                                            isEnabled: $isEnableSearch)
-                            searchButton
-                        }
-                        .animation(.easeInOut, value: isEnableSearch)
-                        .animation(.easeInOut, value: viewModel.userID)
-                        .padding([.leading, .trailing])
-                        .padding(.bottom, 10)
-                        
                         ScrollView(showsIndicators: false) {
                             ForEach(viewModel.displayItems, id: \.id) { item in
-                                NavigationLink {
+                                CustomNavigationLink {
                                     RepositoryDetailView(repoModel: item)
-                                        .navigationBarBackButtonHidden(true)
+                                        .customNavigationViewTitle(item.fullName)
+                                        .customNavigationViewBackgroundColor(.blue)
+                                        .customNavigationViewTintColor(.white)
                                 } label: {
                                     RepositoryCell(height: 180, repoModel: item)
                                 }
@@ -64,6 +50,10 @@ struct RepositoriesView: GeneralView {
                         }
                     }
                 }
+                .customNavigationViewBackButtonHidden(true)
+                .customNavigationViewBackgroundColor(.blue)
+                .customNavigationViewTintColor(.white)
+                .customNavigationViewRightItem(EquatableViewContainer(view: AnyView(searchBar)))
             }
         }
     }
@@ -71,7 +61,7 @@ struct RepositoriesView: GeneralView {
     private var searchButton: some View {
         let shouldShow = (isEnableSearch || !viewModel.userID.isEmpty)
         return Circle()
-            .foregroundColor(.gray)
+            .foregroundColor(.blue)
             .overlay {
                 Image(systemName: "magnifyingglass")
                     .resizable()
@@ -109,6 +99,20 @@ struct RepositoriesView: GeneralView {
             .onTapGesture {
                 viewModel.trigger(.loadMore)
             }
+    }
+    
+    private var searchBar: some View {
+        HStack {
+            CustomTextField(placeholder: "UserID",
+                            text: $viewModel.userID,
+                            isEnabled: $isEnableSearch,
+                            backgroundColor: .white,
+                            tint: .white)
+            searchButton
+        }
+        .animation(.easeInOut, value: isEnableSearch)
+        .animation(.easeInOut, value: viewModel.userID)
+        .padding([.leading, .trailing, .bottom])
     }
 }
 

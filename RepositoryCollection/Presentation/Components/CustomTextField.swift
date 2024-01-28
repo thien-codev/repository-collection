@@ -15,6 +15,7 @@ struct CustomTextField: View {
     @Binding var isEnabled: Bool
     @State var height: CGFloat = 50
     @State var backgroundColor: Color = .gray
+    @State var tint: Color = .white
     
     var body: some View {
         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
@@ -31,14 +32,14 @@ struct CustomTextField: View {
                     TextField(placeholder, text: $text) { isEnabled in
                         self.isEnabled = isEnabled
                     }
-                    .accentColor(.gray)
+                    .accentColor(tint)
                     Spacer()
                     Image(systemName: "xmark")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 10, height: 10)
                         .fontWeight(.bold)
-                        .foregroundColor(.gray)
+                        .foregroundColor(tint)
                         .opacity(text.isEmpty ? 0 : 1)
                         .onTapGesture {
                             text = .init()
