@@ -14,13 +14,13 @@ struct CustomTextField: View {
     @Binding var text: String
     @Binding var isEnabled: Bool
     @State var height: CGFloat = 50
-    @State var backgroundColor: Color = .gray
-    @State var tint: Color = .white
+    @State var backgroundColor: Color = .white
+    @State var tint: Color = .black
     
     var body: some View {
         RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
             .stroke(lineWidth: isEnabled ? 2 : 0)
-            .foregroundColor(backgroundColor)
+            .foregroundColor(tint)
             .frame(height: height)
             .background {
                 RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
@@ -33,6 +33,7 @@ struct CustomTextField: View {
                         self.isEnabled = isEnabled
                     }
                     .accentColor(tint)
+                    .foregroundColor(tint)
                     Spacer()
                     Image(systemName: "xmark")
                         .resizable()

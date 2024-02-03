@@ -14,6 +14,20 @@ protocol GithubRepoUseCases {
 
 final class GithubRepoUseCasesIml: GithubRepoUseCases {
     
+    enum UseCasesError: Error, LocalizedError {
+        case emptyParam
+        case general(Error)
+        
+        public var errorDescription: String? {
+            switch self {
+            case .emptyParam:
+                NSLocalizedString("You need to enter userID", comment: "My error")
+            case .general(let error):
+                error.localizedDescription
+            }
+        }
+    }
+    
     private let repo: GithubRepoRepository
     
     init(repo: GithubRepoRepository) {
@@ -22,13 +36,17 @@ final class GithubRepoUseCasesIml: GithubRepoUseCases {
     
     func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error> {
         let subject = PassthroughSubject<[GithubRepoModel], Error>()
-        Task {
-            do {
-                let repos = try await repo.fetchRepos(userId: userId)
-                subject.send(repos)
-                subject.send(completion: .finished)
-            } catch {
-                subject.send(completion: .failure(error))
+        if userId.isEmpty {
+            subject.send(completion: .failure(UseCasesError.emptyParam))
+        } else {
+            Task {
+                do {
+                    let repos = try await repo.fetchRepos(userId: userId)
+                    subject.send(repos)
+                    subject.send(completion: .finished)
+                } catch {
+                    subject.send(completion: .failure(error))
+                }
             }
         }
         return subject.eraseToAnyPublisher()
