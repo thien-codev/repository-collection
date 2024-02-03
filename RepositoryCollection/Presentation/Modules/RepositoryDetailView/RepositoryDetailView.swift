@@ -17,7 +17,6 @@ struct RepositoryDetailView: View {
         ZStack {
             Color.blue.opacity(0.5).ignoresSafeArea()
             VStack(alignment: .leading) {
-                closeButton
                 containerView
             }
             .padding()
