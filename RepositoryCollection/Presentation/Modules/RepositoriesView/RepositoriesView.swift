@@ -67,7 +67,7 @@ struct RepositoriesView: GeneralView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             }
             .frame(width: shouldShow ? 50 : 2)
             .opacity(shouldShow ? 1 : 0)
@@ -107,7 +107,7 @@ struct RepositoriesView: GeneralView {
                             text: $viewModel.userID,
                             isEnabled: $isEnableSearch,
                             backgroundColor: .white,
-                            tint: .white)
+                            tint: .black)
             searchButton
         }
         .animation(.easeInOut, value: isEnableSearch)

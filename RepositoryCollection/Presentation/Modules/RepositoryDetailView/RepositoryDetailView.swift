@@ -15,7 +15,7 @@ struct RepositoryDetailView: View {
     
     var body: some View {
         ZStack {
-            Color.blue.opacity(0.5).ignoresSafeArea()
+            WaveBackgroundView()
             VStack(alignment: .leading) {
                 containerView
             }
@@ -28,7 +28,7 @@ struct RepositoryDetailView: View {
             .stroke(lineWidth: 3)
             .background {
                 RoundedRectangle(cornerRadius: 25.0)
-                    .foregroundColor(.white)
+                    .foregroundColor(.white.opacity(0.8))
                     .shadow(radius: 0, x: 8, y: 8)
             }
             .overlay {
