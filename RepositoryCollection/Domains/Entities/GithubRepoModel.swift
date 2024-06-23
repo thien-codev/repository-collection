@@ -11,12 +11,12 @@ struct GithubRepoModel: Decodable {
     let id: Int
     let name, fullName: String
     let owner: Owner
-    let htmlURL: String
+    let htmlURL: URL?
     let description: String?
-    let url: String
+    let url: URL?
     let createdAt, updatedAt, pushedAt: String
-    let gitURL, sshURL: String
-    let cloneURL: String
+    let gitURL, sshURL: URL?
+    let cloneURL: URL?
     let language: String?
     let visibility: String
 
@@ -36,6 +36,38 @@ struct GithubRepoModel: Decodable {
         case language
         case visibility
     }
+    
+    init(id: Int,
+         name: String,
+         fullName: String,
+         owner: Owner,
+         htmlURL: URL? = nil,
+         description: String?,
+         url: URL? = nil,
+         createdAt: String,
+         updatedAt: String,
+         pushedAt: String,
+         gitURL: URL? = nil,
+         sshURL: URL? = nil,
+         cloneURL: URL? = nil,
+         language: String? = nil,
+         visibility: String) {
+        self.id = id
+        self.name = name
+        self.fullName = fullName
+        self.owner = owner
+        self.htmlURL = htmlURL
+        self.description = description
+        self.url = url
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.pushedAt = pushedAt
+        self.gitURL = gitURL
+        self.sshURL = sshURL
+        self.cloneURL = cloneURL
+        self.language = language
+        self.visibility = visibility
+    }
 }
 
 extension GithubRepoModel: Equatable {
@@ -45,8 +77,14 @@ extension GithubRepoModel: Equatable {
     }
 }
 
+extension Array where Element == GithubRepoModel {
+    var owner: Owner? {
+        return self.first?.owner
+    }
+}
+
 // MARK: - Owner
-struct Owner: Decodable {
+struct Owner: Decodable, Equatable {
     
     let login: String
     let id: Int

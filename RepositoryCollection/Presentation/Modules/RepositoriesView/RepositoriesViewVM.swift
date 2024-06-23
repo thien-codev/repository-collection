@@ -34,6 +34,7 @@ class RepositoriesViewVM: ObservableObject {
     @Published var displayItems: [GithubRepoModel] = []
     @Published var isLoading: Bool = true
     @Published var alertMessage = AlertMessage()
+    @Published var owner: Owner? = nil
     
     convenience init(diContainer: DIContainer) {
         self.init(useCases: diContainer.githubRepoUseCases)
@@ -80,6 +81,7 @@ private extension RepositoriesViewVM {
     
     func bindDisplayItems(with storedItems: [GithubRepoModel]) {
         displayItems.append(contentsOf: storedItems.prefix(limitItems))
+        owner = storedItems.owner
         canLoadMore = storedItems.count > limitItems
     }
     
@@ -98,15 +100,10 @@ extension GithubRepoModel {
                            id: 1,
                            nodeID: "nodeID",
                            avatarURL: nil),
-              htmlURL: "htmlURL",
               description: "description",
-              url: "url",
               createdAt: "createdAt",
               updatedAt: "updatedAt",
               pushedAt: "pushedAt",
-              gitURL: "gitURL",
-              sshURL: "sshURL",
-              cloneURL: "cloneURL",
               language: "language",
               visibility: "visibility")
     }()

@@ -19,12 +19,12 @@ class GithubRepoRepositoryIml: GithubRepoRepository {
     }
     
     func fetchRepos(userId: String) async throws -> [GithubRepoModel] {
-        let cacheRepos = await githubRepoStorage.getRepos(of: userId)
-        if !cacheRepos.isEmpty {
-            return cacheRepos
-        } else {
+//        let cacheRepos = await githubRepoStorage.getRepos(of: userId)
+//        if !cacheRepos.isEmpty {
+//            return cacheRepos
+//        } else {
             return try await fetchReposFromEndpoint(userId)
-        }
+//        }
     }
 }
 

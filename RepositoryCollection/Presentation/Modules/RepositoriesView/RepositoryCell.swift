@@ -19,7 +19,6 @@ struct RepositoryCell: View {
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .foregroundColor(.white)
-                    .shadow(radius: 0, x: 10, y: 10)
             }
             .overlay(content: {
                 HStack {
@@ -28,10 +27,6 @@ struct RepositoryCell: View {
                             .font(.title)
                             .fontWeight(.bold)
                         Text("Description: \(repoModel.description ?? "No")")
-                            .font(.body)
-                        Text("HtmlURL: \(repoModel.htmlURL)")
-                            .font(.body)
-                        Text("GitURL: \(repoModel.gitURL)")
                             .font(.body)
                         HStack {
                             Text(repoModel.visibility)

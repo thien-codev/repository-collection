@@ -13,25 +13,32 @@ struct CustomTextField: View {
     var placeholder: String = "Enter"
     @Binding var text: String
     @Binding var isEnabled: Bool
-    @State var height: CGFloat = 50
+    @State var height: CGFloat = 40
     @State var backgroundColor: Color = .white
-    @State var tint: Color = .black
+    @State var tint: Color = .gray
+    var focusKeyboard: FocusState<Bool>.Binding
     
     var body: some View {
-        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-            .stroke(lineWidth: isEnabled ? 2 : 0)
+        RoundedRectangle(cornerRadius: 20.0)
+            .stroke(lineWidth: 1)
             .foregroundColor(tint)
             .frame(height: height)
             .background {
-                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                RoundedRectangle(cornerRadius: 20)
                     .frame(height: height)
-                    .foregroundColor(backgroundColor.opacity(0.3))
+                    .foregroundColor(backgroundColor)
+                    .shadow(radius: 0, x: 8, y: 8)
             }
             .overlay {
-                HStack {
+                HStack(spacing: 4) {
+                    Image("ic-github")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                     TextField(placeholder, text: $text) { isEnabled in
                         self.isEnabled = isEnabled
                     }
+                    .focused(focusKeyboard)
                     .accentColor(tint)
                     .foregroundColor(tint)
                     Spacer()
@@ -46,13 +53,9 @@ struct CustomTextField: View {
                             text = .init()
                         }
                 }
-                .padding()
+                .padding(.trailing)
+                .padding(.leading, 6)
             }
             .animation(.easeInOut, value: isEnabled)
     }
-}
-
-#Preview {
-    @State var text: String = .init()
-    return CustomTextField(text: $text, isEnabled: .constant(true))
 }

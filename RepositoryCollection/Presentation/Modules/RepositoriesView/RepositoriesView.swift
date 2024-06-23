@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct RepositoriesView: GeneralView {
     
     @ObservedObject var viewModel: RepositoriesViewVM
     @State var isEnableSearch: Bool = false
+    @FocusState var focusKeyboard: Bool
     
     init(viewModel: RepositoriesViewVM) {
         _viewModel = .init(wrappedValue: viewModel)
@@ -20,7 +22,7 @@ struct RepositoriesView: GeneralView {
     var body: some View {
         LoadingView(isShowing: $viewModel.isLoading) {
             CustomNavigationView {
-                ZStack {
+                ZStack(alignment: .top) {
                     WaveBackgroundView()
                     VStack(alignment: .leading, spacing: 0) {
                         ScrollView(showsIndicators: false) {
@@ -33,12 +35,14 @@ struct RepositoriesView: GeneralView {
                                 } label: {
                                     RepositoryCell(height: 180, repoModel: item)
                                 }
-                                .padding(.bottom, 10)
+                                .padding(.bottom, 6)
                             }
                             .padding([.leading, .trailing], 20)
-                            .offset(y: 10)
+                            .offset(y: 36)
                             
                             loadMoreView
+                                .offset(y: 10)
+                                .padding([.top, .bottom], 20)
                         }
                         .animation(.spring, value: viewModel.displayItems)
                         .alert(isPresented: $viewModel.alertMessage.isShowing) {
@@ -49,35 +53,74 @@ struct RepositoriesView: GeneralView {
                             )
                         }
                     }
+                    .padding(.top, 50)
+                    searchBar
                 }
-                .customNavigationViewBackButtonHidden(true)
-                .customNavigationViewBackgroundColor(.blue)
-                .customNavigationViewTintColor(.white)
-                .customNavigationViewRightItem(EquatableViewContainer(view: AnyView(searchBar)))
+                .onTapGesture {
+                    focusKeyboard = false
+                }
+                .customNavigationViewBarHidden(true)
             }
         }
     }
+}
+
+private extension RepositoriesView {
     
-    private var searchButton: some View {
+    var searchButton: some View {
         let shouldShow = (isEnableSearch || !viewModel.userID.isEmpty)
         return Circle()
-            .foregroundColor(.blue)
+            .stroke(lineWidth: 1)
+            .foregroundColor(.black)
             .overlay {
                 Image(systemName: "magnifyingglass")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 20)
+                    .frame(width: 16)
                     .foregroundColor(.black)
             }
-            .frame(width: shouldShow ? 50 : 2)
-            .opacity(shouldShow ? 1 : 0)
+            .frame(width: 40)
             .onTapGesture {
                 viewModel.trigger(.search)
                 isEnableSearch = false
             }
+            .background(content: {
+                Circle().fill(.white)
+                    .shadow(radius: 0, x: 8, y: 8)
+            })
+            .isHidden(!shouldShow)
     }
     
-    private var loadMoreView: some View {
+    var profileView: some View {
+        let shouldShow = !isEnableSearch && viewModel.owner.hasValue
+        let avatarURL = URL(string:  viewModel.owner?.avatarURL ?? "")
+        return Circle()
+            .stroke(lineWidth: 1)
+            .foregroundColor(.black)
+            .overlay {
+                KFImage(avatarURL)
+                    .placeholder {
+                        Image(systemName: "person.crop.circle")
+                    }
+                    .resizable()
+                    .scaledToFill()
+                    .foregroundColor(.black)
+                    .mask {
+                        Circle()
+                    }
+            }
+            .frame(width: 40)
+            .onTapGesture {
+                // show profile
+            }
+            .background(content: {
+                Circle().fill(.white)
+                    .shadow(radius: 0, x: 8, y: 8)
+            })
+            .isHidden(!shouldShow)
+    }
+    
+    var loadMoreView: some View {
         RoundedRectangle(cornerRadius: 12)
             .stroke(lineWidth: 3)
             .frame(height: 50)
@@ -90,29 +133,52 @@ struct RepositoriesView: GeneralView {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(height: 50)
                     .foregroundColor(.white)
-                    .shadow(radius: 0, x: 10, y: 10)
             })
             .padding([.leading, .trailing], 20)
-            .padding(.bottom, 40)
-            .offset(y: 10)
             .opacity(viewModel.canLoadMore ? 1 : 0)
             .onTapGesture {
                 viewModel.trigger(.loadMore)
             }
     }
     
-    private var searchBar: some View {
-        HStack {
-            CustomTextField(placeholder: "UserID",
+    var searchBar: some View {
+        HStack(spacing: 14) {
+            CustomTextField(placeholder: "Search GitHub",
                             text: $viewModel.userID,
                             isEnabled: $isEnableSearch,
                             backgroundColor: .white,
-                            tint: .black)
+                            tint: .black,
+                            focusKeyboard: $focusKeyboard)
+            recentSearchButtonView
             searchButton
+            profileView
         }
         .animation(.easeInOut, value: isEnableSearch)
+        .animation(.easeInOut, value: viewModel.owner)
         .animation(.easeInOut, value: viewModel.userID)
-        .padding([.leading, .trailing, .bottom])
+        .padding(20)
+    }
+    
+    var recentSearchButtonView: some View {
+        let shouldShow = true
+        return Circle()
+            .stroke(lineWidth: 1)
+            .foregroundColor(.black)
+            .overlay {
+                Image(systemName: "arrow.2.circlepath")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20)
+                    .foregroundColor(.black)
+            }
+            .frame(width: 40)
+            .onTapGesture {
+            }
+            .background(content: {
+                Circle().fill(.white)
+                    .shadow(radius: 0, x: 8, y: 8)
+            })
+            .isHidden(!shouldShow)
     }
 }
 

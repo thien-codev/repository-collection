@@ -17,6 +17,7 @@ struct CustomNavigationContainerView<Content: View>: View {
     @State var backgroundColor: Color = .white
     @State var tintColor: Color = .black
     @State var shadowHidden: Bool = true
+    @State var barHidden: Bool = false
     
     public init(@ViewBuilder content: () -> Content) {
         self.content = content()
@@ -24,12 +25,14 @@ struct CustomNavigationContainerView<Content: View>: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            CustomNavigationBar(title: title,
-                                backButtonHidden: backButtonHidden,
-                                shadowHidden: shadowHidden,
-                                backgroundColor: backgroundColor,
-                                tintColor: tintColor,
-                                rightItem: rightItem)
+            if !barHidden {
+                CustomNavigationBar(title: title,
+                                    backButtonHidden: backButtonHidden,
+                                    shadowHidden: shadowHidden,
+                                    backgroundColor: backgroundColor,
+                                    tintColor: tintColor,
+                                    rightItem: rightItem)
+            }
             content.frame(maxWidth: .infinity,
                           maxHeight: .infinity)
         }
@@ -50,6 +53,9 @@ struct CustomNavigationContainerView<Content: View>: View {
         })
         .onPreferenceChange(CustomNavigationBarRightItemPreferenceKey.self, perform: { value in
             rightItem = value
+        })
+        .onPreferenceChange(CustomNavigationBarHiddenPreferenceKey.self, perform: { value in
+            barHidden = value
         })
     }
 }

@@ -12,7 +12,7 @@ extension RepositoryEntity {
     var toGithubRepoModel: GithubRepoModel? {
         guard let fullName,
               let htmlURL else { return nil }
-        return GithubRepoModel(id: Int(repoID), name: .init(), fullName: fullName, owner: .init(login: .init(), id: .zero, nodeID: .init(), avatarURL: nil), htmlURL: htmlURL, description: description, url: .init(), createdAt: createdAt ?? .init(), updatedAt: .init(), pushedAt: .init(), gitURL: .init(), sshURL: .init(), cloneURL: .init(), language: nil, visibility: visibility ?? .init())
+        return GithubRepoModel(id: Int(repoID), name: .init(), fullName: fullName, owner: .init(login: .init(), id: .zero, nodeID: .init(), avatarURL: nil), htmlURL: URL(string: htmlURL), description: description, url: nil, createdAt: createdAt ?? .init(), updatedAt: .init(), pushedAt: .init(), visibility: visibility ?? "")
     }
 }
 
@@ -25,9 +25,9 @@ extension Array where Element == GithubRepoModel {
         forEach { item in
             let repositoryEntity: RepositoryEntity = .init(context: context)
             repositoryEntity.fullName = item.fullName
-            repositoryEntity.htmlURL = item.htmlURL
+            repositoryEntity.htmlURL = item.htmlURL?.absoluteString
             repositoryEntity.descriptionAttr = item.description
-            repositoryEntity.gitURL = item.gitURL
+            repositoryEntity.gitURL = item.gitURL?.absoluteString
             repositoryEntity.createdAt = item.createdAt
             repositoryEntity.visibility = item.visibility
             repositoryEntity.repoID = Int32(item.id)
@@ -36,7 +36,6 @@ extension Array where Element == GithubRepoModel {
             userEntity.addToRepositories(repositoryEntity)
         }
         
-
         return userEntity
     }
 }

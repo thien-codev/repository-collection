@@ -39,10 +39,6 @@ struct RepositoryDetailView: View {
                             .fontWeight(.bold)
                         Text("Description: \(repoModel.description ?? "No")")
                             .font(.body)
-                        Text("HtmlURL: \(repoModel.htmlURL)")
-                            .font(.body)
-                        Text("GitURL: \(repoModel.gitURL)")
-                            .font(.body)
                         
                         Text(repoModel.visibility)
                             .font(.body)

@@ -18,14 +18,10 @@ struct LoadingView<Content>: View where Content: View {
             ZStack(alignment: .center) {
                 self.content()
                     .disabled(isShowing)
-                    .overlay(Color.black.opacity(isShowing ? 0.3 : 0))
                 
                 VStack {
-                    ProgressView()
+                    ProgressView().frame(width: 40)
                 }
-                .frame(width: 50,
-                       height: 50)
-                .background(Color.white)
                 .cornerRadius(6)
                 .shadow(radius: 10)
                 .opacity(isShowing ? 1 : 0)
