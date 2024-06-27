@@ -54,6 +54,7 @@ struct RepositoriesView: GeneralView {
                         }
                     }
                     .padding(.top, 50)
+                    noResultFoundView
                     searchBar
                 }
                 .onTapGesture {
@@ -156,6 +157,7 @@ private extension RepositoriesView {
         .animation(.easeInOut, value: isEnableSearch)
         .animation(.easeInOut, value: viewModel.owner)
         .animation(.easeInOut, value: viewModel.userID)
+        .animation(.easeInOut, value: viewModel.enableRecentSearch)
         .padding(20)
     }
     
@@ -180,6 +182,25 @@ private extension RepositoriesView {
                     .shadow(radius: 0, x: 8, y: 8)
             })
             .isHidden(!shouldShow)
+    }
+    
+    var noResultFoundView: some View {
+        let shouldShow: Bool = viewModel.hasNoRepo && !viewModel.userID.isEmpty && !isEnableSearch && !viewModel.isLoading
+        return RoundedRectangle(cornerRadius: 12)
+            .stroke(lineWidth: 1)
+            .frame(height: 50)
+            .overlay {
+                Text("The user does not have any repository")
+            }
+            .background(content: {
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(height: 50)
+                    .foregroundColor(.white)
+                    .shadow(radius: 0, x: 8, y: 8)
+            })
+            .padding([.leading, .trailing], 20)
+            .offset(y: shouldShow ? 80 : -160)
+            .animation(.spring(bounce: 0.15), value: shouldShow)
     }
 }
 

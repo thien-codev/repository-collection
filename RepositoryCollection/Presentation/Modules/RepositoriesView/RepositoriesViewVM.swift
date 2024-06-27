@@ -29,9 +29,16 @@ class RepositoriesViewVM: ObservableObject {
     }
     
     // Input
-    @Published var userID: String = ""
+    @Published var userID: String = "" {
+        didSet {
+            hasNoRepo = false
+            guard userID.isEmpty else { return }
+            self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
+        }
+    }
     
     // Output
+    @Published var hasNoRepo: Bool = false
     @Published var enableRecentSearch: Bool = false
     @Published var canLoadMore = false
     @Published var displayItems: [GithubRepoModel] = []
@@ -80,10 +87,18 @@ private extension RepositoriesViewVM {
             .fetchRepos(userId: userID)
             .trackActivity(activityTracker)
             .trackError(errorTracker)
-            .replaceError(with: [])
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
-            .assign(to: \.storedItems, on: self)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure:
+                    self?.hasNoRepo = false
+                case .finished: break
+                }
+            }, receiveValue: { [weak self] repos in
+                self?.hasNoRepo = repos.isEmpty
+                self?.storedItems = repos
+            })
             .store(in: &cancellable)
     }
     
