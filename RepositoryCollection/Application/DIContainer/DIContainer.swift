@@ -16,15 +16,18 @@ final class DIContainer {
     
     static func inject(appConfigurations: Configurations,
                        networkService: NetworkService,
-                       repoStorage: GithubRepoStorage) {
+                       repoStorage: GithubRepoStorage,
+                       userDefaultRepository: UserDefaultRepository) {
         manager.appConfigurations = appConfigurations
         manager.networkService = networkService
         manager.repoStorage = repoStorage
+        manager.userDefaultRepository = userDefaultRepository
     }
     
     var appConfigurations: Configurations!
     var networkService: NetworkService!
     var repoStorage: GithubRepoStorage!
+    var userDefaultRepository: UserDefaultRepository!
     
     lazy var dataTransferService: DataTransferService = {
         DefaultDataTransferService(service: networkService)

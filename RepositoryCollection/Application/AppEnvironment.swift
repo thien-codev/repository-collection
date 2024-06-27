@@ -15,10 +15,12 @@ struct AppEnvironment {
         let configurations = Configurations()
         let networkService = DefaultNetworkService(networkSessionManager: AFNetworkSessionManager.default)
         let coreDataStorage = CoreDataGithubRepoStorage(coreDataStack: CoreDataStorageStack.manager)
+        let userDefaultRepo = UserDefaultRepositoryIml()
         
         DIContainer.inject(appConfigurations: configurations,
                            networkService: networkService,
-                           repoStorage: coreDataStorage)
+                           repoStorage: coreDataStorage,
+                           userDefaultRepository: userDefaultRepo)
     }
 }
 

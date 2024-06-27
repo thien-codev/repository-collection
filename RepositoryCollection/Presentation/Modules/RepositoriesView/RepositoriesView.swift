@@ -160,7 +160,7 @@ private extension RepositoriesView {
     }
     
     var recentSearchButtonView: some View {
-        let shouldShow = true
+        let shouldShow = viewModel.enableRecentSearch && !isEnableSearch
         return Circle()
             .stroke(lineWidth: 1)
             .foregroundColor(.black)
@@ -173,6 +173,7 @@ private extension RepositoriesView {
             }
             .frame(width: 40)
             .onTapGesture {
+                viewModel.trigger(.recentSearchTrigger)
             }
             .background(content: {
                 Circle().fill(.white)

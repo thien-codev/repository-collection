@@ -12,27 +12,30 @@ protocol GithubRepoUseCases {
     func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error>
 }
 
-final class GithubRepoUseCasesIml: GithubRepoUseCases {
+enum UseCasesError: Error, LocalizedError {
+    case emptyParam
+    case general(Error)
     
-    enum UseCasesError: Error, LocalizedError {
-        case emptyParam
-        case general(Error)
-        
-        public var errorDescription: String? {
-            switch self {
-            case .emptyParam:
-                NSLocalizedString("You need to enter userID", comment: "My error")
-            case .general(let error):
-                error.localizedDescription
-            }
+    public var errorDescription: String? {
+        switch self {
+        case .emptyParam:
+            NSLocalizedString("You need to enter userID", comment: "My error")
+        case .general(let error):
+            error.localizedDescription
         }
     }
+}
+
+final class GithubRepoUseCasesIml {
     
     private let repo: GithubRepoRepository
     
     init(repo: GithubRepoRepository) {
         self.repo = repo
     }
+}
+
+extension GithubRepoUseCasesIml: GithubRepoUseCases {
     
     func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error> {
         let subject = PassthroughSubject<[GithubRepoModel], Error>()

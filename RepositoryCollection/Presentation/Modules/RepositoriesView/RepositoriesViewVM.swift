@@ -13,10 +13,12 @@ class RepositoriesViewVM: ObservableObject {
     enum Input {
         case search
         case loadMore
+        case recentSearchTrigger
     }
     
     private let limitItems = 3
     private let useCases: GithubRepoUseCases
+    private var userDefaultRepo: UserDefaultRepository
     private let activityTracker = ActivityTracker(false)
     private let errorTracker = ErrorTracker()
     private var cancellable = Set<AnyCancellable>()
@@ -30,6 +32,7 @@ class RepositoriesViewVM: ObservableObject {
     @Published var userID: String = ""
     
     // Output
+    @Published var enableRecentSearch: Bool = false
     @Published var canLoadMore = false
     @Published var displayItems: [GithubRepoModel] = []
     @Published var isLoading: Bool = true
@@ -37,11 +40,14 @@ class RepositoriesViewVM: ObservableObject {
     @Published var owner: Owner? = nil
     
     convenience init(diContainer: DIContainer) {
-        self.init(useCases: diContainer.githubRepoUseCases)
+        self.init(useCases: diContainer.githubRepoUseCases,
+                  userDefaultRepo: diContainer.userDefaultRepository)
     }
     
-    init(useCases: GithubRepoUseCases) {
+    init(useCases: GithubRepoUseCases, userDefaultRepo: UserDefaultRepository) {
         self.useCases = useCases
+        self.userDefaultRepo = userDefaultRepo
+        self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
         
         activityTracker
             .receive(on: DispatchQueue.main)
@@ -62,6 +68,8 @@ class RepositoriesViewVM: ObservableObject {
             fetchRepos(userID: userID.trim())
         case .loadMore:
             storedItems.removeFirst(limitItems)
+        case .recentSearchTrigger:
+            fetchRecentSearch()
         }
     }
 }
@@ -83,11 +91,25 @@ private extension RepositoriesViewVM {
         displayItems.append(contentsOf: storedItems.prefix(limitItems))
         owner = storedItems.owner
         canLoadMore = storedItems.count > limitItems
+        cacheRecentSearchId()
     }
     
     func clearData() {
         storedItems.removeAll()
         displayItems.removeAll()
+    }
+    
+    func fetchRecentSearch() {
+        guard let recentUserId = userDefaultRepo.recentUserId, !recentUserId.isEmpty else { return }
+        userID = recentUserId
+        clearData()
+        fetchRepos(userID: recentUserId.trim())
+    }
+    
+    func cacheRecentSearchId() {
+        enableRecentSearch = userID.isEmpty
+        guard !displayItems.isEmpty, !userID.isEmpty else { return }
+        userDefaultRepo.recentUserId = userID
     }
 }
 
