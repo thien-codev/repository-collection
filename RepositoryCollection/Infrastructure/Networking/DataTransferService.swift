@@ -17,10 +17,21 @@ extension DispatchQueue: DataTransferQueue {
     }
 }
 
-enum DataTransferError: Error {
+enum DataTransferError: Error, ErrorMessage {
     case noResponse
     case parsing(Error)
-    case general(Error)
+    case general(ErrorMessage)
+    
+    var description: String? {
+        switch self {
+        case .noResponse:
+            return "No response"
+        case .parsing(let error):
+            return error.localizedDescription
+        case .general(let errorMessage):
+            return errorMessage.description
+        }
+    }
 }
 
 protocol DataTransferService {

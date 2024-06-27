@@ -20,8 +20,8 @@ struct AlertMessage {
         self.isShowing = isShowing
     }
     
-    init(error: Error) {
-        let message = error.localizedDescription
+    init(error: ErrorMessage) {
+        let message = error.description ?? ""
         self.init(title: "Error", message: message, isShowing: !message.isEmpty)
     }
 }

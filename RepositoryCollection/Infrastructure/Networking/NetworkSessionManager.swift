@@ -8,12 +8,16 @@
 import Foundation
 import Alamofire
 
+public protocol ErrorMessage {
+    var description: String? { get }
+}
+
 protocol NetworkCancellable {
     func doCancel()
 }
 
 protocol NetworkSessionManager {
-    typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+    typealias CompletionHandler = (Data?, URLResponse?, ErrorMessage?) -> Void
     
     func request(_ url: URLRequest, completion: @escaping CompletionHandler) -> NetworkCancellable
 }
@@ -38,5 +42,11 @@ final class AFNetworkSessionManager: NetworkSessionManager {
                     completion(nil, nil, error)
                 }
             }
+    }
+}
+
+extension AFError: ErrorMessage {
+    public var description: String? {
+        return errorDescription
     }
 }

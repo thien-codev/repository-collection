@@ -7,11 +7,24 @@
 
 import Foundation
 
-enum NetworkError: Error {
+enum NetworkError: Error, ErrorMessage {
     case notConnected
     case cancelled
-    case generic(Error)
+    case generic(ErrorMessage)
     case urlGeneration
+    
+    var description: String? {
+        switch self {
+        case .notConnected:
+            return "No connection"
+        case .cancelled:
+            return "Request cancelled"
+        case .generic(let errorMessage):
+            return errorMessage.description
+        case .urlGeneration:
+            return "Generate URL failed"
+        }
+    }
 }
 
 protocol NetworkService {
