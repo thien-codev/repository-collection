@@ -10,6 +10,7 @@ import Foundation
 struct GithubRepoModel: Decodable {
     let id: Int
     let name, fullName: String
+    let fork: Bool
     let owner: Owner
     let htmlURL: URL?
     let description: String?
@@ -18,13 +19,16 @@ struct GithubRepoModel: Decodable {
     let gitURL, sshURL: URL?
     let cloneURL: URL?
     let language: String?
+    let stargazersCount: Int
     let visibility: String
+    let topics: [String]
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case fullName = "full_name"
         case owner
+        case fork
         case htmlURL = "html_url"
         case description, url
         case createdAt = "created_at"
@@ -33,8 +37,10 @@ struct GithubRepoModel: Decodable {
         case gitURL = "git_url"
         case sshURL = "ssh_url"
         case cloneURL = "clone_url"
+        case stargazersCount = "stargazers_count"
         case language
         case visibility
+        case topics
     }
     
     init(id: Int,
@@ -43,6 +49,7 @@ struct GithubRepoModel: Decodable {
          owner: Owner,
          htmlURL: URL? = nil,
          description: String?,
+         fork: Bool = false,
          url: URL? = nil,
          createdAt: String,
          updatedAt: String,
@@ -51,7 +58,9 @@ struct GithubRepoModel: Decodable {
          sshURL: URL? = nil,
          cloneURL: URL? = nil,
          language: String? = nil,
-         visibility: String) {
+         stargazersCount: Int = 0,
+         visibility: String,
+         topics: [String] = []) {
         self.id = id
         self.name = name
         self.fullName = fullName
@@ -67,6 +76,9 @@ struct GithubRepoModel: Decodable {
         self.cloneURL = cloneURL
         self.language = language
         self.visibility = visibility
+        self.topics = topics
+        self.fork = fork
+        self.stargazersCount = stargazersCount
     }
 }
 

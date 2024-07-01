@@ -85,7 +85,7 @@ private extension MainTabView {
         }
         .frame(width: UIScreen.width, height: bottomBarHeight)
         .background {
-            Rectangle()
+            RoundedRectangle(cornerRadius: 14)
                 .fill(Color(hex: "87CEFA"))
                 .opacity(0.4)
         }

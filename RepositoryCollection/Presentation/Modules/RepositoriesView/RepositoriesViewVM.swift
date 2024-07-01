@@ -16,7 +16,7 @@ class RepositoriesViewVM: ObservableObject {
         case recentSearchTrigger
     }
     
-    private let limitItems = 3
+    private let limitItems = 5
     private let useCases: GithubRepoUseCases
     private var userDefaultRepo: UserDefaultRepository
     private let activityTracker = ActivityTracker(false)

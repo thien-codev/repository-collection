@@ -14,6 +14,7 @@ struct RepositoriesView: GeneralView {
     @ObservedObject var viewModel: RepositoriesViewVM
     @State var isEnableSearch: Bool = false
     @FocusState var focusKeyboard: Bool
+    private let paddingHorizontal: CGFloat = 20
     
     init(viewModel: RepositoriesViewVM) {
         _viewModel = .init(wrappedValue: viewModel)
@@ -33,16 +34,17 @@ struct RepositoriesView: GeneralView {
                                         .customNavigationViewBackgroundColor(.blue)
                                         .customNavigationViewTintColor(.white)
                                 } label: {
-                                    RepositoryCell(height: 180, repoModel: item)
+                                    RepositoryCell(paddingHorizontal: paddingHorizontal, height: 180, repoModel: item)
                                 }
                                 .padding(.bottom, 6)
                             }
-                            .padding([.leading, .trailing], 20)
+                            .padding([.leading, .trailing], paddingHorizontal)
                             .offset(y: 36)
                             
                             loadMoreView
                                 .offset(y: 10)
-                                .padding([.top, .bottom], 20)
+                                .padding(.bottom, 20)
+                                .padding(.top, 26)
                         }
                         .animation(.spring, value: viewModel.displayItems)
                         .alert(isPresented: $viewModel.alertMessage.isShowing) {
@@ -122,18 +124,17 @@ private extension RepositoriesView {
     }
     
     var loadMoreView: some View {
-        RoundedRectangle(cornerRadius: 12)
-            .stroke(lineWidth: 3)
-            .frame(height: 50)
+        RoundedRectangle(cornerRadius: 8)
+            .stroke(lineWidth: 1)
+            .frame(height: 40)
             .overlay {
                 Text("Load more")
-                    .font(.system(size: 26))
-                    .fontWeight(.bold)
+                    .font(.system(size: 14, weight: .semibold))
             }
             .background(content: {
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(height: 50)
-                    .foregroundColor(.white)
+                RoundedRectangle(cornerRadius: 8)
+                    .frame(height: 40)
+                    .foregroundColor(Color(hex: "90D5FF").opacity(0.8))
             })
             .padding([.leading, .trailing], 20)
             .opacity(viewModel.canLoadMore ? 1 : 0)

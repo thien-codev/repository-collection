@@ -11,6 +11,10 @@ extension String {
     func trim() -> String {
         return trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    func uppercasedFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst().lowercased()
+    }
 }
 
 extension Optional where Wrapped == String {
