@@ -1,5 +1,5 @@
 //
-//  CoreDataGithubRepoStorage.swift
+//  CoreDataGitHubRepoStorage.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 23/11/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class CoreDataGithubRepoStorage {
+final class CoreDataGitHubRepoStorage {
     
     private let coreDataStack: CoreDataStorageStack
     
@@ -36,9 +36,9 @@ final class CoreDataGithubRepoStorage {
     }
 }
 
-extension CoreDataGithubRepoStorage: GithubRepoStorage {
+extension CoreDataGitHubRepoStorage: GitHubRepoStorage {
     
-    func getRepos(of userID: String) async -> [GithubRepoModel] {
+    func getRepos(of userID: String) async -> [GitHubRepoModel] {
         await withCheckedContinuation { continuation in
             let request = fetchRequest()
             let predicate = NSPredicate(format: "userID == '\(userID)'")
@@ -48,7 +48,7 @@ extension CoreDataGithubRepoStorage: GithubRepoStorage {
                 do {
                     if let cacheUser = try context.fetch(request).last,
                     let repositories = cacheUser.repositories as? Set<RepositoryEntity> {
-                        continuation.resume(returning: Array(repositories).compactMap({ $0.toGithubRepoModel }))
+                        continuation.resume(returning: Array(repositories).compactMap({ $0.toGitHubRepoModel }))
                     } else {
                         continuation.resume(returning: [])
                     }
@@ -60,7 +60,7 @@ extension CoreDataGithubRepoStorage: GithubRepoStorage {
         }
     }
     
-    func save(_ repos: [GithubRepoModel], with userID: String) async {
+    func save(_ repos: [GitHubRepoModel], with userID: String) async {
         return await withCheckedContinuation { continuation in
             coreDataStack.performBackgroundTask { [weak self] context in
                 guard let self, !repos.isEmpty else {

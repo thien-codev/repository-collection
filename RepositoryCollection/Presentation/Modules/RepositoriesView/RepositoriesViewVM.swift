@@ -17,12 +17,13 @@ class RepositoriesViewVM: ObservableObject {
     }
     
     private let limitItems = 5
-    private let useCases: GithubRepoUseCases
+    private let repoUseCases: GitHubRepoUseCases
+    private let userUseCases: GitHubUserUseCases
     private var userDefaultRepo: UserDefaultRepository
     private let activityTracker = ActivityTracker(false)
     private let errorTracker = ErrorTracker()
     private var cancellable = Set<AnyCancellable>()
-    private var storedItems: [GithubRepoModel] = [] {
+    private var storedItems: [GitHubRepoModel] = [] {
         didSet {
             bindDisplayItems(with: storedItems)
         }
@@ -41,18 +42,20 @@ class RepositoriesViewVM: ObservableObject {
     @Published var hasNoRepo: Bool = false
     @Published var enableRecentSearch: Bool = false
     @Published var canLoadMore = false
-    @Published var displayItems: [GithubRepoModel] = []
+    @Published var displayItems: [GitHubRepoModel] = []
     @Published var isLoading: Bool = true
     @Published var alertMessage = AlertMessage()
-    @Published var owner: Owner? = nil
+    @Published var userInfo: GitHubUserModel? = nil
     
     convenience init(diContainer: DIContainer) {
-        self.init(useCases: diContainer.githubRepoUseCases,
+        self.init(repoUseCases: diContainer.githubRepoUseCases,
+                  userUseCases: diContainer.githubUserUseCases,
                   userDefaultRepo: diContainer.userDefaultRepository)
     }
     
-    init(useCases: GithubRepoUseCases, userDefaultRepo: UserDefaultRepository) {
-        self.useCases = useCases
+    init(repoUseCases: GitHubRepoUseCases, userUseCases: GitHubUserUseCases, userDefaultRepo: UserDefaultRepository) {
+        self.repoUseCases = repoUseCases
+        self.userUseCases = userUseCases
         self.userDefaultRepo = userDefaultRepo
         self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
         
@@ -73,6 +76,7 @@ class RepositoriesViewVM: ObservableObject {
         case .search:
             clearData()
             fetchRepos(userID: userID.trim())
+            fetchUserInfo(userID: userID.trim())
         case .loadMore:
             storedItems.removeFirst(limitItems)
         case .recentSearchTrigger:
@@ -83,7 +87,7 @@ class RepositoriesViewVM: ObservableObject {
 
 private extension RepositoriesViewVM {
     func fetchRepos(userID: String) {
-        useCases
+        repoUseCases
             .fetchRepos(userId: userID)
             .trackActivity(activityTracker)
             .trackError(errorTracker)
@@ -102,9 +106,19 @@ private extension RepositoriesViewVM {
             .store(in: &cancellable)
     }
     
-    func bindDisplayItems(with storedItems: [GithubRepoModel]) {
+    func fetchUserInfo(userID: String) {
+        userUseCases
+            .fetchUserInfo(userId: userID)
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] userInfo in
+                self?.userInfo = userInfo
+            })
+            .store(in: &cancellable)
+    }
+    
+    func bindDisplayItems(with storedItems: [GitHubRepoModel]) {
         displayItems.append(contentsOf: storedItems.prefix(limitItems))
-        owner = storedItems.owner
         canLoadMore = storedItems.count > limitItems
         cacheRecentSearchId()
     }
@@ -116,9 +130,11 @@ private extension RepositoriesViewVM {
     
     func fetchRecentSearch() {
         guard let recentUserId = userDefaultRepo.recentUserId, !recentUserId.isEmpty else { return }
-        userID = recentUserId
+        let trimId = recentUserId.trim()
+        userID = trimId
         clearData()
-        fetchRepos(userID: recentUserId.trim())
+        fetchRepos(userID: trimId)
+        fetchUserInfo(userID: trimId)
     }
     
     func cacheRecentSearchId() {
@@ -128,15 +144,12 @@ private extension RepositoriesViewVM {
     }
 }
 
-extension GithubRepoModel {
-    static var mock: GithubRepoModel = {
+extension GitHubRepoModel {
+    static var mock: GitHubRepoModel = {
         .init(id: 1,
               name: "name",
               fullName: "fullName",
-              owner: Owner(login: "login",
-                           id: 1,
-                           nodeID: "nodeID",
-                           avatarURL: nil),
+              owner: Owner(login: "", id: 0, nodeID: "", avatarURL: "", gravatarID: "", url: "", htmlURL: "", followersURL: "", followingURL: "", gistsURL: "", starredURL: "", subscriptionsURL: "", organizationsURL: "", reposURL: "", eventsURL: "", receivedEventsURL: "", type: "", siteAdmin: true),
               description: "description",
               createdAt: "createdAt",
               updatedAt: "updatedAt",

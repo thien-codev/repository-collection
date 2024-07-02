@@ -16,7 +16,7 @@ final class DIContainer {
     
     static func inject(appConfigurations: Configurations,
                        networkService: NetworkService,
-                       repoStorage: GithubRepoStorage,
+                       repoStorage: GitHubRepoStorage,
                        userDefaultRepository: UserDefaultRepository) {
         manager.appConfigurations = appConfigurations
         manager.networkService = networkService
@@ -26,19 +26,23 @@ final class DIContainer {
     
     var appConfigurations: Configurations!
     var networkService: NetworkService!
-    var repoStorage: GithubRepoStorage!
+    var repoStorage: GitHubRepoStorage!
     var userDefaultRepository: UserDefaultRepository!
     
     lazy var dataTransferService: DataTransferService = {
         DefaultDataTransferService(service: networkService)
     }()
     
-    lazy var githubRepo: GithubRepoRepository = {
-        GithubRepoRepositoryIml(dataTransferService: dataTransferService,
+    lazy var githubRepo: GitHubRepository = {
+        GitHubRepositoryIml(dataTransferService: dataTransferService,
                                 githubRepoStorage: repoStorage)
     }()
     
-    lazy var githubRepoUseCases: GithubRepoUseCases = {
-        GithubRepoUseCasesIml(repo: githubRepo)
+    lazy var githubRepoUseCases: GitHubRepoUseCases = {
+        GitHubRepoUseCasesIml(repo: githubRepo)
+    }()
+    
+    lazy var githubUserUseCases: GitHubUserUseCases = {
+        GitHubUserUseCasesIml(repo: githubRepo)
     }()
 }

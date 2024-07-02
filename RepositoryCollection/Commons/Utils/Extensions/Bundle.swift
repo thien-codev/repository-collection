@@ -16,5 +16,5 @@ extension Bundle {
 }
 
 extension Bundle.Keys {
-    static var githubRepoBaseUrl = "GithubRepoBaseUrl"
+    static var githubRepoBaseUrl = "GitHubRepoBaseUrl"
 }

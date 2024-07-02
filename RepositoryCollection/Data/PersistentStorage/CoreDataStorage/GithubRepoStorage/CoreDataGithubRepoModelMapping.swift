@@ -1,5 +1,5 @@
 //
-//  CoreDataGithubRepoModelMapping.swift
+//  CoreDataGitHubRepoModelMapping.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 23/11/2023.
@@ -9,14 +9,19 @@ import Foundation
 import CoreData
 
 extension RepositoryEntity {
-    var toGithubRepoModel: GithubRepoModel? {
+    var toGitHubRepoModel: GitHubRepoModel? {
         guard let fullName,
-              let htmlURL else { return nil }
-        return GithubRepoModel(id: Int(repoID), name: .init(), fullName: fullName, owner: .init(login: .init(), id: .zero, nodeID: .init(), avatarURL: nil), htmlURL: URL(string: htmlURL), description: description, url: nil, createdAt: createdAt ?? .init(), updatedAt: .init(), pushedAt: .init(), visibility: visibility ?? "")
+              let htmlURL,
+              let name else { return nil }
+        var repoTopics: [String] = []
+        if let setTopics = topics as? Set<TopicEntity> {
+            repoTopics = Array(setTopics).compactMap({ $0.name })
+        }
+        return GitHubRepoModel(id: Int(repoID), name: name, fullName: fullName, owner: Owner(login: "", id: 0, nodeID: "", avatarURL: "", gravatarID: "", url: "", htmlURL: "", followersURL: "", followingURL: "", gistsURL: "", starredURL: "", subscriptionsURL: "", organizationsURL: "", reposURL: "", eventsURL: "", receivedEventsURL: "", type: "", siteAdmin: true), htmlURL: URL(string: htmlURL), description: descriptionAttr, fork: fork == true, url: nil, createdAt: createdAt ?? .init(), updatedAt: .init(), pushedAt: .init(), language: language, stargazersCount: Int(stargazersCount) , visibility: visibility ?? "", topics: repoTopics)
     }
 }
 
-extension Array where Element == GithubRepoModel {
+extension Array where Element == GitHubRepoModel {
     func toEntity(in context: NSManagedObjectContext, userID: String) -> UserEntity {
         let userEntity: UserEntity = .init(context: context)
 
@@ -25,11 +30,19 @@ extension Array where Element == GithubRepoModel {
         forEach { item in
             let repositoryEntity: RepositoryEntity = .init(context: context)
             repositoryEntity.fullName = item.fullName
+            repositoryEntity.name = item.name
+            repositoryEntity.stargazersCount = Int16(item.stargazersCount)
+            item.topics.forEach { topic in
+                let topicEntity: TopicEntity = .init(context: context)
+                topicEntity.name = topic
+                repositoryEntity.addToTopics(topicEntity)
+            }
             repositoryEntity.htmlURL = item.htmlURL?.absoluteString
             repositoryEntity.descriptionAttr = item.description
             repositoryEntity.gitURL = item.gitURL?.absoluteString
             repositoryEntity.createdAt = item.createdAt
             repositoryEntity.visibility = item.visibility
+            repositoryEntity.language = item.language
             repositoryEntity.repoID = Int32(item.id)
             repositoryEntity.ofUser = userEntity
             
