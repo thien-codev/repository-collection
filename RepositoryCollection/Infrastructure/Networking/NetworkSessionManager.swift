@@ -29,7 +29,6 @@ extension DataRequest: NetworkCancellable {
 }
 
 final class AFNetworkSessionManager: NetworkSessionManager {
-    static var `default` = AFNetworkSessionManager()
     
     func request(_ url: URLRequest, completion: @escaping CompletionHandler) -> NetworkCancellable {
         AF.request(url)

@@ -48,8 +48,10 @@ struct MainTabView: View {
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                reposView
-                historyView
+                Group {
+                    reposView
+                    historyView
+                }.toolbar(.hidden, for: .tabBar)
             }
             
             VStack{
@@ -65,7 +67,6 @@ private extension MainTabView {
     
     var tabBar: some View {
         VStack {
-            Divider()
             Spacer()
             HStack(content: {
                 Group {
@@ -86,8 +87,12 @@ private extension MainTabView {
         .frame(width: UIScreen.width, height: bottomBarHeight)
         .background {
             RoundedRectangle(cornerRadius: 14)
-                .fill(Color(hex: "87CEFA"))
-                .opacity(0.4)
+                .stroke(lineWidth: 1)
+                .fill(Color(hex: "00008a"))
+                .background {
+                    RoundedRectangle(cornerRadius: 14)
+                    .fill(Color(hex: "33ABF9"))
+                }
         }
         .animation(.bouncy, value: selectedTab)
     }
@@ -104,10 +109,18 @@ private extension MainTabView {
                         .font(.system(size: 14, weight: .medium))
                 }
             }
+            .scaleEffect(selectedTab == .home ? 1.1 : 0.9, anchor: .center)
             .background {
-                RoundedRectangle(cornerRadius: 21)
-                    .frame(width: 100, height: 42)
-                    .foregroundColor(Color(hex: "90D5FF"))
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(lineWidth: 1)
+                    .frame(width: 106, height: 44)
+                    .foregroundColor(Color(hex: "00008a"))
+                    .background {
+                        RoundedRectangle(cornerRadius: 22)
+                            .frame(width: 106, height: 44)
+                            .foregroundColor(Color(hex: "90D5FF"))
+                            .shadow(radius: 0, x: 6, y: 6)
+                    }
                     .offset(x: selectedTab == .home ? 0 : 200)
                     .opacity(selectedTab == .home ? 1 : 0)
             }
@@ -122,19 +135,27 @@ private extension MainTabView {
     var historyTabBar: some View {
         HStack {
             HStack(spacing: 8) {
-                Image(systemName: Tab.history.icon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24)
                 if selectedTab == .history {
                     Text(Tab.history.title)
                         .font(.system(size: 14, weight: .medium))
                 }
+                Image(systemName: Tab.history.icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24)
             }
+            .scaleEffect(selectedTab == .history ? 1.1 : 0.9, anchor: .center)
             .background {
-                RoundedRectangle(cornerRadius: 21)
-                    .frame(width: 100, height: 42)
-                    .foregroundColor(Color(hex: "90D5FF"))
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(lineWidth: 1)
+                    .frame(width: 106, height: 44)
+                    .foregroundColor(Color(hex: "00008a"))
+                    .background {
+                        RoundedRectangle(cornerRadius: 22)
+                            .frame(width: 106, height: 44)
+                            .foregroundColor(Color(hex: "90D5FF"))
+                            .shadow(radius: 0, x: 6, y: 6)
+                    }
                     .offset(x: selectedTab == .history ? 0 : -200)
                     .opacity(selectedTab == .history ? 1 : 0)
             }

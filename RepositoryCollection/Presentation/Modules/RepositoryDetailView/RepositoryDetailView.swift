@@ -11,7 +11,7 @@ import SwiftUI
 struct RepositoryDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var repoModel: GithubRepoModel
+    @State var repoModel: GitHubRepoModel
     
     var body: some View {
         ZStack {

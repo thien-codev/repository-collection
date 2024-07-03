@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G720" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="RepositoryEntity" representedClassName="RepositoryEntity" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="String"/>
         <attribute name="descriptionAttr" optional="YES" attributeType="String"/>
+        <attribute name="fork" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="fullName" optional="YES" attributeType="String"/>
         <attribute name="gitURL" optional="YES" attributeType="String"/>
         <attribute name="htmlURL" optional="YES" attributeType="String"/>
+        <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="repoID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stargazersCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="visibility" optional="YES" attributeType="String"/>
         <relationship name="ofUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="repositories" inverseEntity="UserEntity"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TopicEntity" inverseName="ofRepo" inverseEntity="TopicEntity"/>
+    </entity>
+    <entity name="TopicEntity" representedClassName="TopicEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="ofRepo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepositoryEntity" inverseName="topics" inverseEntity="RepositoryEntity"/>
     </entity>
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">
         <attribute name="userID" optional="YES" attributeType="String"/>

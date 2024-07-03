@@ -46,7 +46,6 @@ struct RepositoriesView: GeneralView {
                                 .padding(.bottom, 20)
                                 .padding(.top, 26)
                         }
-                        .animation(.spring, value: viewModel.displayItems)
                         .alert(isPresented: $viewModel.alertMessage.isShowing) {
                             Alert(
                                 title: Text("\(viewModel.alertMessage.title)"),
@@ -55,10 +54,11 @@ struct RepositoriesView: GeneralView {
                             )
                         }
                     }
-                    .padding(.top, 50)
+                    .padding([.top, .bottom], 50)
                     noResultFoundView
                     searchBar
                 }
+                .animation(.spring, value: viewModel.displayItems)
                 .onTapGesture {
                     focusKeyboard = false
                 }
@@ -95,8 +95,8 @@ private extension RepositoriesView {
     }
     
     var profileView: some View {
-        let shouldShow = !isEnableSearch && viewModel.owner.hasValue
-        let avatarURL = URL(string:  viewModel.owner?.avatarURL ?? "")
+        let shouldShow = !isEnableSearch && viewModel.userInfo.hasValue
+        let avatarURL = URL(string:  viewModel.userInfo?.avatarURL ?? "")
         return Circle()
             .stroke(lineWidth: 1)
             .foregroundColor(.black)
@@ -156,7 +156,7 @@ private extension RepositoriesView {
             profileView
         }
         .animation(.easeInOut, value: isEnableSearch)
-        .animation(.easeInOut, value: viewModel.owner)
+        .animation(.easeInOut, value: viewModel.userInfo)
         .animation(.easeInOut, value: viewModel.userID)
         .animation(.easeInOut, value: viewModel.enableRecentSearch)
         .padding(20)

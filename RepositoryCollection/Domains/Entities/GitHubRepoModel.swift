@@ -1,5 +1,5 @@
 //
-//  GithubRepoModel.swift
+//  GitHubRepoModel.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 21/11/2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GithubRepoModel: Decodable {
+struct GitHubRepoModel: Decodable {
     let id: Int
     let name, fullName: String
     let fork: Bool
@@ -22,7 +22,7 @@ struct GithubRepoModel: Decodable {
     let stargazersCount: Int
     let visibility: String
     let topics: [String]
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -82,14 +82,14 @@ struct GithubRepoModel: Decodable {
     }
 }
 
-extension GithubRepoModel: Equatable {
+extension GitHubRepoModel: Equatable {
     
-    static func == (lhs: GithubRepoModel, rhs: GithubRepoModel) -> Bool {
+    static func == (lhs: GitHubRepoModel, rhs: GitHubRepoModel) -> Bool {
         return lhs.id == rhs.id && lhs.fullName == rhs.fullName && lhs.gitURL == rhs.gitURL
     }
 }
 
-extension Array where Element == GithubRepoModel {
+extension Array where Element == GitHubRepoModel {
     var owner: Owner? {
         return self.first?.owner
     }
@@ -101,12 +101,36 @@ struct Owner: Decodable, Equatable {
     let login: String
     let id: Int
     let nodeID: String
-    let avatarURL: String?
+    let avatarURL: String
+    let gravatarID: String
+    let url, htmlURL, followersURL: String
+    let followingURL: String
+    let gistsURL: String
+    let starredURL: String
+    let subscriptionsURL, organizationsURL, reposURL: String
+    let eventsURL: String
+    let receivedEventsURL: String
+    let type: String
+    let siteAdmin: Bool
     
     enum CodingKeys: String, CodingKey {
         case login, id
         case nodeID = "node_id"
         case avatarURL = "avatar_url"
+        case gravatarID = "gravatar_id"
+        case url
+        case htmlURL = "html_url"
+        case followersURL = "followers_url"
+        case followingURL = "following_url"
+        case gistsURL = "gists_url"
+        case starredURL = "starred_url"
+        case subscriptionsURL = "subscriptions_url"
+        case organizationsURL = "organizations_url"
+        case reposURL = "repos_url"
+        case eventsURL = "events_url"
+        case receivedEventsURL = "received_events_url"
+        case type
+        case siteAdmin = "site_admin"
     }
 }
 

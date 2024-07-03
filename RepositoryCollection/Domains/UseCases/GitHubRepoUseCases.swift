@@ -1,5 +1,5 @@
 //
-//  GithubRepoUseCases.swift
+//  GitHubRepoUseCases.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 21/11/2023.
@@ -8,8 +8,8 @@
 import Foundation
 import Combine
 
-protocol GithubRepoUseCases {
-    func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error>
+protocol GitHubRepoUseCases {
+    func fetchRepos(userId: String) -> AnyPublisher<[GitHubRepoModel], Error>
 }
 
 enum UseCasesError: Error, LocalizedError {
@@ -26,19 +26,19 @@ enum UseCasesError: Error, LocalizedError {
     }
 }
 
-final class GithubRepoUseCasesIml {
+final class GitHubRepoUseCasesIml {
     
-    private let repo: GithubRepoRepository
+    private let repo: GitHubRepository
     
-    init(repo: GithubRepoRepository) {
+    init(repo: GitHubRepository) {
         self.repo = repo
     }
 }
 
-extension GithubRepoUseCasesIml: GithubRepoUseCases {
+extension GitHubRepoUseCasesIml: GitHubRepoUseCases {
     
-    func fetchRepos(userId: String) -> AnyPublisher<[GithubRepoModel], Error> {
-        let subject = PassthroughSubject<[GithubRepoModel], Error>()
+    func fetchRepos(userId: String) -> AnyPublisher<[GitHubRepoModel], Error> {
+        let subject = PassthroughSubject<[GitHubRepoModel], Error>()
         if userId.isEmpty {
             subject.send(completion: .failure(UseCasesError.emptyParam))
         } else {

@@ -1,5 +1,5 @@
 //
-//  GithubRepoRepositoryIml.swift
+//  GitHubRepositoryIml.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 21/11/2023.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-class GithubRepoRepositoryIml: GithubRepoRepository {
+class GitHubRepositoryIml: GitHubRepository {
     
     private let dataTransferService: DataTransferService
-    private let githubRepoStorage: GithubRepoStorage
+    private let githubRepoStorage: GitHubRepoStorage
     private var currentTask: NetworkCancellable?
     
-    init(dataTransferService: DataTransferService, githubRepoStorage: GithubRepoStorage) {
+    init(dataTransferService: DataTransferService, githubRepoStorage: GitHubRepoStorage) {
         self.dataTransferService = dataTransferService
         self.githubRepoStorage = githubRepoStorage
     }
     
-    func fetchRepos(userId: String) async throws -> [GithubRepoModel] {
+    func fetchRepos(userId: String) async throws -> [GitHubRepoModel] {
 //        let cacheRepos = await githubRepoStorage.getRepos(of: userId)
 //        if !cacheRepos.isEmpty {
 //            return cacheRepos
@@ -28,8 +28,8 @@ class GithubRepoRepositoryIml: GithubRepoRepository {
     }
 }
 
-private extension GithubRepoRepositoryIml {
-    func fetchReposFromEndpoint(_ userId: String) async throws -> [GithubRepoModel] {
+private extension GitHubRepositoryIml {
+    func fetchReposFromEndpoint(_ userId: String) async throws -> [GitHubRepoModel] {
         try await withCheckedThrowingContinuation { continuation in
             let request = APIEndpoint.githubRepos(of: userId)
             currentTask?.doCancel()

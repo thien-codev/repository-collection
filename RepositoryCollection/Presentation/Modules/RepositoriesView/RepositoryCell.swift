@@ -12,7 +12,7 @@ struct RepositoryCell: View {
     
     let paddingHorizontal: CGFloat
     @State var height: CGFloat
-    @State var repoModel: GithubRepoModel
+    @State var repoModel: GitHubRepoModel
     
     var body: some View {
         VStack(alignment: .leading) {
