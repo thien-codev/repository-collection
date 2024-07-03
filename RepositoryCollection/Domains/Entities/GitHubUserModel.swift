@@ -13,22 +13,26 @@ struct GitHubUserModel: Decodable, Equatable {
     let nodeID: String
     let avatarURL: String
     let gravatarID: String
-    let url, htmlURL, followersURL: String
-    let followingURL, gistsURL, starredURL: String
-    let subscriptionsURL, organizationsURL, reposURL: String
-    let eventsURL: String
-    let receivedEventsURL: String
-    let type: String
+    let url, htmlURL, followersURL: String?
+    let followingURL, gistsURL, starredURL: String?
+    let subscriptionsURL, organizationsURL, reposURL: String?
+    let eventsURL: String?
+    let receivedEventsURL: String?
+    let type: String?
     let siteAdmin: Bool
-    let name: String
+    let name: String?
     let company: String?
-    let blog: String
+    let blog: String?
     let location, email: String?
     let hireable: Bool?
-    let bio: String
+    let bio: String?
     let twitterUsername: String?
     let publicRepos, publicGists, followers, following: Int
-    let createdAt, updatedAt: String
+    let createdAt, updatedAt: String?
+    let privateGists, totalPrivateRepos, ownedPrivateRepos, diskUsage: Int?
+    let collaborators: Int?
+    let twoFactorAuthentication: Bool?
+    let plan: Plan?
     
     enum CodingKeys: String, CodingKey {
         case login, id
@@ -55,5 +59,23 @@ struct GitHubUserModel: Decodable, Equatable {
         case followers, following
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case privateGists = "private_gists"
+        case totalPrivateRepos = "total_private_repos"
+        case ownedPrivateRepos = "owned_private_repos"
+        case diskUsage = "disk_usage"
+        case collaborators
+        case twoFactorAuthentication = "two_factor_authentication"
+        case plan
+    }
+}
+
+struct Plan: Decodable, Equatable {
+    let name: String
+    let space, privateRepos, collaborators: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case name, space
+        case privateRepos = "private_repos"
+        case collaborators
     }
 }

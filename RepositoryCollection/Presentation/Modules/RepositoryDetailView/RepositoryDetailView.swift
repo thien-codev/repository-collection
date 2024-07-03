@@ -43,7 +43,7 @@ struct RepositoryDetailView: View {
                         Text(repoModel.visibility)
                             .font(.body)
                         Spacer()
-                        Text(repoModel.createdAt)
+                        Text(repoModel.createdAt ?? "")
                             .font(.body)
                     }
                     Spacer()

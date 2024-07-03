@@ -16,7 +16,9 @@ class RepositoriesViewVM: ObservableObject {
         case recentSearchTrigger
     }
     
+    private let backgrounds: [String] = ["im-1", "im-2", "im-3", "im-4", "im-5", "im-6"]
     private let limitItems = 5
+    private let popularRepoThreshold = 6
     private let repoUseCases: GitHubRepoUseCases
     private let userUseCases: GitHubUserUseCases
     private var userDefaultRepo: UserDefaultRepository
@@ -46,6 +48,24 @@ class RepositoriesViewVM: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var alertMessage = AlertMessage()
     @Published var userInfo: GitHubUserModel? = nil
+    
+    var userInfoBackgroundImage: String {
+        backgrounds.randomElement() ?? backgrounds[0]
+    }
+    
+    var mostPopularRepos: [GitHubRepoModel] {
+        return Array(storedItems.sorted(by: { $0.stargazersCount > $1.stargazersCount }).prefix(popularRepoThreshold))
+    }
+    
+    var starred: Int {
+        return storedItems.reduce(0) { partialResult, model in
+            partialResult + model.stargazersCount
+        }
+    }
+    
+    var totalRepos: Int {
+        return storedItems.count
+    }
     
     convenience init(diContainer: DIContainer) {
         self.init(repoUseCases: diContainer.githubRepoUseCases,
@@ -126,6 +146,7 @@ private extension RepositoriesViewVM {
     func clearData() {
         storedItems.removeAll()
         displayItems.removeAll()
+        userInfo = nil
     }
     
     func fetchRecentSearch() {

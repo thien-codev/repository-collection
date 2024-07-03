@@ -38,6 +38,7 @@ struct CustomTextField: View {
                     TextField(placeholder, text: $text) { isEnabled in
                         self.isEnabled = isEnabled
                     }
+                    .disableAutocorrection(true)
                     .focused(focusKeyboard)
                     .accentColor(tint)
                     .foregroundColor(tint)

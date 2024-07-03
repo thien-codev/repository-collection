@@ -23,6 +23,7 @@ struct CustomNavigationView<Content> : View where Content : View {
             }
         })
         .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

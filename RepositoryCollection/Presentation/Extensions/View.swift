@@ -12,6 +12,7 @@ extension View {
     func eraseToAnyView() -> AnyView {
         return AnyView(self)
     }
+    
     @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = true) -> some View {
         if hidden {
             if !remove {

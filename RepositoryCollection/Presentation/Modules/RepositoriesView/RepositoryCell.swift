@@ -10,9 +10,38 @@ import SwiftUI
 
 struct RepositoryCell: View {
     
+    enum PresentationMode {
+        case large
+        case medium
+        
+        var showFork: Bool {
+            return self == .large
+        }
+        
+        var showTopic: Bool {
+            return self == .large
+        }
+        
+        var titleFont: CGFloat {
+            return self == .large ? 22 : 18
+        }
+        
+        var descFont: CGFloat {
+            return self == .large ? 16 : 14
+        }
+        
+        var backgroundColor: Color {
+            return self == .large ? .white : Color(hex: "90D5FF").opacity(0.2)
+        }
+        
+        var limitTextLine: Int {
+            return self == .large ? 4 : 1
+        }
+    }
+    
     let paddingHorizontal: CGFloat
-    @State var height: CGFloat
     @State var repoModel: GitHubRepoModel
+    let presentationMode: PresentationMode
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,8 +49,9 @@ struct RepositoryCell: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(repoModel.name)
-                            .font(.system(size: 22, weight: .semibold))
-                        if repoModel.fork {
+                            .font(.system(size: presentationMode.titleFont, weight: .semibold))
+                            .lineLimit(presentationMode.limitTextLine)
+                        if repoModel.fork, presentationMode.showFork {
                             HStack(alignment: .center, spacing: 2) {
                                 Image("ic-fork-color")
                                     .resizable()
@@ -50,12 +80,15 @@ struct RepositoryCell: View {
                     Spacer()
                 }
                 if let description = repoModel.description {
-                    Text(description).font(.system(size: 16, weight: .medium)).foregroundColor(Color(UIColor.darkGray))
+                    Text(description)
+                        .font(.system(size: presentationMode.descFont, weight: .medium))
+                        .foregroundColor(Color(UIColor.darkGray))
+                        .lineLimit(presentationMode.limitTextLine)
                 } else {
                     Text("No description").font(.system(size: 14)).italic().foregroundColor(.gray)
                 }
                 
-                if !repoModel.topics.isEmpty {
+                if !repoModel.topics.isEmpty, presentationMode.showTopic {
                     drawTopicListView(topics: repoModel.topics, width: UIScreen.width - paddingHorizontal * 2)
                         .padding(.bottom, 10)
                         .padding(.top, 6)
@@ -97,7 +130,7 @@ struct RepositoryCell: View {
                 .stroke(lineWidth: 1)
                 .background {
                     RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(.white)
+                        .foregroundColor(presentationMode.backgroundColor)
                 }
         })
         .foregroundColor(.black)
@@ -126,5 +159,5 @@ private extension RepositoryCell {
 }
 
 #Preview {
-    RepositoryCell(paddingHorizontal: 20, height: 200, repoModel: .mock)
+    RepositoryCell(paddingHorizontal: 20, repoModel: .mock, presentationMode: .large)
 }

@@ -15,7 +15,7 @@ struct GitHubRepoModel: Decodable {
     let htmlURL: URL?
     let description: String?
     let url: URL?
-    let createdAt, updatedAt, pushedAt: String
+    let createdAt, updatedAt, pushedAt: String?
     let gitURL, sshURL: URL?
     let cloneURL: URL?
     let language: String?
@@ -51,9 +51,9 @@ struct GitHubRepoModel: Decodable {
          description: String?,
          fork: Bool = false,
          url: URL? = nil,
-         createdAt: String,
-         updatedAt: String,
-         pushedAt: String,
+         createdAt: String? = nil,
+         updatedAt: String? = nil,
+         pushedAt: String? = nil,
          gitURL: URL? = nil,
          sshURL: URL? = nil,
          cloneURL: URL? = nil,
