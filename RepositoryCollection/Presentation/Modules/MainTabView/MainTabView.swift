@@ -38,19 +38,24 @@ enum Tab {
 
 struct MainTabView: View {
     
-    private let bottomBarHeight: CGFloat = 83
-    @State var selectedTab: Tab = .home
-    private var reposView: some View = ViewFactory<RepositoriesView>().build(RepositoriesViewVM.init)
-        .tag(Tab.home)
-    private var historyView: some View = ViewFactory<HistoryView>().build(HistoryViewModel.init)
-        .tag(Tab.history)
+    static let bottomBarHeight: CGFloat = 96
+    @State var selectedHistoryUserInfo: GitHubUserModel?
+    @StateObject var viewModel = MainTabViewModel()
+    
+    var reposView: RepositoriesView?
+    var historyView: HistoryView?
+    
+    init() {
+        reposView = ViewFactory<RepositoriesView>().build(RepositoriesViewModel.init)
+        historyView = ViewFactory<HistoryView>().build(HistoryViewModel.init)
+    }
     
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $viewModel.selectedTab) {
                 Group {
-                    reposView
-                    historyView
+                    reposView.tag(Tab.home)
+                    historyView.tag(Tab.history)
                 }.toolbar(.hidden, for: .tabBar)
             }
             
@@ -60,6 +65,8 @@ struct MainTabView: View {
             }
         }
         .ignoresSafeArea()
+        .eraseToAnyView()
+        .environmentObject(viewModel)
     }
 }
 
@@ -84,7 +91,7 @@ private extension MainTabView {
             })
             Spacer()
         }
-        .frame(width: UIScreen.width, height: bottomBarHeight)
+        .frame(width: UIScreen.width, height: MainTabView.bottomBarHeight)
         .background {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(lineWidth: 1)
@@ -94,7 +101,7 @@ private extension MainTabView {
                     .fill(Color(hex: "33ABF9"))
                 }
         }
-        .animation(.bouncy, value: selectedTab)
+        .animation(.bouncy, value: viewModel.selectedTab)
     }
     
     var homeTabBar: some View {
@@ -104,12 +111,12 @@ private extension MainTabView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 26)
-                if selectedTab == .home {
+                if viewModel.selectedTab == .home {
                     Text(Tab.home.title)
                         .font(.system(size: 14, weight: .medium))
                 }
             }
-            .scaleEffect(selectedTab == .home ? 1.1 : 0.9, anchor: .center)
+            .scaleEffect(viewModel.selectedTab == .home ? 1.1 : 0.9, anchor: .center)
             .background {
                 RoundedRectangle(cornerRadius: 22)
                     .stroke(lineWidth: 1)
@@ -121,12 +128,12 @@ private extension MainTabView {
                             .foregroundColor(Color(hex: "90D5FF"))
                             .shadow(radius: 0, x: 6, y: 6)
                     }
-                    .offset(x: selectedTab == .home ? 0 : 200)
-                    .opacity(selectedTab == .home ? 1 : 0)
+                    .offset(x: viewModel.selectedTab == .home ? 0 : 200)
+                    .opacity(viewModel.selectedTab == .home ? 1 : 0)
             }
             .onTapGesture {
-                guard selectedTab != .home else { return }
-                selectedTab = .home
+                guard viewModel.selectedTab != .home else { return }
+                viewModel.selectedTab = .home
             }
         }
         .foregroundStyle(Color(hex: "00008a"))
@@ -135,7 +142,7 @@ private extension MainTabView {
     var historyTabBar: some View {
         HStack {
             HStack(spacing: 8) {
-                if selectedTab == .history {
+                if viewModel.selectedTab == .history {
                     Text(Tab.history.title)
                         .font(.system(size: 14, weight: .medium))
                 }
@@ -144,7 +151,7 @@ private extension MainTabView {
                     .scaledToFit()
                     .frame(width: 24)
             }
-            .scaleEffect(selectedTab == .history ? 1.1 : 0.9, anchor: .center)
+            .scaleEffect(viewModel.selectedTab == .history ? 1.1 : 0.9, anchor: .center)
             .background {
                 RoundedRectangle(cornerRadius: 22)
                     .stroke(lineWidth: 1)
@@ -156,12 +163,12 @@ private extension MainTabView {
                             .foregroundColor(Color(hex: "90D5FF"))
                             .shadow(radius: 0, x: 6, y: 6)
                     }
-                    .offset(x: selectedTab == .history ? 0 : -200)
-                    .opacity(selectedTab == .history ? 1 : 0)
+                    .offset(x: viewModel.selectedTab == .history ? 0 : -200)
+                    .opacity(viewModel.selectedTab == .history ? 1 : 0)
             }
             .onTapGesture {
-                guard selectedTab != .history else { return }
-                selectedTab = .history
+                guard viewModel.selectedTab != .history else { return }
+                viewModel.selectedTab = .history
             }
         }
         .foregroundStyle(Color(hex: "00008a"))

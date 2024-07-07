@@ -11,15 +11,16 @@ import Kingfisher
 
 struct RepositoriesView: GeneralView {
     
-    @ObservedObject var viewModel: RepositoriesViewVM
+    @ObservedObject var viewModel: RepositoriesViewModel
     @State var isEnableSearch: Bool = false
     @State var userInfoSheetPresented: Bool = false
     @State var sharedSheetPresented: Bool = false
     @State var userInfoPresentationDetent: PresentationDetent = .medium
     @FocusState var focusKeyboard: Bool
+    @EnvironmentObject var mainTabViewModel: MainTabViewModel
     private let paddingHorizontal: CGFloat = 20
     
-    init(viewModel: RepositoriesViewVM) {
+    init(viewModel: RepositoriesViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
     
@@ -48,7 +49,7 @@ struct RepositoriesView: GeneralView {
                                 
                                 loadMoreView
                                     .offset(y: 10)
-                                    .padding(.bottom, 20)
+                                    .padding(.bottom, 40)
                                     .padding(.top, 26)
                             }
                             .alert(isPresented: $viewModel.alertMessage.isShowing) {
@@ -73,6 +74,10 @@ struct RepositoriesView: GeneralView {
                        onDismiss: { userInfoPresentationDetent = .medium },
                        content: { userInfoModal })
             }
+        }
+        .onReceive(mainTabViewModel.$selectedHistoryUserInfo) { userInfo in
+            guard let userInfo else { return }
+            viewModel.trigger(.historySearch(userInfo))
         }
     }
 }
@@ -214,7 +219,6 @@ private extension RepositoriesView {
     }
     
     var userInfoModal: some View {
-        @Environment(\.dismiss) var dismiss
         
         return VStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
@@ -431,7 +435,7 @@ private extension RepositoriesView {
             }
             .foregroundColor(Color(hex: "000072"))
             .padding()
-            .offset(y: userInfoPresentationDetent == .medium ? -290 : 0)
+            .offset(y: userInfoPresentationDetent == .medium ? viewModel.mostPopularRepos.isEmpty ? -120 : -290 : 0)
             
             Spacer()
         }

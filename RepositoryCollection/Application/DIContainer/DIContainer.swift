@@ -34,7 +34,7 @@ final class DIContainer {
     
     lazy var userInfoRepo: UserInfoRepository = {
         let dataTransferService = DefaultDataTransferService(service: DefaultNetworkService(networkSessionManager: AFNetworkSessionManager()))
-        return UserInfoRepositoryIml(dataTransferService: dataTransferService)
+        return UserInfoRepositoryIml(dataTransferService: dataTransferService, userInfoStorage: CoreDataUserInfoStorage(coreDataStack: .manager))
     }()
     
     lazy var githubRepoUseCases: GitHubRepoUseCases = {
@@ -43,5 +43,9 @@ final class DIContainer {
     
     lazy var githubUserUseCases: GitHubUserUseCases = {
         GitHubUserUseCasesIml(repo: userInfoRepo)
+    }()
+    
+    lazy var historyUseCases: HistoryUseCases = {
+        HistoryUseCasesIml(repo: userInfoRepo)
     }()
 }

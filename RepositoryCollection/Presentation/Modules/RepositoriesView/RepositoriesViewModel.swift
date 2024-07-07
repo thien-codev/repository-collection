@@ -1,5 +1,5 @@
 //
-//  RepositoriesViewVM.swift
+//  RepositoriesViewModel.swift
 //  RepositoryCollection
 //
 //  Created by ndthien01 on 21/11/2023.
@@ -8,12 +8,13 @@
 import Foundation
 import Combine
 
-class RepositoriesViewVM: ObservableObject {
+class RepositoriesViewModel: ObservableObject {
     
     enum Input {
         case search
         case loadMore
         case recentSearchTrigger
+        case historySearch(GitHubUserModel)
     }
     
     private let backgrounds: [String] = ["im-1", "im-2", "im-3", "im-4", "im-5", "im-6"]
@@ -25,6 +26,7 @@ class RepositoriesViewVM: ObservableObject {
     private let activityTracker = ActivityTracker(false)
     private let errorTracker = ErrorTracker()
     private var cancellable = Set<AnyCancellable>()
+    private var returnedData: [GitHubRepoModel] = []
     private var storedItems: [GitHubRepoModel] = [] {
         didSet {
             bindDisplayItems(with: storedItems)
@@ -54,17 +56,17 @@ class RepositoriesViewVM: ObservableObject {
     }
     
     var mostPopularRepos: [GitHubRepoModel] {
-        return Array(storedItems.sorted(by: { $0.stargazersCount > $1.stargazersCount }).prefix(popularRepoThreshold))
+        return Array(returnedData.sorted(by: { $0.stargazersCount > $1.stargazersCount }).prefix(popularRepoThreshold))
     }
     
     var starred: Int {
-        return storedItems.reduce(0) { partialResult, model in
+        return returnedData.reduce(0) { partialResult, model in
             partialResult + model.stargazersCount
         }
     }
     
     var totalRepos: Int {
-        return storedItems.count
+        return returnedData.count
     }
     
     convenience init(diContainer: DIContainer) {
@@ -101,11 +103,16 @@ class RepositoriesViewVM: ObservableObject {
             storedItems.removeFirst(limitItems)
         case .recentSearchTrigger:
             fetchRecentSearch()
+        case .historySearch(let userInfo):
+            clearData()
+            userID = userInfo.login
+            fetchRepos(userID: userID.trim())
+            fetchUserInfo(userID: userID.trim())
         }
     }
 }
 
-private extension RepositoriesViewVM {
+private extension RepositoriesViewModel {
     func fetchRepos(userID: String) {
         repoUseCases
             .fetchRepos(userId: userID)
@@ -122,6 +129,7 @@ private extension RepositoriesViewVM {
             }, receiveValue: { [weak self] repos in
                 self?.hasNoRepo = repos.isEmpty
                 self?.storedItems = repos
+                self?.returnedData = repos
             })
             .store(in: &cancellable)
     }

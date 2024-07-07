@@ -9,4 +9,5 @@ import Foundation
 
 protocol UserInfoRepository {
     func fetchUserInfo(userId: String) async throws -> GitHubUserModel
+    func fetchAllUserInfos() async -> [GitHubUserModel]
 }

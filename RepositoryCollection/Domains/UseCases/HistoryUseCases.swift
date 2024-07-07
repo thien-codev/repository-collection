@@ -9,15 +9,27 @@ import Foundation
 import Combine
 
 protocol HistoryUseCases {
-    func fetchAllUseIDs() -> AnyPublisher<[Owner], Error>
+    func fetchAllUserInfos() -> AnyPublisher<[GitHubUserModel], Error>
 }
 
-class HistoryUseCasesIml: HistoryUseCases {
+final class HistoryUseCasesIml {
     
-    func fetchAllUseIDs() -> AnyPublisher<[Owner], Error> {
-        let subject = PassthroughSubject<[Owner], Error>()
-        subject.send([])
-        subject.send(completion: .finished)
+    private let repo: UserInfoRepository
+    
+    init(repo: UserInfoRepository) {
+        self.repo = repo
+    }
+}
+
+extension HistoryUseCasesIml: HistoryUseCases {
+    func fetchAllUserInfos() -> AnyPublisher<[GitHubUserModel], Error> {
+        let subject = PassthroughSubject<[GitHubUserModel], Error>()
+        
+        Task {
+            let cacheUserInfos = await repo.fetchAllUserInfos()
+            subject.send(cacheUserInfos.filterDuplicates(includeElement: { $0.login == $1.login }))
+            subject.send(completion: .finished)
+        }
         
         return subject.eraseToAnyPublisher()
     }
