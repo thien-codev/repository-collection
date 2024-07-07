@@ -21,7 +21,12 @@ struct GitHubRepoModel: Decodable {
     let language: String?
     let stargazersCount: Int
     let visibility: String
+    let watchersCount: Int
+    let forksCount: Int
     let topics: [String]
+    let isTemplate: Bool
+    let archived: Bool
+    let disabled: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -40,7 +45,12 @@ struct GitHubRepoModel: Decodable {
         case stargazersCount = "stargazers_count"
         case language
         case visibility
+        case watchersCount = "watchers_count"
+        case forksCount = "forks_count"
         case topics
+        case isTemplate = "is_template"
+        case archived
+        case disabled
     }
     
     init(id: Int,
@@ -59,8 +69,14 @@ struct GitHubRepoModel: Decodable {
          cloneURL: URL? = nil,
          language: String? = nil,
          stargazersCount: Int = 0,
+         watchersCount: Int = 0,
+         forksCount: Int = 0,
          visibility: String,
-         topics: [String] = []) {
+         topics: [String] = [],
+         isTemplate: Bool = false,
+         archived: Bool = false,
+         disabled: Bool = false
+    ) {
         self.id = id
         self.name = name
         self.fullName = fullName
@@ -79,6 +95,11 @@ struct GitHubRepoModel: Decodable {
         self.topics = topics
         self.fork = fork
         self.stargazersCount = stargazersCount
+        self.watchersCount = watchersCount
+        self.forksCount = forksCount
+        self.isTemplate = isTemplate
+        self.archived = archived
+        self.disabled = disabled
     }
 }
 
