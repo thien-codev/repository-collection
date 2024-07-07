@@ -29,6 +29,7 @@ class RepositoriesViewModel: ObservableObject {
     private var returnedData: [GitHubRepoModel] = []
     private var storedItems: [GitHubRepoModel] = [] {
         didSet {
+            guard storedItems != oldValue else { return }
             bindDisplayItems(with: storedItems)
         }
     }
@@ -39,6 +40,7 @@ class RepositoriesViewModel: ObservableObject {
             hasNoRepo = false
             guard userID.isEmpty else { return }
             self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
+            self.clearData()
         }
     }
     

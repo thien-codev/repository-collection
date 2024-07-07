@@ -46,7 +46,7 @@ struct RepositoryCell: View {
     var body: some View {
         VStack(alignment: .leading) {
             Group {
-                HStack(alignment: .top) {
+                HStack(alignment: .firstTextBaseline) {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(repoModel.name)
                             .font(.system(size: presentationMode.titleFont, weight: .semibold))
@@ -64,19 +64,33 @@ struct RepositoryCell: View {
                             .underline()
                         }
                     }
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(lineWidth: 1)
-                        .fill(.gray)
-                        .frame(width: 56, height: 24)
-                        .overlay {
-                            Text(repoModel.visibility.uppercasedFirstLetter())
-                                .font(.system(size: 12, weight: .medium))
+                    HStack(spacing: 2) {
+                        Text(repoModel.visibility.uppercasedFirstLetter())
+                            .font(.system(size: 12, weight: .semibold))
+                        if repoModel.isTemplate {
+                            Text("template")
+                                .font(.system(size: 12, weight: .semibold))
                         }
-                        .background {
-                            RoundedRectangle(cornerRadius: 12)
-                                .frame(width: 56, height: 24)
-                                .foregroundColor(Color(hex: "90D5FF").opacity(0.4))
+                        
+                        if repoModel.archived {
+                            Text("archived")
+                                .font(.system(size: 12, weight: .semibold))
                         }
+                    }
+                    .padding(.horizontal, 6)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(lineWidth: 1)
+                            .fill(repoModel.archived ? Color(hex: "ff4d01") : .gray)
+                            .frame(height: 24)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundColor(Color(hex: "90D5FF").opacity(0.4))
+                            }
+                    }
+                    .foregroundColor(repoModel.archived ? Color(hex: "ff4d01") : .black)
+                    .offset(y: -6)
+                    
                     Spacer()
                 }
                 if let description = repoModel.description {
@@ -93,7 +107,7 @@ struct RepositoryCell: View {
                         .padding(.bottom, 10)
                         .padding(.top, 6)
                 }
-                HStack {
+                HStack(spacing: 14) {
                     if let language = repoModel.language, !language.isEmpty {
                         HStack(spacing: 4) {
                             Circle()
@@ -108,9 +122,33 @@ struct RepositoryCell: View {
                     
                     Spacer()
                     
+                    if repoModel.forksCount != .zero {
+                        HStack(spacing: 4) {
+                            Image("ic-forked")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 14)
+                            Text("\(repoModel.forksCount)")
+                                .font(.system(size: 14, weight: .medium))
+                        }
+                        .foregroundColor(Color(UIColor.darkGray))
+                    }
+                    
+                    if repoModel.watchersCount != .zero {
+                        HStack(spacing: 4) {
+                            Image(systemName: "eye")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18)
+                                .fontWeight(.semibold)
+                            Text("\(repoModel.watchersCount)")
+                                .font(.system(size: 14, weight: .medium))
+                        }
+                        .foregroundColor(Color(UIColor.darkGray))
+                    }
+                    
                     if repoModel.stargazersCount != .zero {
                         HStack(spacing: 4) {
-                            Spacer()
                             Image("ic-bling-star")
                                 .resizable()
                                 .scaledToFit()
@@ -130,7 +168,7 @@ struct RepositoryCell: View {
                 .stroke(lineWidth: 1)
                 .background {
                     RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(presentationMode.backgroundColor)
+                        .foregroundColor(repoModel.archived ? Color(hex: "fff2e5") : presentationMode.backgroundColor)
                 }
         })
         .foregroundColor(.black)
