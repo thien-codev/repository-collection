@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G720" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="RepositoryEntity" representedClassName="RepositoryEntity" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="String"/>
         <attribute name="descriptionAttr" optional="YES" attributeType="String"/>
@@ -22,5 +22,39 @@
     <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">
         <attribute name="userID" optional="YES" attributeType="String"/>
         <relationship name="repositories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RepositoryEntity" inverseName="ofUser" inverseEntity="RepositoryEntity"/>
+    </entity>
+    <entity name="UserInfoEntity" representedClassName="UserInfoEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="avatarURL" optional="YES" attributeType="String"/>
+        <attribute name="bio" optional="YES" attributeType="String"/>
+        <attribute name="blog" optional="YES" attributeType="String"/>
+        <attribute name="collaborators" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="company" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="String"/>
+        <attribute name="diskUsage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="eventsURL" optional="YES" attributeType="String"/>
+        <attribute name="followers" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="followersURL" optional="YES" attributeType="String"/>
+        <attribute name="following" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="followingURL" optional="YES" attributeType="String"/>
+        <attribute name="gistsURL" optional="YES" attributeType="String"/>
+        <attribute name="htmlURL" optional="YES" attributeType="String"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="login" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="nodeID" optional="YES" attributeType="String"/>
+        <attribute name="organizationsURL" optional="YES" attributeType="String"/>
+        <attribute name="ownedPrivateRepos" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="privateGists" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="publicGists" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="publicRepos" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="reposURL" optional="YES" attributeType="String"/>
+        <attribute name="starredURL" optional="YES" attributeType="String"/>
+        <attribute name="subscriptionsURL" optional="YES" attributeType="String"/>
+        <attribute name="totalPrivateRepos" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="twitterUsername" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>
