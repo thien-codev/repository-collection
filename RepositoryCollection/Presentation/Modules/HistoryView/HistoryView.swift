@@ -19,15 +19,14 @@ struct HistoryView: GeneralView {
     
     var body: some View {
         ZStack {
-            emptyView
-                .offset(y: viewModel.cacheUserInfos.isEmpty ? 0 : -UIScreen.height)
+            emptyView.isHidden(!viewModel.cacheUserInfos.isEmpty, remove: true)
             sectionView
         }
         .task {
             try? await Task.sleep(nanoseconds: 1 * 1000 * 1000 * 1000)
             viewModel.trigger(.fetchData)
         }
-        .animation(.easeInOut(duration: 0.3), value: viewModel.cacheUserInfos)
+        .animation(.spring, value: viewModel.cacheUserInfos)
     }
 }
 
@@ -38,14 +37,13 @@ private extension HistoryView {
                 .padding(.leading, 20)
                 .isHidden(viewModel.cacheUserInfos.isEmpty, remove: true)
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 2) {
-                    ForEach(viewModel.cacheUserInfos, id: \.id) { userInfo in
-                        UserInfoCell(model: userInfo)
-                            .onTapGesture {
-                                mainTabViewModel.onSelectHistoryUserInfo(userInfo)
-                            }
-                    }
+                ForEach(viewModel.cacheUserInfos, id: \.id) { userInfo in
+                    UserInfoCell(model: userInfo)
+                        .onTapGesture {
+                            mainTabViewModel.trigger(.selectHistoryUserInfo(userInfo))
+                        }
                 }
+                .frame(width: UIScreen.width)
                 .padding(.bottom, MainTabView.bottomBarHeight)
             }
         }

@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum Tab {
+enum Tab: CaseIterable {
     case home
     case history
+    case setting
     
     var title: String {
         switch self {
@@ -18,6 +19,8 @@ enum Tab {
             return "Home"
         case .history:
             return "Hitory"
+        case .setting:
+            return "Setting"
         }
     }
     
@@ -27,6 +30,8 @@ enum Tab {
             return "house.circle"
         case .history:
             return "clock"
+        case .setting:
+            return "gearshape"
         }
     }
     
@@ -38,16 +43,19 @@ enum Tab {
 
 struct MainTabView: View {
     
+    private let tabbarButtonWidth: CGFloat = 106
     static let bottomBarHeight: CGFloat = 96
     @State var selectedHistoryUserInfo: GitHubUserModel?
     @StateObject var viewModel = MainTabViewModel()
     
     var reposView: RepositoriesView?
     var historyView: HistoryView?
+    var settingView: SettingView?
     
     init() {
         reposView = ViewFactory<RepositoriesView>().build(RepositoriesViewModel.init)
         historyView = ViewFactory<HistoryView>().build(HistoryViewModel.init)
+        settingView = ViewFactory<SettingView>().build(SettingViewModel.init)
     }
     
     var body: some View {
@@ -56,6 +64,7 @@ struct MainTabView: View {
                 Group {
                     reposView.tag(Tab.home)
                     historyView.tag(Tab.history)
+                    settingView.tag(Tab.setting)
                 }.toolbar(.hidden, for: .tabBar)
             }
             
@@ -77,12 +86,14 @@ private extension MainTabView {
             Spacer()
             HStack(content: {
                 Group {
-                    ForEach([Tab.home, Tab.history], id: \.title) { item in
+                    ForEach(Tab.allCases, id: \.title) { item in
                         switch item {
                         case .home:
                             homeTabBar
                         case .history:
                             historyTabBar
+                        case .setting:
+                            settingTabBar
                         }
                     }
                 }
@@ -120,20 +131,20 @@ private extension MainTabView {
             .background {
                 RoundedRectangle(cornerRadius: 22)
                     .stroke(lineWidth: 1)
-                    .frame(width: 106, height: 44)
+                    .frame(width: tabbarButtonWidth, height: 44)
                     .foregroundColor(Color(hex: "00008a"))
                     .background {
                         RoundedRectangle(cornerRadius: 22)
-                            .frame(width: 106, height: 44)
+                            .frame(width: tabbarButtonWidth, height: 44)
                             .foregroundColor(Color(hex: "90D5FF"))
                             .shadow(radius: 0, x: 6, y: 6)
                     }
-                    .offset(x: viewModel.selectedTab == .home ? 0 : 200)
+                    .offset(x: viewModel.selectedTab == .home ? 0 : tabbarButtonWidth)
                     .opacity(viewModel.selectedTab == .home ? 1 : 0)
             }
             .onTapGesture {
                 guard viewModel.selectedTab != .home else { return }
-                viewModel.selectedTab = .home
+                viewModel.trigger(.updateSelectedTap(.home))
             }
         }
         .foregroundStyle(Color(hex: "00008a"))
@@ -163,12 +174,48 @@ private extension MainTabView {
                             .foregroundColor(Color(hex: "90D5FF"))
                             .shadow(radius: 0, x: 6, y: 6)
                     }
-                    .offset(x: viewModel.selectedTab == .history ? 0 : -200)
+                    .offset(x: viewModel.selectedTab == .history ? 0 : viewModel.selectedTab == .home ? -tabbarButtonWidth : tabbarButtonWidth)
                     .opacity(viewModel.selectedTab == .history ? 1 : 0)
             }
             .onTapGesture {
                 guard viewModel.selectedTab != .history else { return }
-                viewModel.selectedTab = .history
+                viewModel.trigger(.updateSelectedTap(.history))
+            }
+        }
+        .foregroundStyle(Color(hex: "00008a"))
+    }
+    
+    var settingTabBar: some View {
+        HStack {
+            HStack(spacing: 8) {
+                Image(systemName: Tab.setting.icon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24)
+                
+                if viewModel.selectedTab == .setting {
+                    Text(Tab.setting.title)
+                        .font(.system(size: 14, weight: .medium))
+                }
+            }
+            .scaleEffect(viewModel.selectedTab == .setting ? 1.1 : 0.9, anchor: .center)
+            .background {
+                RoundedRectangle(cornerRadius: 22)
+                    .stroke(lineWidth: 1)
+                    .frame(width: 106, height: 44)
+                    .foregroundColor(Color(hex: "00008a"))
+                    .background {
+                        RoundedRectangle(cornerRadius: 22)
+                            .frame(width: 106, height: 44)
+                            .foregroundColor(Color(hex: "90D5FF"))
+                            .shadow(radius: 0, x: 6, y: 6)
+                    }
+                    .offset(x: viewModel.selectedTab == .setting ? 0 : -tabbarButtonWidth)
+                    .opacity(viewModel.selectedTab == .setting ? 1 : 0)
+            }
+            .onTapGesture {
+                guard viewModel.selectedTab != .setting else { return }
+                viewModel.trigger(.updateSelectedTap(.setting))
             }
         }
         .foregroundStyle(Color(hex: "00008a"))

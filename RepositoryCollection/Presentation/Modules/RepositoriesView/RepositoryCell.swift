@@ -116,11 +116,10 @@ struct RepositoryCell: View {
                             Text(language)
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(Color(UIColor.darkGray))
-                            Spacer()
                         }
                     }
                     
-                    Spacer()
+                    Spacer(minLength: 0)
                     
                     if repoModel.forksCount != .zero {
                         HStack(spacing: 4) {
@@ -172,6 +171,7 @@ struct RepositoryCell: View {
                 }
         })
         .foregroundColor(.black)
+        .contentShape(Rectangle())
     }
 }
 
