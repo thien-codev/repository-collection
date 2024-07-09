@@ -11,4 +11,7 @@ public extension DefaultsKey {
     
     /// GitHub user id
     static let recentUserId = Key<String>("recentUserId")
+    
+    /// appIcon
+    static let appIcon = Key<AppIcon>("appIcon")
 }

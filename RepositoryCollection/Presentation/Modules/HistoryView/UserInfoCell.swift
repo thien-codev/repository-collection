@@ -87,12 +87,7 @@ struct UserInfoCell: View {
         .padding(12)
         .background {
             RoundedRectangle(cornerRadius: 12)
-                .stroke(lineWidth: 1)
-                .foregroundColor(.white)
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Color(hex: "90D5FF").opacity(0.4))
-                }
+                .foregroundColor(Color(hex: "90D5FF").opacity(0.4))
         }
         .padding(.top, 10)
         .padding(.horizontal, 20)

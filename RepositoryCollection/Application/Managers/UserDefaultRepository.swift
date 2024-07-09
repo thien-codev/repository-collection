@@ -11,4 +11,5 @@ protocol UserDefaultRepository {
     var defaultStorage: DefaultStorage { get }
     
     var recentUserId: String? { get set }
+    var appIcon: AppIcon { get set }
 }
