@@ -15,4 +15,9 @@ class UserDefaultRepositoryIml: UserDefaultRepository {
         get { defaultStorage.get(forKey: .recentUserId) }
         set { defaultStorage.set(newValue, forKey: .recentUserId)}
     }
+    
+    var appIcon: AppIcon {
+        get { defaultStorage.get(forKey: .appIcon) ?? .initial }
+        set { defaultStorage.set(newValue, forKey: .appIcon)}
+    }
 }

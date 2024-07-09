@@ -33,7 +33,7 @@ struct HistoryView: GeneralView {
 private extension HistoryView {
     var sectionView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Recently").font(.system(size: 15, weight: .semibold))
+            Text("Recently").font(.system(size: 16, weight: .semibold))
                 .padding(.leading, 20)
                 .isHidden(viewModel.cacheUserInfos.isEmpty, remove: true)
             ScrollView(showsIndicators: false) {
