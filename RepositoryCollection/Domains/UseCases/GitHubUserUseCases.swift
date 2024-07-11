@@ -10,6 +10,7 @@ import Combine
 
 protocol GitHubUserUseCases {
     func fetchUserInfo(userId: String) -> AnyPublisher<GitHubUserModel, Error>
+    func fetchUserEvents(userId: String) -> AnyPublisher<[UserEventModel], Error>
 }
 
 final class GitHubUserUseCasesIml {
@@ -37,6 +38,22 @@ extension GitHubUserUseCasesIml: GitHubUserUseCases {
                 } catch {
                     subject.send(completion: .failure(error))
                 }
+            }
+        }
+        
+        return subject.eraseToAnyPublisher()
+    }
+    
+    func fetchUserEvents(userId: String) -> AnyPublisher<[UserEventModel], Error> {
+        let subject = PassthroughSubject<[UserEventModel], Error>()
+        let trimUserId = userId.trim()
+        if trimUserId.isEmpty {
+            subject.send(completion: .finished)
+        } else {
+            Task {
+                let userEvents = await repo.fetchUserEvents(trimUserId)
+                subject.send(userEvents)
+                subject.send(completion: .finished)
             }
         }
         

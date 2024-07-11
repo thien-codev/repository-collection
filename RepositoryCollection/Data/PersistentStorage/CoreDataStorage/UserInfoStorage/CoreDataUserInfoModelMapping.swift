@@ -80,17 +80,17 @@ extension GitHubUserModel {
         entity.email = email
         entity.bio = bio
         entity.twitterUsername = twitterUsername
-        entity.publicRepos = Int16(publicRepos)
-        entity.publicGists = Int16(publicGists)
-        entity.followers = Int16(followers)
-        entity.following = Int16(following)
+        entity.publicRepos = Int64(publicRepos)
+        entity.publicGists = Int64(publicGists)
+        entity.followers = Int64(followers)
+        entity.following = Int64(following)
         entity.createdAt = createdAt
         entity.updatedAt = updatedAt
-        entity.privateGists = Int16(privateGists ?? 0)
-        entity.totalPrivateRepos = Int16(totalPrivateRepos ?? 0)
-        entity.ownedPrivateRepos = Int16(ownedPrivateRepos ?? 0)
-        entity.diskUsage = Int16(diskUsage ?? 0)
-        entity.collaborators = Int16(collaborators ?? 0)
+        entity.privateGists = Int64(privateGists ?? 0)
+        entity.totalPrivateRepos = Int64(totalPrivateRepos ?? 0)
+        entity.ownedPrivateRepos = Int64(ownedPrivateRepos ?? 0)
+        entity.diskUsage = Int64(diskUsage ?? 0)
+        entity.collaborators = Int64(collaborators ?? 0)
         
         return entity
     }

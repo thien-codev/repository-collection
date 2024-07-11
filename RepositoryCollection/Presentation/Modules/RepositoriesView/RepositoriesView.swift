@@ -48,9 +48,10 @@ struct RepositoriesView: GeneralView {
                                 .offset(y: 36)
                                 
                                 loadMoreView
-                                    .offset(y: 10)
-                                    .padding(.bottom, 40)
-                                    .padding(.top, 26)
+                                    .padding(.top, 40)
+                                Rectangle()
+                                    .frame(height: 110)
+                                    .foregroundColor(.clear)
                             }
                             .alert(isPresented: $viewModel.alertMessage.isShowing) {
                                 Alert(
@@ -61,7 +62,8 @@ struct RepositoriesView: GeneralView {
                             }
                         }
                     }
-                    .padding([.top, .bottom], 50)
+                    .ignoresSafeArea()
+                    .padding(.top, 50)
                     noResultFoundView
                     searchBar
                 }
@@ -71,13 +73,15 @@ struct RepositoriesView: GeneralView {
                 }
                 .customNavigationViewBarHidden(true)
                 .sheet(isPresented: $userInfoSheetPresented,
-                       onDismiss: { userInfoPresentationDetent = .medium },
+                       onDismiss: {
+                    userInfoPresentationDetent = .medium
+                },
                        content: { userInfoModal })
             }
         }
-        .onReceive(mainTabViewModel.$selectedHistoryUserInfo) { userInfo in
-            guard let userInfo else { return }
-            viewModel.trigger(.historySearch(userInfo))
+        .onReceive(mainTabViewModel.$showSelectedHistoryUserInfo) { shouldShow in
+            guard shouldShow, let selectedUserInfo = mainTabViewModel.selectedUserInfo else { return }
+            viewModel.trigger(.historySearch(selectedUserInfo))
         }
     }
 }
@@ -112,7 +116,7 @@ private extension RepositoriesView {
         let shouldShow = !isEnableSearch && viewModel.userInfo.hasValue
         let avatarURL = URL(string: viewModel.userInfo?.avatarURL ?? "")
         return Circle()
-            .stroke(lineWidth: 1)
+            .stroke(lineWidth: 2)
             .foregroundColor(.black)
             .overlay {
                 KFImage(avatarURL)
@@ -256,6 +260,7 @@ private extension RepositoriesView {
                                 .padding(.trailing, 30)
                                 .padding(.top, 26)
                         }
+                        .zIndex(.infinity)
                         Spacer()
                         HStack(spacing: 14) {
                             Circle()
@@ -273,11 +278,17 @@ private extension RepositoriesView {
                                         .clipShape(Circle())
                                         .shadow(color: Color(hex: "33ABFF"), radius: 3, x: 3, y: 3)
                                 }
+                                .onTapGesture {
+                                    mainTabViewModel.trigger(.showUserInfo(viewModel.userInfo, true))
+                                }
                             VStack(alignment: .leading,spacing: 0) {
                                 if let bio = viewModel.userInfo?.bio {
                                     Text(bio)
                                         .font(.system(size: 14, weight: .semibold))
-                                        .lineLimit(4)
+                                        .lineLimit(2)
+                                        .onTapGesture {
+                                            mainTabViewModel.trigger(.showUserInfo(viewModel.userInfo, false))
+                                        }
                                 }
                                 if let name = viewModel.userInfo?.name {
                                     Text(name)
@@ -302,15 +313,15 @@ private extension RepositoriesView {
                         Image(systemName: "person.2")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 18)
+                            .frame(height: 16)
                             .fontWeight(.medium)
                         
                         if userInfo.followers != .zero {
-                            Text("\(userInfo.followers)").font(.system(size: 16, weight: .bold)) + Text(" follower").font(.system(size: 16))
+                            Text("\(userInfo.followers)").font(.system(size: 16, weight: .bold)) + Text(" follower").font(.system(size: 14))
                         }
                         
                         if userInfo.following != .zero {
-                            Text("\(userInfo.following)").font(.system(size: 16, weight: .bold)) + Text(" following").font(.system(size: 16))
+                            Text("\(userInfo.following)").font(.system(size: 16, weight: .bold)) + Text(" following").font(.system(size: 14))
                         }
                     }
                     .foregroundColor(Color(hex: "000072"))
@@ -326,7 +337,7 @@ private extension RepositoriesView {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .fontWeight(.regular)
-                            Text(location).font(.system(size: 16))
+                            Text(location).font(.system(size: 14))
                         }
                     }
                     
@@ -337,7 +348,7 @@ private extension RepositoriesView {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .fontWeight(.regular)
-                            Text(company).font(.system(size: 16))
+                            Text(company).font(.system(size: 14))
                         }
                     }
                     
@@ -348,7 +359,7 @@ private extension RepositoriesView {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .fontWeight(.medium)
-                            Text(email).font(.system(size: 16))
+                            Text(email).font(.system(size: 14))
                         }
                     }
                     
@@ -358,8 +369,8 @@ private extension RepositoriesView {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
-                                .fontWeight(.semibold)
-                            Text(twitterUsername).font(.system(size: 16))
+                                .fontWeight(.bold)
+                            Text(twitterUsername).font(.system(size: 14))
                         }
                     }
                     
@@ -370,14 +381,42 @@ private extension RepositoriesView {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .fontWeight(.semibold)
-                            Text(blog).font(.system(size: 16))
+                            Text(blog).font(.system(size: 14))
                         }
                     }
+                    
+                    HStack(spacing: 20) {
+                        HStack {
+                            Image(systemName: "book.closed")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
+                                .fontWeight(.regular)
+                            
+                            Text("Repositories").font(.system(size: 14))
+                            Text("\(viewModel.totalRepos)").font(.system(size: 16, weight: .bold))
+                        }
+                        
+                        HStack {
+                            Image(systemName: "star")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
+                                .fontWeight(.medium)
+                            
+                            Text("Starred").font(.system(size: 14))
+                            Text("\(viewModel.starred)").font(.system(size: 16, weight: .bold))
+                        }
+                        
+                        Spacer()
+                    }
+                    .foregroundColor(Color(hex: "000072"))
                 }
                 .offset(y: userInfoPresentationDetent == .medium ? -120 : 0)
                 .foregroundColor(Color(hex: "000072"))
                 .padding(.leading, 20)
             }
+            
             
             if !viewModel.mostPopularRepos.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
@@ -400,42 +439,12 @@ private extension RepositoriesView {
                     }
                 }
                 .offset(y: userInfoPresentationDetent == .medium ? UIScreen.height : 0)
-                .padding(.top, 20)
+                .padding(.top, 10)
             }
             
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Overview")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(Color(hex: "000072"))
-                    .padding(.bottom, 6)
-                
-                HStack {
-                    Image(systemName: "book.closed")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .fontWeight(.medium)
-                    
-                    Text("Repositories").font(.system(size: 14, weight: .medium))
-                    Spacer()
-                    Text("\(viewModel.totalRepos)").font(.system(size: 16, weight: .bold))
-                }
-                
-                HStack {
-                    Image(systemName: "star")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .fontWeight(.medium)
-                    
-                    Text("Starred").font(.system(size: 14, weight: .medium))
-                    Spacer()
-                    Text("\(viewModel.starred)").font(.system(size: 16, weight: .bold))
-                }
-            }
-            .foregroundColor(Color(hex: "000072"))
-            .padding()
-            .offset(y: userInfoPresentationDetent == .medium ? viewModel.mostPopularRepos.isEmpty ? -120 : -290 : 0)
+            // Chart
+            ChartView()
+            
             
             Spacer()
         }

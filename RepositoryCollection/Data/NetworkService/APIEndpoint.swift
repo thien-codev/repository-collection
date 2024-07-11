@@ -12,6 +12,7 @@ struct APIEndpoint {
     struct Path {
         static var githubRepos = "/users/%@/repos"
         static var githubUser = "/users/%@"
+        static var userEvent = "/users/%@/events"
     }
     
     static var baseUrl: String = {
@@ -30,5 +31,12 @@ struct APIEndpoint {
         return Endpoint<GitHubUserModel>(baseUrl: baseUrl,
                                          path: path,
                                          method: .get)
+    }
+    
+    static func userEvent(with userId: String) -> Endpoint<[UserEventModel]> {
+        let path = String(format: Path.userEvent, userId)
+        return Endpoint<[UserEventModel]>(baseUrl: baseUrl,
+                                          path: path,
+                                          method: .get)
     }
 }

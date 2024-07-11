@@ -47,9 +47,7 @@ final class DefaultNetworkService: NetworkService {
             completion(.failure(.urlGeneration))
             return nil
         }
-        
-        currentTask?.doCancel()
-        currentTask = networkSessionManager.request(urlRequest) { data, _, requestError in
+        networkSessionManager.request(urlRequest) { data, _, requestError in
             if let requestError {
                 completion(.failure(.generic(requestError)))
             } else {

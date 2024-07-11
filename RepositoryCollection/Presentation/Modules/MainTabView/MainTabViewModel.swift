@@ -12,9 +12,12 @@ class MainTabViewModel: ObservableObject {
     enum Input {
         case selectHistoryUserInfo(GitHubUserModel)
         case updateSelectedTap(Tab)
+        case showUserInfo(GitHubUserModel?, Bool)
+        case closeUserInfo
     }
     
-    @Published var selectedHistoryUserInfo: GitHubUserModel?
+    @Published var showBioUserInfo: Bool = false
+    @Published var showSelectedHistoryUserInfo: Bool = false
     @Published var selectedTab: Tab = .home
     @Published var recentTabs: [Tab] = [.home] {
         didSet {
@@ -23,12 +26,21 @@ class MainTabViewModel: ObservableObject {
         }
     }
     
+    var isShowFullAvatar: Bool = false
+    var selectedUserInfo: GitHubUserModel?
+    
     func trigger(_ input: Input) {
         switch input {
         case .selectHistoryUserInfo(let gitHubUserModel):
             onSelectHistoryUserInfo(gitHubUserModel)
         case .updateSelectedTap(let tab):
             updateCurrentTab(to: tab)
+        case .showUserInfo(let userInfo, let isFullAvatar):
+            selectedUserInfo = userInfo
+            isShowFullAvatar = isFullAvatar
+            showBioUserInfo = true
+        case .closeUserInfo:
+            showBioUserInfo = false
         }
     }
 }
@@ -37,7 +49,8 @@ private extension MainTabViewModel {
     
     func onSelectHistoryUserInfo(_ userInfo: GitHubUserModel) {
         updateCurrentTab(to: .home)
-        selectedHistoryUserInfo = userInfo
+        showSelectedHistoryUserInfo = true
+        selectedUserInfo = userInfo
     }
     
     func updateCurrentTab(to tab: Tab) {

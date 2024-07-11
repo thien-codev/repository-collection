@@ -50,9 +50,9 @@ extension Array where Element == GitHubRepoModel {
             let repositoryEntity: RepositoryEntity = .init(context: context)
             repositoryEntity.fullName = item.fullName
             repositoryEntity.name = item.name
-            repositoryEntity.stargazersCount = Int16(item.stargazersCount)
-            repositoryEntity.watchersCount = Int16(item.watchersCount)
-            repositoryEntity.forksCount = Int16(item.forksCount)
+            repositoryEntity.stargazersCount = Int64(item.stargazersCount)
+            repositoryEntity.watchersCount = Int64(item.watchersCount)
+            repositoryEntity.forksCount = Int64(item.forksCount)
             item.topics.forEach { topic in
                 let topicEntity: TopicEntity = .init(context: context)
                 topicEntity.name = topic
@@ -64,7 +64,7 @@ extension Array where Element == GitHubRepoModel {
             repositoryEntity.createdAt = item.createdAt
             repositoryEntity.visibility = item.visibility
             repositoryEntity.language = item.language
-            repositoryEntity.repoID = Int32(item.id)
+            repositoryEntity.repoID = Int64(item.id)
             repositoryEntity.ofUser = userEntity
             repositoryEntity.isTemplate = item.isTemplate
             repositoryEntity.archived = item.archived

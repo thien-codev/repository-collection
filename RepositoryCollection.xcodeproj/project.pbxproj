@@ -24,6 +24,8 @@
 		8BB11EF12C3A65FF00BEEAE1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8BB11EF02C3A65FF00BEEAE1 /* Lottie */; };
 		8BB11EF32C3A6E1800BEEAE1 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB11EF22C3A6E1800BEEAE1 /* UserInfoCell.swift */; };
 		8BB11EF52C3AE71500BEEAE1 /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB11EF42C3AE71500BEEAE1 /* MainTabViewModel.swift */; };
+		8BB11EF82C3D661F00BEEAE1 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB11EF72C3D661F00BEEAE1 /* PopUpView.swift */; };
+		8BB11EFA2C3D797900BEEAE1 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB11EF92C3D797900BEEAE1 /* Int.swift */; };
 		8BB6FBC52B64D7FE00345CFA /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6FBC42B64D7FE00345CFA /* CustomNavigationBar.swift */; };
 		8BB6FBC72B66149200345CFA /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6FBC62B66149200345CFA /* CustomNavigationView.swift */; };
 		8BB6FBC92B66160D00345CFA /* CustomNavigationContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6FBC82B66160D00345CFA /* CustomNavigationContainerView.swift */; };
@@ -66,6 +68,7 @@
 		8BF5809F2C2FC6C700AB77AF /* FlexibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF5809E2C2FC6C700AB77AF /* FlexibleView.swift */; };
 		8BF580A12C2FC72E00AB77AF /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF580A02C2FC72E00AB77AF /* SizePreferenceKey.swift */; };
 		A22E10702C367CC0007362D5 /* ActivityControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22E106F2C367CC0007362D5 /* ActivityControllerView.swift */; };
+		A23BADAC2C3F7B5000AE25BE /* UserEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23BADAB2C3F7B5000AE25BE /* UserEventModel.swift */; };
 		A263CA252C33B0180085AF0A /* GitHubUserUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A263CA242C33B0180085AF0A /* GitHubUserUseCases.swift */; };
 		A263CA272C33B2D30085AF0A /* GitHubUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A263CA262C33B2D30085AF0A /* GitHubUserModel.swift */; };
 		A2BFB1752B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1742B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift */; };
@@ -77,6 +80,9 @@
 		A2BFB1962B0CA6B100AA6FE7 /* RepositoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewModel.swift */; };
 		A2BFB19C2B0CA96100AA6FE7 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */; };
 		A2BFB19F2B0CB4DB00AA6FE7 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */; };
+		A2D50BB22C3E20B6001CB370 /* BioInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */; };
+		A2D50BB42C3E229A001CB370 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB32C3E229A001CB370 /* UIApplication.swift */; };
+		A2D50BB62C3E3215001CB370 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB52C3E3215001CB370 /* ChartView.swift */; };
 		A2D686C62C3B8C7900CAD47B /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D686C52C3B8C7900CAD47B /* SettingView.swift */; };
 		A2D686C82C3B8CB100CAD47B /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D686C72C3B8CB100CAD47B /* SettingViewModel.swift */; };
 		A2D686EC2C3BF4F200CAD47B /* app-ic-2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D686E42C3BF4F200CAD47B /* app-ic-2@3x.png */; };
@@ -89,6 +95,8 @@
 		A2D686F32C3BF4F200CAD47B /* app-ic-3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A2D686EB2C3BF4F200CAD47B /* app-ic-3@3x.png */; };
 		A2F2F1222B0F40B30004281E /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F1212B0F40B30004281E /* LaunchView.swift */; };
 		A2F2F1252B0F5B100004281E /* RepositoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2F1242B0F5B100004281E /* RepositoryDetailView.swift */; };
+		A2F3EFDE2C3FB36E00CB3A28 /* UserEventUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F3EFDD2C3FB36E00CB3A28 /* UserEventUIModel.swift */; };
+		A2F3EFE02C3FBF3500CB3A28 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F3EFDF2C3FBF3500CB3A28 /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +116,8 @@
 		8BB11EED2C3A631900BEEAE1 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		8BB11EF22C3A6E1800BEEAE1 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		8BB11EF42C3AE71500BEEAE1 /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
+		8BB11EF72C3D661F00BEEAE1 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
+		8BB11EF92C3D797900BEEAE1 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		8BB6FBC42B64D7FE00345CFA /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		8BB6FBC62B66149200345CFA /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		8BB6FBC82B66160D00345CFA /* CustomNavigationContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationContainerView.swift; sourceTree = "<group>"; };
@@ -149,6 +159,7 @@
 		8BF5809E2C2FC6C700AB77AF /* FlexibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleView.swift; sourceTree = "<group>"; };
 		8BF580A02C2FC72E00AB77AF /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		A22E106F2C367CC0007362D5 /* ActivityControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityControllerView.swift; sourceTree = "<group>"; };
+		A23BADAB2C3F7B5000AE25BE /* UserEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventModel.swift; sourceTree = "<group>"; };
 		A263CA242C33B0180085AF0A /* GitHubUserUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserUseCases.swift; sourceTree = "<group>"; };
 		A263CA262C33B2D30085AF0A /* GitHubUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserModel.swift; sourceTree = "<group>"; };
 		A2BFB1712B0C8D6400AA6FE7 /* RepositoryCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepositoryCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +172,9 @@
 		A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesViewModel.swift; sourceTree = "<group>"; };
 		A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioInfoView.swift; sourceTree = "<group>"; };
+		A2D50BB32C3E229A001CB370 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		A2D50BB52C3E3215001CB370 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		A2D686C52C3B8C7900CAD47B /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A2D686C72C3B8CB100CAD47B /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		A2D686E42C3BF4F200CAD47B /* app-ic-2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-ic-2@3x.png"; sourceTree = "<group>"; };
@@ -173,6 +187,8 @@
 		A2D686EB2C3BF4F200CAD47B /* app-ic-3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-ic-3@3x.png"; sourceTree = "<group>"; };
 		A2F2F1212B0F40B30004281E /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		A2F2F1242B0F5B100004281E /* RepositoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailView.swift; sourceTree = "<group>"; };
+		A2F3EFDD2C3FB36E00CB3A28 /* UserEventUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEventUIModel.swift; sourceTree = "<group>"; };
+		A2F3EFDF2C3FBF3500CB3A28 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,11 +253,20 @@
 			path = Json;
 			sourceTree = "<group>";
 		};
+		8BB11EF62C3D660700BEEAE1 /* PopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				8BB11EF72C3D661F00BEEAE1 /* PopUpView.swift */,
+			);
+			path = PopUpView;
+			sourceTree = "<group>";
+		};
 		8BB6FBCC2B66227D00345CFA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				8BB6FBCD2B6622A000345CFA /* CustomNavigationBarPreferenceKey.swift */,
 				8BF580A02C2FC72E00AB77AF /* SizePreferenceKey.swift */,
+				A2D50BB32C3E229A001CB370 /* UIApplication.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -320,6 +345,8 @@
 				8B901C5A2B0FA8F700C05DFF /* String.swift */,
 				8BF5808A2C15EEA900AB77AF /* Optional.swift */,
 				8BB11EEA2C3A56AF00BEEAE1 /* Array.swift */,
+				8BB11EF92C3D797900BEEAE1 /* Int.swift */,
+				A2F3EFDF2C3FBF3500CB3A28 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -427,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD2D78A2B0F2A4900CCF197 /* AlertMessage.swift */,
+				A2F3EFDD2C3FB36E00CB3A28 /* UserEventUIModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -544,6 +572,7 @@
 			children = (
 				A2BFB18D2B0C9C1000AA6FE7 /* GitHubRepoModel.swift */,
 				A263CA262C33B2D30085AF0A /* GitHubUserModel.swift */,
+				A23BADAB2C3F7B5000AE25BE /* UserEventModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -576,6 +605,8 @@
 				A2BFB1932B0CA68700AA6FE7 /* RepositoriesView.swift */,
 				A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewModel.swift */,
 				8BD2D77F2B0E5ACC00CCF197 /* RepositoryCell.swift */,
+				A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */,
+				A2D50BB52C3E3215001CB370 /* ChartView.swift */,
 			);
 			path = RepositoriesView;
 			sourceTree = "<group>";
@@ -594,6 +625,7 @@
 		A2BFB19D2B0CB41000AA6FE7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8BB11EF62C3D660700BEEAE1 /* PopUpView */,
 				A22E106E2C367C99007362D5 /* ActivityControllerView */,
 				8BF5809D2C2FC6AE00AB77AF /* CollectionView */,
 				8BF5809C2C2FC6A400AB77AF /* LoadingView */,
@@ -757,6 +789,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D686C82C3B8CB100CAD47B /* SettingViewModel.swift in Sources */,
+				8BB11EF82C3D661F00BEEAE1 /* PopUpView.swift in Sources */,
 				8BB11EE52C3A371C00BEEAE1 /* UserInfoStorage.swift in Sources */,
 				8BD2D7872B0F12A800CCF197 /* ActivityTracker.swift in Sources */,
 				8BD2D7802B0E5ACC00CCF197 /* RepositoryCell.swift in Sources */,
@@ -765,7 +798,9 @@
 				8BD2D7672B0D258000CCF197 /* Encodable.swift in Sources */,
 				8BB11EE22C34698D00BEEAE1 /* UserInfoRepositoryIml.swift in Sources */,
 				8B901C4F2B0F817300C05DFF /* RepositoryCollectionStorage.xcdatamodeld in Sources */,
+				A2D50BB42C3E229A001CB370 /* UIApplication.swift in Sources */,
 				8BF580972C2D3D3200AB77AF /* AppDefaultsKey.swift in Sources */,
+				A2D50BB22C3E20B6001CB370 /* BioInfoView.swift in Sources */,
 				8BB11EEB2C3A56AF00BEEAE1 /* Array.swift in Sources */,
 				8BF5808D2C1F152C00AB77AF /* Color.swift in Sources */,
 				8BF580902C2D3AA100AB77AF /* UserDefaultRepository.swift in Sources */,
@@ -773,8 +808,10 @@
 				8BF580822C15694500AB77AF /* HistoryView.swift in Sources */,
 				8BF5809F2C2FC6C700AB77AF /* FlexibleView.swift in Sources */,
 				8BD2D7512B0CF84400CCF197 /* WaveBackgroundView.swift in Sources */,
+				8BB11EFA2C3D797900BEEAE1 /* Int.swift in Sources */,
 				8BB6FBCB2B66184400345CFA /* CustomNavigationLink.swift in Sources */,
 				8BB6FBC52B64D7FE00345CFA /* CustomNavigationBar.swift in Sources */,
+				A2D50BB62C3E3215001CB370 /* ChartView.swift in Sources */,
 				A2BFB1752B0C8D6400AA6FE7 /* RepositoryCollectionApp.swift in Sources */,
 				8BB11EE92C3A395E00BEEAE1 /* CoreDataUserInfoModelMapping.swift in Sources */,
 				8BF580842C156A9B00AB77AF /* HistoryViewModel.swift in Sources */,
@@ -782,12 +819,14 @@
 				8BD2D75E2B0D0CC100CCF197 /* Endpoint.swift in Sources */,
 				8B901C522B0F846600C05DFF /* CoreDataStorage.swift in Sources */,
 				8B901C552B0F88E000C05DFF /* GithubRepoStorage.swift in Sources */,
+				A2F3EFE02C3FBF3500CB3A28 /* Date.swift in Sources */,
 				8BB11EF32C3A6E1800BEEAE1 /* UserInfoCell.swift in Sources */,
 				8BD2D7892B0F12DD00CCF197 /* ErrorTracker.swift in Sources */,
 				8BF5808B2C15EEA900AB77AF /* Optional.swift in Sources */,
 				A2BFB18C2B0C90B200AA6FE7 /* GithubRepository.swift in Sources */,
 				A2BFB19F2B0CB4DB00AA6FE7 /* CustomTextField.swift in Sources */,
 				8B901C572B0F894C00C05DFF /* CoreDataGithubRepoStorage.swift in Sources */,
+				A2F3EFDE2C3FB36E00CB3A28 /* UserEventUIModel.swift in Sources */,
 				8BD2D76D2B0DDB4C00CCF197 /* APIEndpoint.swift in Sources */,
 				A2BFB19C2B0CA96100AA6FE7 /* UIScreen.swift in Sources */,
 				8B901C592B0F9E8F00C05DFF /* CoreDataGithubRepoModelMapping.swift in Sources */,
@@ -796,6 +835,7 @@
 				8BF580A12C2FC72E00AB77AF /* SizePreferenceKey.swift in Sources */,
 				8BD2D7822B0EEE3C00CCF197 /* LoadingView.swift in Sources */,
 				A22E10702C367CC0007362D5 /* ActivityControllerView.swift in Sources */,
+				A23BADAC2C3F7B5000AE25BE /* UserEventModel.swift in Sources */,
 				8BB11EE72C3A391D00BEEAE1 /* CoreDataUserInfoStorage.swift in Sources */,
 				A2F2F1222B0F40B30004281E /* LaunchView.swift in Sources */,
 				8BD2D76F2B0DE04B00CCF197 /* DIContainer.swift in Sources */,
@@ -957,10 +997,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepositoryCollection/Preview Content\"";
-				DEVELOPMENT_TEAM = 95XVN448CF;
+				DEVELOPMENT_TEAM = J37YRCNW2V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RepositoryCollection/Info.plist;
@@ -968,7 +1009,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -976,6 +1019,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thiencodev.RepositoryCollection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -990,10 +1034,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepositoryCollection/Preview Content\"";
-				DEVELOPMENT_TEAM = 95XVN448CF;
+				DEVELOPMENT_TEAM = J37YRCNW2V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RepositoryCollection/Info.plist;
@@ -1001,7 +1046,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1009,6 +1056,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thiencodev.RepositoryCollection;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -52,6 +52,7 @@ class RepositoriesViewModel: ObservableObject {
     @Published var isLoading: Bool = true
     @Published var alertMessage = AlertMessage()
     @Published var userInfo: GitHubUserModel? = nil
+    @Published var userEvents: [UserEventUIModel] = []
     
     var userInfoBackgroundImage: String {
         backgrounds.randomElement() ?? backgrounds[0]
@@ -145,6 +146,17 @@ private extension RepositoriesViewModel {
                 self?.userInfo = userInfo
             })
             .store(in: &cancellable)
+        
+        userUseCases
+            .fetchUserEvents(userId: userID)
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] userEvents in
+                let pushEvents = userEvents.filter({ $0.type == .pushEvent })
+                self?.userEvents = pushEvents
+                print("===", pushEvents)
+            })
+            .store(in: &cancellable)
     }
     
     func bindDisplayItems(with storedItems: [GitHubRepoModel]) {
@@ -156,6 +168,7 @@ private extension RepositoriesViewModel {
     func clearData() {
         storedItems.removeAll()
         displayItems.removeAll()
+        userEvents.removeAll()
         userInfo = nil
     }
     

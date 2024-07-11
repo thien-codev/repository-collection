@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - GitHubUserModel
 struct GitHubUserModel: Decodable, Equatable {
     let login: String
     let id: Int
@@ -69,6 +70,7 @@ struct GitHubUserModel: Decodable, Equatable {
     }
 }
 
+// MARK: - Plan
 struct Plan: Decodable, Equatable {
     let name: String
     let space, privateRepos, collaborators: Int

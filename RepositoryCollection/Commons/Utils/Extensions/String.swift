@@ -17,6 +17,17 @@ extension String {
     }
 }
 
+extension String {
+    var toDate: Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.date(from: self)
+//        let calendar = Calendar.current
+//        let components = calendar.dateComponents([.year, .month, .day], from: date)
+    }
+}
+
 extension Optional where Wrapped == String {
     
     var isNotEmptyAndHasValue: Bool {
