@@ -19,6 +19,7 @@ protocol NetworkCancellable {
 protocol NetworkSessionManager {
     typealias CompletionHandler = (Data?, URLResponse?, ErrorMessage?) -> Void
     
+    @discardableResult
     func request(_ url: URLRequest, completion: @escaping CompletionHandler) -> NetworkCancellable
 }
 

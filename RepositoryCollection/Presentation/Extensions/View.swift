@@ -22,4 +22,10 @@ extension View {
             self
         }
     }
+    
+    func popup<PopupContent: View>(isPresented: Binding<Bool>, view: @escaping () -> PopupContent) -> some View {
+        self.modifier(
+            PopUpView(isPresented: isPresented, content: view)
+        )
+    }
 }

@@ -107,7 +107,7 @@ struct RepositoryCell: View {
                         .padding(.bottom, 10)
                         .padding(.top, 6)
                 }
-                HStack(spacing: 14) {
+                HStack(spacing: 10) {
                     if let language = repoModel.language, !language.isEmpty {
                         HStack(spacing: 4) {
                             Circle()
@@ -127,7 +127,7 @@ struct RepositoryCell: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 14)
-                            Text("\(repoModel.forksCount)")
+                            Text(repoModel.forksCount.roundedWithAbbreviations)
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(Color(UIColor.darkGray))
@@ -140,7 +140,7 @@ struct RepositoryCell: View {
                                 .scaledToFit()
                                 .frame(width: 18)
                                 .fontWeight(.semibold)
-                            Text("\(repoModel.watchersCount)")
+                            Text(repoModel.watchersCount.roundedWithAbbreviations)
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(Color(UIColor.darkGray))
@@ -152,7 +152,7 @@ struct RepositoryCell: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 16)
-                            Text("\(repoModel.stargazersCount)")
+                            Text(repoModel.stargazersCount.roundedWithAbbreviations)
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundColor(Color(UIColor.darkGray))
                         }

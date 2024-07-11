@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 enum Tab: CaseIterable {
     case home
@@ -76,6 +77,15 @@ struct MainTabView: View {
         .ignoresSafeArea()
         .eraseToAnyView()
         .environmentObject(viewModel)
+        .onReceive(viewModel.$showBioUserInfo, perform: { showUserInfo in
+            guard showUserInfo else { return }
+            let bioView = UIHostingController(rootView: BioInfoView(isPresented: $viewModel.showBioUserInfo, avatarUrlString: viewModel.selectedUserInfo?.avatarURL, info: viewModel.selectedUserInfo?.bio, isFullAvatar: viewModel.isShowFullAvatar))
+            bioView.modalPresentationStyle = .overFullScreen
+            bioView.modalTransitionStyle = .crossDissolve
+            bioView.view.backgroundColor = .clear
+            UIApplication.topViewController()?.present(bioView, animated: true)
+        })
+        .animation(.easeInOut, value: viewModel.showBioUserInfo)
     }
 }
 

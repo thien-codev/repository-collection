@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - GitHubRepoModel
 struct GitHubRepoModel: Decodable {
     let id: Int
     let name, fullName: String

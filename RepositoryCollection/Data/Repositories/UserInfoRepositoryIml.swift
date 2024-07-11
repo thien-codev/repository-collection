@@ -19,8 +19,13 @@ final class UserInfoRepositoryIml {
 }
 
 extension UserInfoRepositoryIml: UserInfoRepository {
+    
     func fetchUserInfo(userId: String) async throws -> GitHubUserModel {
         return try await fetchUserInfoFromEndpoint(userId)
+    }
+    
+    func fetchUserEvents(_ userId: String) async -> [UserEventModel] {
+        return await fetchUserEventsFromEndpoint(userId)
     }
     
     func fetchAllUserInfos() async -> [GitHubUserModel] {
@@ -30,6 +35,7 @@ extension UserInfoRepositoryIml: UserInfoRepository {
 }
 
 private extension UserInfoRepositoryIml {
+    
     func fetchUserInfoFromEndpoint(_ userId: String) async throws -> GitHubUserModel {
         try await withCheckedThrowingContinuation { continuation in
             let request = APIEndpoint.githubUser(with: userId)
@@ -44,6 +50,21 @@ private extension UserInfoRepositoryIml {
                 case let .failure(error):
                     debugPrint("\(#function) ---> error: \(error)")
                     continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func fetchUserEventsFromEndpoint(_ userId: String) async -> [UserEventModel] {
+        await withCheckedContinuation { continuation in
+            let request = APIEndpoint.userEvent(with: userId)
+            _ = dataTransferService.request(endpoint: request, on: DispatchQueue.main) { result in
+                switch result {
+                case let .success(userEvents):
+                    continuation.resume(returning: userEvents)
+                case let .failure(error):
+                    debugPrint("\(#function) ---> error: \(error)")
+                    continuation.resume(returning: [])
                 }
             }
         }
