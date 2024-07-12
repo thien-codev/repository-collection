@@ -23,8 +23,6 @@ extension String {
         dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return dateFormatter.date(from: self)
-//        let calendar = Calendar.current
-//        let components = calendar.dateComponents([.year, .month, .day], from: date)
     }
 }
 

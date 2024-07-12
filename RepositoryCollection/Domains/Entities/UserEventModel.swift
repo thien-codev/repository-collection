@@ -26,6 +26,21 @@ struct UserEventModel: Decodable {
     }
 }
 
+extension UserEventModel {
+    var message: String {
+        switch type {
+        case .pushEvent:
+            guard let commits = payload.commits else { return "" }
+            return "pushed \(commits.count) commits to \(repo.name)"
+        case .pullRequestEvent:
+            return "created PR to \(repo.name)"
+        case .issueCommentEvent:
+            return "commented on \(repo.name)"
+        default: return ""
+        }
+    }
+}
+
 // MARK: - Actor
 struct EventActor: Codable {
     let id: Int
@@ -87,7 +102,7 @@ enum Action: String, Decodable {
 struct Comment: Decodable {
     let url, htmlURL, issueURL: String
     let id: Int
-    let nodeID: String
+    let nodeID: String?
     let user: Owner
     let createdAt, updatedAt: String
     let authorAssociation, body: String
@@ -142,7 +157,7 @@ struct Author: Decodable {
 // MARK: - Forkee
 struct Forkee: Decodable {
     let id: Int
-    let nodeID, name, fullName: String
+    let nodeID, name, fullName: String?
     let forkeePrivate: Bool
     let owner: Owner
     let htmlURL: String
@@ -273,7 +288,7 @@ struct Issue: Decodable {
     let labelsURL: String
     let commentsURL, eventsURL, htmlURL: String
     let id: Int
-    let nodeID: String
+    let nodeID: String?
     let number: Int
     let title: String
     let user: Owner
@@ -318,7 +333,7 @@ struct Issue: Decodable {
 // MARK: - Label
 struct Label: Decodable {
     let id: Int
-    let nodeID: String
+    let nodeID: String?
     let url: String
     let name, color: String
     let labelDefault: Bool
@@ -337,7 +352,7 @@ struct Label: Decodable {
 struct PullRequest: Decodable {
     let url: String
     let id: Int
-    let nodeID: String
+    let nodeID: String?
     let htmlURL: String
     let diffURL: String
     let patchURL: String
@@ -450,22 +465,45 @@ enum UserEventType: String, Decodable {
     case pushEvent = "PushEvent"
     case watchEvent = "WatchEvent"
     
-//    var messageFormat: String {
-//        switch self {
-//        case .createEvent:
-//            <#code#>
-//        case .forkEvent:
-//            <#code#>
-//        case .issueCommentEvent:
-//            <#code#>
-//        case .issuesEvent:
-//            <#code#>
-//        case .pullRequestEvent:
-//            <#code#>
-//        case .pushEvent:
-//            <#code#>
-//        case .watchEvent:
-//            <#code#>
-//        }
-//    }
+    var title: String {
+        switch self {
+        case .createEvent:
+            "created repositories"
+        case .forkEvent:
+            "forked"
+        case .issueCommentEvent:
+            "comments on other repositories"
+        case .issuesEvent:
+            "issues from other repositories"
+        case .pullRequestEvent:
+            "created pull request to other repositories"
+        case .pushEvent:
+            "pushed commits to other repositories"
+        case .watchEvent:
+            "watched repository"
+        }
+    }
+    
+    var isContributedEvent: Bool {
+        return [.issueCommentEvent, .pullRequestEvent, .pushEvent].contains(self)
+    }
+    
+    var prefixMessage: String {
+        switch self {
+        case .createEvent:
+            return "created "
+        case .forkEvent:
+            return "forked from "
+        case .issueCommentEvent:
+            return "commented on "
+        case .issuesEvent:
+            return "created a issue "
+        case .pullRequestEvent:
+            return "created pull request "
+        case .pushEvent:
+            return "pushed to "
+        case .watchEvent:
+            return "watched "
+        }
+    }
 }

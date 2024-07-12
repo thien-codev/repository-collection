@@ -152,9 +152,8 @@ private extension RepositoriesViewModel {
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] userEvents in
-                let pushEvents = userEvents.filter({ $0.type == .pushEvent })
-                self?.userEvents = pushEvents
-                print("===", pushEvents)
+                let contributedEvents = userEvents.filter({ $0.type.isContributedEvent })
+                self?.userEvents = contributedEvents.toUIModels
             })
             .store(in: &cancellable)
     }
@@ -201,4 +200,49 @@ extension GitHubRepoModel {
               language: "language",
               visibility: "visibility")
     }()
+}
+
+extension Array where Element == UserEventModel {
+    var toUIModels: [UserEventUIModel] {
+        var results: [UserEventUIModel] = []
+        var initialList = self
+        
+        for item in self {
+            if let itemCreatedDate = item.createdDate, initialList.contains(where: { $0.id == item.id }) {
+                let eventsInSameDate = initialList.filter({ itemCreatedDate.isSameDate(to: $0.createdDate) == true })
+                if !eventsInSameDate.isEmpty {
+                    results.append(.init(types: eventsInSameDate.map({ $0.type }), createdDate: itemCreatedDate, message: eventsInSameDate.eventMessage))
+                    initialList.removeAll(where: { eventsInSameDate.contain(to: $0) })
+                }
+            }
+        }
+        
+        return results
+    }
+    
+    var eventMessage: String {
+        var message = ""
+        var initialList = self
+        
+        while !initialList.isEmpty {
+            let first = initialList.first
+            let groupEvents = initialList.filter{( $0.type == first?.type )}
+            
+            if groupEvents.count == 1 {
+                message += "- \(first?.message.uppercasedFirstLetter() ?? "")"
+            } else {
+                message += "- \(groupEvents.count) \(first?.type.title ?? "actions")".uppercasedFirstLetter()
+            }
+            initialList.removeAll(where: { groupEvents.contain(to: $0) })
+            if !initialList.isEmpty {
+                message += "\n"
+            }
+        }
+        
+        return message
+    }
+    
+    func contain(to item: UserEventModel) -> Bool {
+        return self.contains(where: { $0.id == item.id })
+    }
 }

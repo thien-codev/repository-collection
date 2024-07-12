@@ -61,6 +61,7 @@ struct BioInfoView: View {
                         .background {
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(lineWidth: 2)
+                                .foregroundColor(.white)
                                 .background {
                                     RoundedRectangle(cornerRadius: 12)
                                         .foregroundColor(.white)

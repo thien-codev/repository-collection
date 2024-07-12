@@ -80,6 +80,8 @@
 		A2BFB1962B0CA6B100AA6FE7 /* RepositoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewModel.swift */; };
 		A2BFB19C2B0CA96100AA6FE7 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */; };
 		A2BFB19F2B0CB4DB00AA6FE7 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */; };
+		A2CEB0D92C40E432003817ED /* ChartDetailModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CEB0D82C40E432003817ED /* ChartDetailModeView.swift */; };
+		A2CEB0DB2C4113AC003817ED /* hand-tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = A2CEB0DA2C4113AC003817ED /* hand-tapping.json */; };
 		A2D50BB22C3E20B6001CB370 /* BioInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */; };
 		A2D50BB42C3E229A001CB370 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB32C3E229A001CB370 /* UIApplication.swift */; };
 		A2D50BB62C3E3215001CB370 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D50BB52C3E3215001CB370 /* ChartView.swift */; };
@@ -172,6 +174,8 @@
 		A2BFB1952B0CA6B100AA6FE7 /* RepositoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesViewModel.swift; sourceTree = "<group>"; };
 		A2BFB19B2B0CA96100AA6FE7 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		A2BFB19E2B0CB4DB00AA6FE7 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		A2CEB0D82C40E432003817ED /* ChartDetailModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDetailModeView.swift; sourceTree = "<group>"; };
+		A2CEB0DA2C4113AC003817ED /* hand-tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hand-tapping.json"; sourceTree = "<group>"; };
 		A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioInfoView.swift; sourceTree = "<group>"; };
 		A2D50BB32C3E229A001CB370 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		A2D50BB52C3E3215001CB370 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -249,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				8BB11EED2C3A631900BEEAE1 /* empty.json */,
+				A2CEB0DA2C4113AC003817ED /* hand-tapping.json */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -607,6 +612,7 @@
 				8BD2D77F2B0E5ACC00CCF197 /* RepositoryCell.swift */,
 				A2D50BB12C3E20B6001CB370 /* BioInfoView.swift */,
 				A2D50BB52C3E3215001CB370 /* ChartView.swift */,
+				A2CEB0D82C40E432003817ED /* ChartDetailModeView.swift */,
 			);
 			path = RepositoriesView;
 			sourceTree = "<group>";
@@ -752,6 +758,7 @@
 				A2D686F22C3BF4F200CAD47B /* app-ic-3@2x.png in Resources */,
 				A2D686EF2C3BF4F200CAD47B /* app-ic-1@2x.png in Resources */,
 				A2D686ED2C3BF4F200CAD47B /* app-ic@3x.png in Resources */,
+				A2CEB0DB2C4113AC003817ED /* hand-tapping.json in Resources */,
 				A2D686F32C3BF4F200CAD47B /* app-ic-3@3x.png in Resources */,
 				A2D686F02C3BF4F200CAD47B /* app-ic@2x.png in Resources */,
 				8B901C4C2B0F813100C05DFF /* Assets.xcassets in Resources */,
@@ -849,6 +856,7 @@
 				8BD2D77C2B0E36B900CCF197 /* Cancellable.swift in Sources */,
 				8BB6FBC92B66160D00345CFA /* CustomNavigationContainerView.swift in Sources */,
 				A263CA272C33B2D30085AF0A /* GitHubUserModel.swift in Sources */,
+				A2CEB0D92C40E432003817ED /* ChartDetailModeView.swift in Sources */,
 				8BD2D7652B0D1BAB00CCF197 /* Dictionary.swift in Sources */,
 				8BD2D77E2B0E512600CCF197 /* AppEnvironment.swift in Sources */,
 				8B901C5B2B0FA8F700C05DFF /* String.swift in Sources */,
