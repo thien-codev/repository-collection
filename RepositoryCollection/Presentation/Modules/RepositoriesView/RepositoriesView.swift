@@ -16,6 +16,8 @@ struct RepositoriesView: GeneralView {
     @State var userInfoSheetPresented: Bool = false
     @State var sharedSheetPresented: Bool = false
     @State var userInfoPresentationDetent: PresentationDetent = .medium
+    @State var showChartDetail: Bool = false
+    @State var frameChartDetail: CGRect = .zero
     @FocusState var focusKeyboard: Bool
     @EnvironmentObject var mainTabViewModel: MainTabViewModel
     private let paddingHorizontal: CGFloat = 20
@@ -116,7 +118,8 @@ private extension RepositoriesView {
         let shouldShow = !isEnableSearch && viewModel.userInfo.hasValue
         let avatarURL = URL(string: viewModel.userInfo?.avatarURL ?? "")
         return Circle()
-            .stroke(lineWidth: 2)
+            .stroke(lineWidth: 1)
+            .frame(width: 40)
             .foregroundColor(.black)
             .overlay {
                 KFImage(avatarURL)
@@ -128,9 +131,9 @@ private extension RepositoriesView {
                     .foregroundColor(.black)
                     .mask {
                         Circle()
+                            .frame(width: 39)
                     }
             }
-            .frame(width: 40)
             .onTapGesture {
                 userInfoSheetPresented = true
             }
@@ -435,18 +438,31 @@ private extension RepositoriesView {
                                     .padding(.bottom, 6)
                             }
                         }
-                        .padding([.leading, .bottom, .trailing])
+                        .padding([.leading, .trailing])
+                        .padding(.bottom, 4)
+                    }
+                    if viewModel.userEvents.isEmpty {
+                        Text("No contributions recently")
+                            .font(.system(size: 13))
+                            .italic()
+                            .foregroundColor(.gray.opacity(0.8))
+                            .padding(.leading, 20)
                     }
                 }
                 .offset(y: userInfoPresentationDetent == .medium ? UIScreen.height : 0)
                 .padding(.top, 10)
             }
             
-            // Chart
-            ChartView()
+            // Contribute chart
+            if !viewModel.userEvents.isEmpty {
+                Text("Contributions")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(Color(hex: "000072"))
+                    .padding(.leading, 20)
+                ChartView(previousChartSelection: .constant(nil), displayData: viewModel.userEvents, showChartDetail: $showChartDetail, frameGetter: $frameChartDetail)
+            }
             
-            
-            Spacer()
+            Spacer(minLength: 0)
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         .sheet(isPresented: $sharedSheetPresented, content: {
@@ -457,6 +473,13 @@ private extension RepositoriesView {
         })
         .presentationDetents([.medium, .large], selection: $userInfoPresentationDetent)
         .animation(.easeInOut, value: userInfoPresentationDetent)
+        .onChange(of: showChartDetail) { oldValue, newValue in
+            guard newValue else { return }
+            mainTabViewModel.trigger(.showChartDetail(viewModel.userEvents, frameChartDetail))
+        }
+        .onReceive(mainTabViewModel.$onCloseChartDetail) { _ in
+            showChartDetail = false
+        }
     }
 }
 

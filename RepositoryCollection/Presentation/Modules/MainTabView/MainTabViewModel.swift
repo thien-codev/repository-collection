@@ -12,10 +12,14 @@ class MainTabViewModel: ObservableObject {
     enum Input {
         case selectHistoryUserInfo(GitHubUserModel)
         case updateSelectedTap(Tab)
+        case showChartDetail([UserEventUIModel], CGRect)
+        case closeChartDetail
         case showUserInfo(GitHubUserModel?, Bool)
         case closeUserInfo
     }
     
+    @Published var onCloseChartDetail: Void?
+    @Published var showChartDetail: Bool = false
     @Published var showBioUserInfo: Bool = false
     @Published var showSelectedHistoryUserInfo: Bool = false
     @Published var selectedTab: Tab = .home
@@ -28,6 +32,8 @@ class MainTabViewModel: ObservableObject {
     
     var isShowFullAvatar: Bool = false
     var selectedUserInfo: GitHubUserModel?
+    var chartDetailDislayData: [UserEventUIModel] = []
+    var frameChartDetail: CGRect?
     
     func trigger(_ input: Input) {
         switch input {
@@ -41,6 +47,12 @@ class MainTabViewModel: ObservableObject {
             showBioUserInfo = true
         case .closeUserInfo:
             showBioUserInfo = false
+        case .showChartDetail(let displayData, let frame):
+            showChartDetail = true
+            frameChartDetail = frame
+            chartDetailDislayData = displayData
+        case .closeChartDetail:
+            onCloseChartDetail = ()
         }
     }
 }

@@ -7,13 +7,21 @@
 
 import Foundation
 
-protocol UserEventUIModel {
-    var type: UserEventType { get }
-    var createdDate: Date? { get }
+struct UserEventUIModel: Identifiable, Hashable {
+    let id = UUID()
+    let types: [UserEventType]
+    let createdDate: Date
+    let message: String
 }
 
-extension UserEventModel: UserEventUIModel {
+protocol SingleUserEventDisplayModel {
+    var type: UserEventType { get }
+    var createdDate: Date? { get }
+    var message: String { get }
+}
+
+extension UserEventModel: SingleUserEventDisplayModel {
     var createdDate: Date? {
-        createdAt.toDate
+        return createdAt.toDate
     }
 }

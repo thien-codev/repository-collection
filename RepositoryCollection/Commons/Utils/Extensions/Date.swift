@@ -8,13 +8,16 @@
 import Foundation
 
 extension Date {
-    var text: String {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: self)
-        return components.description
+    
+    var textInUTC: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        
+        return dateFormatter.string(from: self)
     }
     
-    func isEqual(to another: Date) -> Bool {
+    func isSameDate(to another: Date?) -> Bool {
+        guard let another else { return false }
         let calendar = Calendar.current
         let selfComponents = calendar.dateComponents([.year, .month, .day], from: self)
         let anotherComponents = calendar.dateComponents([.year, .month, .day], from: another)

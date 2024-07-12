@@ -80,10 +80,14 @@ struct MainTabView: View {
         .onReceive(viewModel.$showBioUserInfo, perform: { showUserInfo in
             guard showUserInfo else { return }
             let bioView = UIHostingController(rootView: BioInfoView(isPresented: $viewModel.showBioUserInfo, avatarUrlString: viewModel.selectedUserInfo?.avatarURL, info: viewModel.selectedUserInfo?.bio, isFullAvatar: viewModel.isShowFullAvatar))
-            bioView.modalPresentationStyle = .overFullScreen
-            bioView.modalTransitionStyle = .crossDissolve
-            bioView.view.backgroundColor = .clear
-            UIApplication.topViewController()?.present(bioView, animated: true)
+            showView(view: bioView)
+        })
+        .onReceive(viewModel.$showChartDetail, perform: { showChartDetail in
+            guard showChartDetail, let frameChartDetail = viewModel.frameChartDetail else { return }
+            let chartDetailView = UIHostingController(rootView: ChartDetailModeView(displayData: viewModel.chartDetailDislayData, frameChart: frameChartDetail, onClose: {
+                viewModel.trigger(.closeChartDetail)
+            }))
+            showView(view: chartDetailView)
         })
         .animation(.easeInOut, value: viewModel.showBioUserInfo)
     }
@@ -231,5 +235,11 @@ private extension MainTabView {
         .foregroundStyle(Color(hex: "00008a"))
     }
     
+    func showView(view: UIViewController) {
+        view.modalPresentationStyle = .overFullScreen
+        view.modalTransitionStyle = .crossDissolve
+        view.view.backgroundColor = .clear
+        UIApplication.topViewController()?.present(view, animated: true)
+    }
 }
 
