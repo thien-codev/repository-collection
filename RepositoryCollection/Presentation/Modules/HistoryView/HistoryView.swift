@@ -20,7 +20,7 @@ struct HistoryView: GeneralView {
     var body: some View {
         ZStack {
             emptyView.isHidden(!viewModel.displayedData.isEmpty, remove: true)
-            sectionView
+            sectionView.ignoresSafeArea(edges: .bottom)
         }
         .task {
             try? await Task.sleep(nanoseconds: 1 * 1000 * 1000 * 1000)
@@ -47,7 +47,7 @@ private extension HistoryView {
                     .frame(width: UIScreen.width)
                     loadMoreView.padding(.top, 8)
                 }
-                .padding(.bottom, MainTabView.bottomBarHeight)
+                .padding(.bottom, MainTabView.bottomBarHeight + 20)
             }
         }
     }

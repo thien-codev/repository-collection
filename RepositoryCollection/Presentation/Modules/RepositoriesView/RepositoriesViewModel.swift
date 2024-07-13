@@ -17,7 +17,6 @@ class RepositoriesViewModel: ObservableObject {
         case historySearch(GitHubUserModel)
     }
     
-    private let backgrounds: [String] = ["im-1", "im-2", "im-3", "im-4", "im-5", "im-6"]
     private let limitItems = 5
     private let popularRepoThreshold = 6
     private let repoUseCases: GitHubRepoUseCases
@@ -37,15 +36,18 @@ class RepositoriesViewModel: ObservableObject {
     // Input
     @Published var userID: String = "" {
         didSet {
-            hasNoRepo = false
+            if userID != oldValue {
+                clearData()
+            }
             guard userID.isEmpty else { return }
             self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
-            self.clearData()
         }
     }
     
     // Output
-    @Published var hasNoRepo: Bool = false
+    @Published var isEnableSearchTextField: Bool = false
+    @Published var alreadySearched: Bool = false
+    @Published var reposNumbers: Int = 0
     @Published var enableRecentSearch: Bool = false
     @Published var canLoadMore = false
     @Published var displayItems: [GitHubRepoModel] = []
@@ -53,10 +55,6 @@ class RepositoriesViewModel: ObservableObject {
     @Published var alertMessage = AlertMessage()
     @Published var userInfo: GitHubUserModel? = nil
     @Published var userEvents: [UserEventUIModel] = []
-    
-    var userInfoBackgroundImage: String {
-        backgrounds.randomElement() ?? backgrounds[0]
-    }
     
     var mostPopularRepos: [GitHubRepoModel] {
         return Array(returnedData.sorted(by: { $0.stargazersCount > $1.stargazersCount }).prefix(popularRepoThreshold))
@@ -99,6 +97,7 @@ class RepositoriesViewModel: ObservableObject {
     func trigger(_ input: Input) {
         switch input {
         case .search:
+            isEnableSearchTextField = false
             clearData()
             fetchRepos(userID: userID.trim())
             fetchUserInfo(userID: userID.trim())
@@ -107,6 +106,7 @@ class RepositoriesViewModel: ObservableObject {
         case .recentSearchTrigger:
             fetchRecentSearch()
         case .historySearch(let userInfo):
+            isEnableSearchTextField = false
             clearData()
             userID = userInfo.login
             fetchRepos(userID: userID.trim())
@@ -126,13 +126,14 @@ private extension RepositoriesViewModel {
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure:
-                    self?.hasNoRepo = false
+                    self?.reposNumbers.beZero()
                 case .finished: break
                 }
             }, receiveValue: { [weak self] repos in
-                self?.hasNoRepo = repos.isEmpty
+                self?.reposNumbers = repos.count
                 self?.storedItems = repos
                 self?.returnedData = repos
+                self?.alreadySearched = true
             })
             .store(in: &cancellable)
     }
@@ -169,6 +170,8 @@ private extension RepositoriesViewModel {
         displayItems.removeAll()
         userEvents.removeAll()
         userInfo = nil
+        reposNumbers.beZero()
+        alreadySearched = false
     }
     
     func fetchRecentSearch() {
