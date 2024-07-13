@@ -19,14 +19,14 @@ struct HistoryView: GeneralView {
     
     var body: some View {
         ZStack {
-            emptyView.isHidden(!viewModel.cacheUserInfos.isEmpty, remove: true)
+            emptyView.isHidden(!viewModel.displayedData.isEmpty, remove: true)
             sectionView
         }
         .task {
             try? await Task.sleep(nanoseconds: 1 * 1000 * 1000 * 1000)
             viewModel.trigger(.fetchData)
         }
-        .animation(.spring, value: viewModel.cacheUserInfos)
+        .animation(.spring, value: viewModel.displayedData)
     }
 }
 
@@ -35,18 +35,41 @@ private extension HistoryView {
         VStack(alignment: .leading, spacing: 8) {
             Text("Recently").font(.system(size: 16, weight: .semibold))
                 .padding(.leading, 20)
-                .isHidden(viewModel.cacheUserInfos.isEmpty, remove: true)
+                .isHidden(viewModel.displayedData.isEmpty, remove: true)
             ScrollView(showsIndicators: false) {
-                ForEach(viewModel.cacheUserInfos, id: \.id) { userInfo in
-                    UserInfoCell(model: userInfo)
-                        .onTapGesture {
-                            mainTabViewModel.trigger(.selectHistoryUserInfo(userInfo))
-                        }
+                Group {
+                    ForEach(viewModel.displayedData, id: \.id) { userInfo in
+                        UserInfoCell(model: userInfo)
+                            .onTapGesture {
+                                mainTabViewModel.trigger(.selectHistoryUserInfo(userInfo))
+                            }
+                    }
+                    .frame(width: UIScreen.width)
+                    loadMoreView.padding(.top, 8)
                 }
-                .frame(width: UIScreen.width)
                 .padding(.bottom, MainTabView.bottomBarHeight)
             }
         }
+    }
+    
+    var loadMoreView: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .stroke(lineWidth: 1)
+            .frame(height: 40)
+            .overlay {
+                Text("Load more")
+                    .font(.system(size: 14, weight: .semibold))
+            }
+            .background(content: {
+                RoundedRectangle(cornerRadius: 8)
+                    .frame(height: 40)
+                    .foregroundColor(Color(hex: "90D5FF").opacity(0.8))
+            })
+            .padding([.leading, .trailing], 20)
+            .onTapGesture {
+                viewModel.trigger(.loadMore)
+            }
+            .isHidden(!viewModel.canLoadMore, remove: true)
     }
     
     var emptyView: some View {

@@ -196,7 +196,7 @@ struct Forkee: Decodable {
     let mirrorURL: String?
     let archived, disabled: Bool
     let openIssuesCount: Int
-    let license: String?
+    let license: License?
     let allowForking, isTemplate, webCommitSignoffRequired: Bool
     let topics: [String]
     let visibility: String
@@ -282,6 +282,22 @@ struct Forkee: Decodable {
     }
 }
 
+// MARK: - License
+struct License: Codable {
+    let key: String
+    let name: String
+    let spdxID: String
+    let url: String
+    let nodeID: String
+
+    enum CodingKeys: String, CodingKey {
+        case key, name
+        case spdxID = "spdx_id"
+        case url
+        case nodeID = "node_id"
+    }
+}
+
 // MARK: - Issue
 struct Issue: Decodable {
     let url, repositoryURL: String
@@ -295,9 +311,9 @@ struct Issue: Decodable {
     let labels: [Label]
     let state: String
     let locked: Bool
-    let assignee: String?
-    let assignees: [String]
-    let milestone: String?
+    let assignee: Owner?
+    let assignees: [Owner]
+    let milestone: Milestone?
     let comments: Int
     let createdAt, updatedAt: String
     let closedAt: Date?
@@ -327,6 +343,37 @@ struct Issue: Decodable {
         case timelineURL = "timeline_url"
         case performedViaGithubApp = "performed_via_github_app"
         case stateReason = "state_reason"
+    }
+}
+
+// MARK: - Milestone
+struct Milestone: Decodable {
+    let url, htmlURL, labelsURL: String
+    let id: Int
+    let nodeID: String
+    let number: Int
+    let title, description: String
+    let creator: Owner
+    let openIssues, closedIssues: Int
+    let state: String
+    let createdAt, updatedAt: String
+    let dueOn: String?
+    let closedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case url
+        case htmlURL = "html_url"
+        case labelsURL = "labels_url"
+        case id
+        case nodeID = "node_id"
+        case number, title, description, creator
+        case openIssues = "open_issues"
+        case closedIssues = "closed_issues"
+        case state
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case dueOn = "due_on"
+        case closedAt = "closed_at"
     }
 }
 
@@ -366,9 +413,10 @@ struct PullRequest: Decodable {
     let createdAt, updatedAt: String
     let closedAt, mergedAt: String?
     let mergeCommitSHA: String?
-    let assignee: String?
-    let assignees, requestedReviewers, requestedTeams, labels: [String]
-    let milestone: String?
+    let assignee: Owner?
+    let assignees, requestedReviewers: [Owner]
+    let labels: [Label]
+    let milestone: Milestone?
     let draft: Bool
     let commitsURL, reviewCommentsURL: String
     let reviewCommentURL: String
@@ -400,7 +448,6 @@ struct PullRequest: Decodable {
         case mergeCommitSHA = "merge_commit_sha"
         case assignee, assignees
         case requestedReviewers = "requested_reviewers"
-        case requestedTeams = "requested_teams"
         case labels, milestone, draft
         case commitsURL = "commits_url"
         case reviewCommentsURL = "review_comments_url"
@@ -464,6 +511,17 @@ enum UserEventType: String, Decodable {
     case pullRequestEvent = "PullRequestEvent"
     case pushEvent = "PushEvent"
     case watchEvent = "WatchEvent"
+    case publicEvent = "PublicEvent"
+    case deleteEvent = "DeleteEvent"
+    case commitCommentEvent = "CommitCommentEvent"
+    case gollumEvent = "GollumEvent"
+    
+    case MemberEvent = "MemberEvent"
+    case PullRequestReviewEvent = "PullRequestReviewEvent"
+    case PullRequestReviewCommentEvent = "PullRequestReviewCommentEvent"
+    case PullRequestReviewThreadEvent = "PullRequestReviewThreadEvent"
+    case ReleaseEvent = "ReleaseEvent"
+    case SponsorshipEvent = "SponsorshipEvent"
     
     var title: String {
         switch self {
@@ -481,29 +539,30 @@ enum UserEventType: String, Decodable {
             "pushed commits to other repositories"
         case .watchEvent:
             "watched repository"
+        case .publicEvent:
+            "public repository"
+        case .deleteEvent:
+            "deleted repository"
+        case .commitCommentEvent:
+            "commited comments"
+        case .gollumEvent:
+            "gollumed "
+        case .MemberEvent:
+            "member"
+        case .PullRequestReviewEvent:
+            "pulled request review"
+        case .PullRequestReviewCommentEvent:
+            "pulled request review comment"
+        case .PullRequestReviewThreadEvent:
+            "pulled request review thread"
+        case .ReleaseEvent:
+            "release"
+        case .SponsorshipEvent:
+            "got sponsorship"
         }
     }
     
     var isContributedEvent: Bool {
         return [.issueCommentEvent, .pullRequestEvent, .pushEvent].contains(self)
-    }
-    
-    var prefixMessage: String {
-        switch self {
-        case .createEvent:
-            return "created "
-        case .forkEvent:
-            return "forked from "
-        case .issueCommentEvent:
-            return "commented on "
-        case .issuesEvent:
-            return "created a issue "
-        case .pullRequestEvent:
-            return "created pull request "
-        case .pushEvent:
-            return "pushed to "
-        case .watchEvent:
-            return "watched "
-        }
     }
 }
