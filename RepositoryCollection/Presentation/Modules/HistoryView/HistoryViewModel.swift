@@ -20,7 +20,6 @@ class HistoryViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
     private var returnedData: [GitHubUserModel] = [] {
         didSet {
-            guard returnedData != oldValue else { return }
             bindDisplayData(items: returnedData)
         }
     }
@@ -59,6 +58,7 @@ private extension HistoryViewModel {
     
     func clearData() {
         displayedData.removeAll()
+        canLoadMore = false
     }
     
     func bindDisplayData(items: [GitHubUserModel]) {

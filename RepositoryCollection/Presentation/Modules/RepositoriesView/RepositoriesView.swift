@@ -12,7 +12,6 @@ import Kingfisher
 struct RepositoriesView: GeneralView {
     
     @ObservedObject var viewModel: RepositoriesViewModel
-    @State var isEnableSearch: Bool = false
     @State var userInfoSheetPresented: Bool = false
     @State var sharedSheetPresented: Bool = false
     @State var userInfoPresentationDetent: PresentationDetent = .medium
@@ -91,7 +90,8 @@ struct RepositoriesView: GeneralView {
 private extension RepositoriesView {
     
     var searchButton: some View {
-        let shouldShow = (isEnableSearch || !viewModel.userID.isEmpty)
+        let shouldShow = (viewModel.isEnableSearchTextField || !viewModel.userID.isEmpty)
+        let showNumberOfRepos = !viewModel.isEnableSearchTextField && !viewModel.reposNumbers.isEmpty
         return Circle()
             .stroke(lineWidth: 1)
             .foregroundColor(.black)
@@ -101,21 +101,28 @@ private extension RepositoriesView {
                     .scaledToFit()
                     .frame(width: 16)
                     .foregroundColor(.black)
+                    .rotation3DEffect(.degrees(showNumberOfRepos ? 180 : 0), axis: (0, 1, 0))
+                    .opacity(showNumberOfRepos ? 0 : 1)
+                Text("\(viewModel.reposNumbers)")
+                    .font(.system(size: 16, weight: .bold))
+                    .rotation3DEffect(.degrees(showNumberOfRepos ? 0 : 180), axis: (0, 1, 0))
+                    .opacity(showNumberOfRepos ? 1 : 0)
             }
             .frame(width: 40)
             .onTapGesture {
+                guard !showNumberOfRepos else { return }
                 viewModel.trigger(.search)
-                isEnableSearch = false
             }
             .background(content: {
                 Circle().fill(.white)
                     .shadow(radius: 0, x: 8, y: 8)
             })
             .isHidden(!shouldShow)
+            .animation(.easeInOut, value: showNumberOfRepos)
     }
     
     var profileView: some View {
-        let shouldShow = !isEnableSearch && viewModel.userInfo.hasValue
+        let shouldShow = !viewModel.isEnableSearchTextField && viewModel.userInfo.hasValue
         let avatarURL = URL(string: viewModel.userInfo?.avatarURL ?? "")
         return Circle()
             .stroke(lineWidth: 1)
@@ -168,7 +175,7 @@ private extension RepositoriesView {
         HStack(spacing: 14) {
             CustomTextField(placeholder: "Search GitHub",
                             text: $viewModel.userID,
-                            isEnabled: $isEnableSearch,
+                            isEnabled: $viewModel.isEnableSearchTextField,
                             backgroundColor: .white,
                             tint: .black,
                             focusKeyboard: $focusKeyboard)
@@ -176,7 +183,7 @@ private extension RepositoriesView {
             searchButton
             profileView
         }
-        .animation(.easeInOut, value: isEnableSearch)
+        .animation(.easeInOut, value: viewModel.isEnableSearchTextField)
         .animation(.easeInOut, value: viewModel.userInfo)
         .animation(.easeInOut, value: viewModel.userID)
         .animation(.easeInOut, value: viewModel.enableRecentSearch)
@@ -184,7 +191,7 @@ private extension RepositoriesView {
     }
     
     var recentSearchButtonView: some View {
-        let shouldShow = viewModel.enableRecentSearch && !isEnableSearch
+        let shouldShow = viewModel.enableRecentSearch && !viewModel.isEnableSearchTextField
         return Circle()
             .stroke(lineWidth: 1)
             .foregroundColor(.black)
@@ -207,7 +214,7 @@ private extension RepositoriesView {
     }
     
     var noResultFoundView: some View {
-        let shouldShow: Bool = viewModel.hasNoRepo && !viewModel.userID.isEmpty && !isEnableSearch && !viewModel.isLoading
+        let shouldShow: Bool = viewModel.alreadySearched && viewModel.reposNumbers.isEmpty && !viewModel.userID.isEmpty && !viewModel.isEnableSearchTextField && !viewModel.isLoading
         return RoundedRectangle(cornerRadius: 12)
             .stroke(lineWidth: 1)
             .frame(height: 50)

@@ -8,6 +8,7 @@
 import Foundation
 
 extension Int {
+    
     var roundedWithAbbreviations: String {
         let number = Double(self)
         let thousand = number / 1000
@@ -21,5 +22,13 @@ extension Int {
         else {
             return "\(self)"
         }
+    }
+    
+    var isEmpty: Bool {
+        return self == .zero
+    }
+    
+    mutating func beZero() {
+        self = .zero
     }
 }
