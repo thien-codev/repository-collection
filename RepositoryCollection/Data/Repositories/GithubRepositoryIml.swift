@@ -19,13 +19,17 @@ class GitHubRepositoryIml: GitHubRepository {
     }
     
     func fetchRepos(userId: String) async throws -> [GitHubRepoModel] {
-//        let cacheRepos = await githubRepoStorage.getRepos(of: userId)
         // should check cache when offline
+//        let cacheRepos = await githubRepoStorage.getRepos(of: userId)
 //        if !cacheRepos.isEmpty {
 //            return cacheRepos
 //        } else {
             return try await fetchReposFromEndpoint(userId)
 //        }
+    }
+    
+    func fetchSuggestionUsers(prefix: String) async -> [Owner] {
+        await fetchSuggestionUsersEndpoint(prefix)
     }
 }
 
@@ -44,6 +48,22 @@ private extension GitHubRepositoryIml {
                 case let .failure(error):
                     debugPrint("\(#function) ---> error: \(error)")
                     continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func fetchSuggestionUsersEndpoint(_ prefix: String) async -> [Owner] {
+        await withCheckedContinuation { continuation in
+            let request = APIEndpoint.suggestionUsers(with: prefix)
+            currentTask?.doCancel()
+            currentTask = dataTransferService.request(endpoint: request, on: DispatchQueue.main) { result in
+                switch result {
+                case let .success(suggestionUsers):
+                    continuation.resume(returning: suggestionUsers.items)
+                case let .failure(error):
+                    debugPrint("\(#function) ---> error: \(error)")
+                    continuation.resume(returning: [])
                 }
             }
         }

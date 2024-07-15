@@ -172,22 +172,62 @@ private extension RepositoriesView {
     }
     
     var searchBar: some View {
-        HStack(spacing: 14) {
-            CustomTextField(placeholder: "Search GitHub",
-                            text: $viewModel.userID,
-                            isEnabled: $viewModel.isEnableSearchTextField,
-                            backgroundColor: .white,
-                            tint: .black,
-                            focusKeyboard: $focusKeyboard)
-            recentSearchButtonView
-            searchButton
-            profileView
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 14) {
+                CustomTextField(placeholder: "Search GitHub",
+                                text: $viewModel.userID,
+                                isEnabled: $viewModel.isEnableSearchTextField,
+                                backgroundColor: .white,
+                                tint: .black,
+                                focusKeyboard: $focusKeyboard)
+                recentSearchButtonView
+                searchButton
+                profileView
+            }
+            
+            suggesionUsers
+                .isHidden(viewModel.suggestionUsers.isEmpty || !viewModel.isEnableSearchTextField || !viewModel.displayItems.isEmpty, remove: true)
         }
         .animation(.easeInOut, value: viewModel.isEnableSearchTextField)
         .animation(.easeInOut, value: viewModel.userInfo)
         .animation(.easeInOut, value: viewModel.userID)
         .animation(.easeInOut, value: viewModel.enableRecentSearch)
+        .animation(.easeInOut, value: viewModel.suggestionUsers)
         .padding(20)
+    }
+    
+    var suggesionUsers: some View {
+        ScrollView(showsIndicators: false) {
+            ForEach(viewModel.suggestionUsers, id: \.login) { suggestionUser in
+                HStack {
+                    Circle()
+                        .stroke(lineWidth: 1)
+                        .frame(width: 20)
+                        .foregroundColor(.black)
+                        .overlay {
+                            KFImage(URL(string: suggestionUser.avatarURL ?? ""))
+                                .placeholder {
+                                    Image(systemName: "person.crop.circle")
+                                }
+                                .resizable()
+                                .scaledToFill()
+                                .foregroundColor(.black)
+                                .mask {
+                                    Circle()
+                                        .frame(width: 20)
+                                }
+                        }
+                    Text(suggestionUser.login)
+                        .font(.system(size: 14, weight: .medium))
+                    Spacer()
+                }
+                .onTapGesture {
+                    viewModel.trigger(.fillSuggestion(suggestionUser.login))
+                }
+            }
+            .padding(.top, 12)
+            .padding(.leading, 10)
+        }
     }
     
     var recentSearchButtonView: some View {

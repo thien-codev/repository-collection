@@ -9,4 +9,5 @@ import Foundation
 
 protocol GitHubRepository {
     func fetchRepos(userId: String) async throws -> [GitHubRepoModel]
+    func fetchSuggestionUsers(prefix: String) async -> [Owner]
 }

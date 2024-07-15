@@ -11,6 +11,7 @@ struct APIEndpoint {
     
     struct Path {
         static var githubRepos = "/users/%@/repos"
+        static var suggestionUsers = "/search/users?q=%@"
         static var githubUser = "/users/%@"
         static var userEvent = "/users/%@/events"
     }
@@ -24,6 +25,13 @@ struct APIEndpoint {
         return Endpoint<[GitHubRepoModel]>(baseUrl: baseUrl,
                                            path: path,
                                            method: .get)
+    }
+    
+    static func suggestionUsers(with prefix: String) -> Endpoint<ListSuggestionUsersModel> {
+        let path = String(format: Path.suggestionUsers, prefix)
+        return Endpoint<ListSuggestionUsersModel>(baseUrl: baseUrl,
+                                                  path: path,
+                                                  method: .get)
     }
     
     static func githubUser(with userId: String) -> Endpoint<GitHubUserModel> {
