@@ -15,8 +15,10 @@ class RepositoriesViewModel: ObservableObject {
         case loadMore
         case recentSearchTrigger
         case historySearch(GitHubUserModel)
+        case fillSuggestion(String)
     }
     
+    private let limitRecentSearch: Int = 3
     private let limitItems = 5
     private let popularRepoThreshold = 6
     private let repoUseCases: GitHubRepoUseCases
@@ -33,6 +35,10 @@ class RepositoriesViewModel: ObservableObject {
         }
     }
     
+    private var recentSearchUsers: [Owner] {
+        userDefaultRepo.recentSearchUsers
+    }
+    
     // Input
     @Published var userID: String = "" {
         didSet {
@@ -40,7 +46,7 @@ class RepositoriesViewModel: ObservableObject {
                 clearData()
             }
             guard userID.isEmpty else { return }
-            self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
+            self.enableRecentSearch = !userDefaultRepo.recentSearchUsers.isEmpty
         }
     }
     
@@ -55,6 +61,7 @@ class RepositoriesViewModel: ObservableObject {
     @Published var alertMessage = AlertMessage()
     @Published var userInfo: GitHubUserModel? = nil
     @Published var userEvents: [UserEventUIModel] = []
+    @Published var suggestionUsers: [Owner] = []
     
     var mostPopularRepos: [GitHubRepoModel] {
         return Array(returnedData.sorted(by: { $0.stargazersCount > $1.stargazersCount }).prefix(popularRepoThreshold))
@@ -80,7 +87,7 @@ class RepositoriesViewModel: ObservableObject {
         self.repoUseCases = repoUseCases
         self.userUseCases = userUseCases
         self.userDefaultRepo = userDefaultRepo
-        self.enableRecentSearch = userDefaultRepo.recentUserId.isNotEmptyAndHasValue
+        self.enableRecentSearch = !userDefaultRepo.recentSearchUsers.isEmpty
         
         activityTracker
             .receive(on: DispatchQueue.main)
@@ -92,23 +99,42 @@ class RepositoriesViewModel: ObservableObject {
             .compactMap({ AlertMessage(error: $0) })
             .assign(to: \.alertMessage, on: self)
             .store(in: &cancellable)
+        
+        $userID
+            .removeDuplicates()
+            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.fetchSuggestionUsers(prefix: value)
+            }
+            .store(in: &cancellable)
     }
     
     func trigger(_ input: Input) {
         switch input {
         case .search:
             isEnableSearchTextField = false
+            suggestionUsers.removeAll()
             clearData()
             fetchRepos(userID: userID.trim())
             fetchUserInfo(userID: userID.trim())
         case .loadMore:
+            suggestionUsers.removeAll()
             storedItems.removeFirst(limitItems)
         case .recentSearchTrigger:
+            suggestionUsers.removeAll()
             fetchRecentSearch()
         case .historySearch(let userInfo):
+            suggestionUsers.removeAll()
             isEnableSearchTextField = false
             clearData()
             userID = userInfo.login
+            fetchRepos(userID: userID.trim())
+            fetchUserInfo(userID: userID.trim())
+        case .fillSuggestion(let userId):
+            userID = userId.trim()
+            suggestionUsers.removeAll()
+            isEnableSearchTextField = false
+            clearData()
             fetchRepos(userID: userID.trim())
             fetchUserInfo(userID: userID.trim())
         }
@@ -138,6 +164,36 @@ private extension RepositoriesViewModel {
             .store(in: &cancellable)
     }
     
+    func fetchSuggestionUsers(prefix: String) {
+        repoUseCases
+            .fetchSuggestionUsers(prefix: prefix)
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] remoteSuggestionUsers in
+                guard let self else { return }
+                
+                if prefix.isEmpty {
+                    self.suggestionUsers = []
+                } else {
+                    var suggestionUsers: [Owner] = []
+                    let recentSearchUsers = Array(self.recentSearchUsers.filter({ $0.login.lowercased().contains(prefix.lowercased()) }).prefix(self.limitRecentSearch))
+                    if remoteSuggestionUsers.isEmpty {
+                        suggestionUsers = recentSearchUsers
+                    } else {
+                        let filterRemoteSuggestionUsers = remoteSuggestionUsers.filter { owner in
+                            return recentSearchUsers.contain { comparedOwner in
+                                return owner.login == comparedOwner.login
+                            }
+                        }
+                        suggestionUsers = recentSearchUsers + filterRemoteSuggestionUsers.filter({ $0.login.lowercased().contains(prefix.lowercased()) })
+                    }
+                    
+                    self.suggestionUsers = suggestionUsers
+                }
+            })
+            .store(in: &cancellable)
+    }
+    
     func fetchUserInfo(userID: String) {
         userUseCases
             .fetchUserInfo(userId: userID)
@@ -162,7 +218,7 @@ private extension RepositoriesViewModel {
     func bindDisplayItems(with storedItems: [GitHubRepoModel]) {
         displayItems.append(contentsOf: storedItems.prefix(limitItems))
         canLoadMore = storedItems.count > limitItems
-        cacheRecentSearchId()
+        cacheRecentSearchUser()
     }
     
     func clearData() {
@@ -175,20 +231,20 @@ private extension RepositoriesViewModel {
     }
     
     func fetchRecentSearch() {
-        guard let recentUserId = userDefaultRepo.recentUserId, !recentUserId.isEmpty else { return }
-        let trimId = recentUserId.trim()
+        guard let recentUser = userDefaultRepo.recentSearchUsers.first, !recentUser.login.isEmpty else { return }
+        let trimId = recentUser.login.trim()
         userID = trimId
         clearData()
         fetchRepos(userID: trimId)
         fetchUserInfo(userID: trimId)
     }
     
-    func cacheRecentSearchId() {
+    func cacheRecentSearchUser() {
         enableRecentSearch = userID.isEmpty
-        guard !displayItems.isEmpty, !userID.isEmpty else { return }
-        userDefaultRepo.recentUserId = userID
+        guard !displayItems.isEmpty, !userID.isEmpty, let owner = storedItems.first?.owner else { return }
+        userDefaultRepo.recentSearchUsers.insert(owner, at: 0)
     }
-}
+} 
 
 extension GitHubRepoModel {
     static var mock: GitHubRepoModel = {
@@ -215,7 +271,11 @@ extension Array where Element == UserEventModel {
                 let eventsInSameDate = initialList.filter({ itemCreatedDate.isSameDate(to: $0.createdDate) == true })
                 if !eventsInSameDate.isEmpty {
                     results.append(.init(types: eventsInSameDate.map({ $0.type }), createdDate: itemCreatedDate, message: eventsInSameDate.eventMessage))
-                    initialList.removeAll(where: { eventsInSameDate.contain(to: $0) })
+                    initialList.removeAll(where: { item in
+                        eventsInSameDate.contain { comparedItem in
+                            return comparedItem.id == item.id
+                        }
+                    })
                 }
             }
         }
@@ -236,16 +296,16 @@ extension Array where Element == UserEventModel {
             } else {
                 message += "- \(groupEvents.count) \(first?.type.title ?? "actions")".uppercasedFirstLetter()
             }
-            initialList.removeAll(where: { groupEvents.contain(to: $0) })
+            initialList.removeAll(where: { item in
+                groupEvents.contain { comparedItem in
+                    return comparedItem.id == item.id
+                }
+            })
             if !initialList.isEmpty {
                 message += "\n"
             }
         }
         
         return message
-    }
-    
-    func contain(to item: UserEventModel) -> Bool {
-        return self.contains(where: { $0.id == item.id })
     }
 }

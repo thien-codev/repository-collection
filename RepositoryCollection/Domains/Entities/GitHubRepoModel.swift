@@ -118,7 +118,7 @@ extension Array where Element == GitHubRepoModel {
 }
 
 // MARK: - Owner
-struct Owner: Decodable, Equatable {
+public struct Owner: Codable, Equatable {
     
     let login: String
     let id: Int

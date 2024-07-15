@@ -10,6 +10,7 @@ import Combine
 
 protocol GitHubRepoUseCases {
     func fetchRepos(userId: String) -> AnyPublisher<[GitHubRepoModel], Error>
+    func fetchSuggestionUsers(prefix: String) -> AnyPublisher<[Owner], Error>
 }
 
 enum UseCasesError: Error, LocalizedError {
@@ -36,6 +37,18 @@ final class GitHubRepoUseCasesIml {
 }
 
 extension GitHubRepoUseCasesIml: GitHubRepoUseCases {
+    
+    func fetchSuggestionUsers(prefix: String) -> AnyPublisher<[Owner], Error> {
+        let limit: Int = 7
+        let subject = PassthroughSubject<[Owner], Error>()
+        Task {
+            let suggestionUsers = await repo.fetchSuggestionUsers(prefix: prefix)
+            subject.send(Array(suggestionUsers.prefix(limit)))
+            subject.send(completion: .finished)
+        }
+        return subject.eraseToAnyPublisher()
+    }
+    
     
     func fetchRepos(userId: String) -> AnyPublisher<[GitHubRepoModel], Error> {
         let subject = PassthroughSubject<[GitHubRepoModel], Error>()

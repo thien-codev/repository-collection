@@ -23,4 +23,8 @@ extension Array where Element: Equatable {
         guard index >= 0 && index < count else { return nil }
         return self[index]
     }
+    
+    func contain(comparasion: @escaping (Element) -> Bool) -> Bool {
+        self.contains(where: { comparasion($0) })
+    }
 }

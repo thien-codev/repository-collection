@@ -10,6 +10,6 @@ import Foundation
 protocol UserDefaultRepository {
     var defaultStorage: DefaultStorage { get }
     
-    var recentUserId: String? { get set }
+    var recentSearchUsers: [Owner] { get set }
     var appIcon: AppIcon { get set }
 }

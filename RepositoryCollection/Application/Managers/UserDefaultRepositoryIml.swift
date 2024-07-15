@@ -11,9 +11,14 @@ class UserDefaultRepositoryIml: UserDefaultRepository {
     
     var defaultStorage: DefaultStorage = .shared
     
-    var recentUserId: String? {
-        get { defaultStorage.get(forKey: .recentUserId) }
-        set { defaultStorage.set(newValue, forKey: .recentUserId)}
+    var recentSearchUsers: [Owner] {
+        get {
+            defaultStorage.get(forKey: .recentSearchUsers) ?? []
+        }
+        set {
+            let newItems = newValue.filterDuplicates(includeElement: { $0.login == $1.login })
+            defaultStorage.set(newItems, forKey: .recentSearchUsers)
+        }
     }
     
     var appIcon: AppIcon {

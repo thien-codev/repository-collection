@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - UserEventModel
-struct UserEventModel: Decodable {
+struct UserEventModel: Decodable, Equatable {
     let id: String
     let type: UserEventType
     let actor: EventActor
@@ -23,6 +23,10 @@ struct UserEventModel: Decodable {
         case welcomePublic = "public"
         case createdAt = "created_at"
         case org
+    }
+    
+    static func == (lhs: UserEventModel, rhs: UserEventModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -42,7 +46,7 @@ extension UserEventModel {
 }
 
 // MARK: - Actor
-struct EventActor: Codable {
+struct EventActor: Codable, Equatable {
     let id: Int
     let login: String
     let displayLogin: String?
@@ -497,13 +501,13 @@ struct Comments: Decodable {
 }
 
 // MARK: - Repo
-struct Repo: Decodable {
+struct Repo: Decodable, Equatable {
     let id: Int
     let name: String
     let url: String
 }
 
-enum UserEventType: String, Decodable {
+enum UserEventType: String, Decodable, Equatable {
     case createEvent = "CreateEvent"
     case forkEvent = "ForkEvent"
     case issueCommentEvent = "IssueCommentEvent"

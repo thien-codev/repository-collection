@@ -10,7 +10,7 @@ import Foundation
 public extension DefaultsKey {
     
     /// GitHub user id
-    static let recentUserId = Key<String>("recentUserId")
+    static let recentSearchUsers = Key<[Owner]>("recentSearchUsers")
     
     /// appIcon
     static let appIcon = Key<AppIcon>("appIcon")
