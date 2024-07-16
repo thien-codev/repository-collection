@@ -57,7 +57,7 @@ class RepositoriesViewModel: ObservableObject {
     @Published var enableRecentSearch: Bool = false
     @Published var canLoadMore = false
     @Published var displayItems: [GitHubRepoModel] = []
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = false
     @Published var alertMessage = AlertMessage()
     @Published var userInfo: GitHubUserModel? = nil
     @Published var userEvents: [UserEventUIModel] = []

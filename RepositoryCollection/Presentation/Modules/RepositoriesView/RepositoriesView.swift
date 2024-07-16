@@ -179,6 +179,7 @@ private extension RepositoriesView {
                                 isEnabled: $viewModel.isEnableSearchTextField,
                                 backgroundColor: .white,
                                 tint: .black,
+                                isLoading: $viewModel.isLoading, 
                                 focusKeyboard: $focusKeyboard)
                 recentSearchButtonView
                 searchButton
@@ -221,6 +222,7 @@ private extension RepositoriesView {
                         .font(.system(size: 14, weight: .medium))
                     Spacer()
                 }
+                .contentShape(Rectangle())
                 .onTapGesture {
                     viewModel.trigger(.fillSuggestion(suggestionUser.login))
                 }
