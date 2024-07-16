@@ -20,7 +20,9 @@ struct LoadingView<Content>: View where Content: View {
                     .disabled(isShowing)
                 
                 VStack {
-                    ProgressView().frame(width: 40)
+                    ProgressView()
+                        .tint(Color(hex: "00008a"))
+                        .frame(width: 50)
                 }
                 .cornerRadius(6)
                 .shadow(radius: 10)

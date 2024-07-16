@@ -76,6 +76,6 @@ private extension HistoryView {
         let path = Bundle.main.path(forResource: "empty",
                                     ofType: "json") ?? ""
         let animationView = LottieView(animation: .filepath(path))
-        return animationView.playing(loopMode: .loop)
+        return animationView.playing(loopMode: .loop).animationSpeed(2)
     }
 }

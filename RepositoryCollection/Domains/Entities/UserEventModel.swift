@@ -320,7 +320,7 @@ struct Issue: Decodable {
     let milestone: Milestone?
     let comments: Int
     let createdAt, updatedAt: String
-    let closedAt: Date?
+    let closedAt: String?
     let authorAssociation: String
     let activeLockReason: String?
     let body: String
